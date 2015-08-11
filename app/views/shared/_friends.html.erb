@@ -1,0 +1,22 @@
+<!-- for larger formats... -->
+
+	<table class="table">
+		<thead>
+			<th class="col-md-2"></th>
+  		<th class="col-md-2"></th>
+		</thead>
+		<tbody>
+			<% friends.each do |friend| %>
+				<tr>
+					<td>
+						<span class="text-muted"><%= friend.display_name %></span>
+					</td>
+          <td>
+            <span class="text-muted">
+              <%= link_to "Add to #{@event.name}", event_accounts_create_path(@event, source_id: friend.id, source_type: 'User', name: friend.display_name), method: "post" %>
+            </span>
+          </td>
+        </tr>
+			<% end %>
+		</tbody>
+	</table>

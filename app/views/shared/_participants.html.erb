@@ -1,0 +1,17 @@
+<!-- for larger formats... -->
+
+	<table class="table">
+		<thead>
+			<th class="col-md-2"></th>
+			<th class="col-md-2"></th>
+		</thead>
+		<tbody>
+			<% participants.each do |participant| %>
+				<tr>
+					<td>
+						<span><%= participant.name %></span>
+					</td>
+					<td></td>
+			<% end %>
+		</tbody>
+	</table>

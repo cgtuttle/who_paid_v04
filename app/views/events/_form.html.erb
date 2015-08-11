@@ -1,0 +1,18 @@
+<div class="row">
+  <%= form_for(@event, :role => 'form') do |f| %>
+    <%= render 'layouts/errors', index: @event %>
+
+    <div class="form-group">
+      <%= f.label :name %>
+      <%= f.text_field :name, :class => "form-control" %>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-md-4">
+        <%= f.submit 'Submit', :class => 'btn btn-primary' %>
+        <%= link_to 'Cancel', events_path, :class => 'btn btn-default' %>
+      </div>
+    </div>
+
+  <% end %>
+</div>

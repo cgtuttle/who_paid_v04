@@ -1,0 +1,39 @@
+<% @visitor_class = "visitor" %>
+
+<div class="container-fluid visitor">
+	<div class="row">
+		<div class="banner">       
+		  <h1 class="text-left h0">Who Paid?</h1>
+		  <h1 class="text-left">Keep track of everyone's payments for all of your activities!</h1>
+		</div>
+  </div>
+</div>
+
+<div class="container">			  
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default visitor">
+        <div class="panel-heading"><h2>Hello. Did your recent trip include...</h2></div>
+        <div class="panel-body">
+        	<h4>Two families,</h4>
+        	<h4>three extra guests,</h4> 
+        	<h4>a dinner in,</h4> 
+        	<h4>a dinner out,</h4>
+        	<h4>a shuttle from the airport...</h4>
+        	<p class="lead">And no idea who paid for what?</p>
+        	</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel panel-default visitor">
+        <div class="panel-heading"><h2>We can make it easier!</h2></div>
+        <div class="panel-body">
+        	<span class="h3 col-md-8">Join Who Paid...it's free</span>
+        	<span class="h4 col-md-4 text-right"><%= link_to "learn more...", learn_more_path %></span>
+        		<%= render 'form' %>
+        </div>          
+      </div>
+    </div>
+  </div>
+</div>

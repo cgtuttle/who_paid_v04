@@ -1,0 +1,10 @@
+<% if index.errors.any? %>		
+	<div id="error_explanation">
+		<h2><%= pluralize(index.errors.count, "error") %> prohibited this <%= index.class.name %> from being saved:</h2>
+			<ul>
+	      <% index.errors.full_messages.each do |msg| %>
+	        <li><%= msg %></li>
+	      <% end %>
+      </ul>
+  </div>
+<% end %>

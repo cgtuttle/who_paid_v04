@@ -1,0 +1,23 @@
+<div class="row">
+  <%= form_for(@user, :role => 'form') do |f| %>
+    <%= render 'layouts/errors', index: @user %>
+
+    <div class="form-group">
+      <%= f.label :name %>
+      <%= f.text_field :name, :class => "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :email,"Email" %>
+      <%= f.text_field :email, class: "form-control" %>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-md-4">
+        <%= f.submit 'Submit', :class => 'btn btn-primary' %>
+        <%= link_to 'Cancel', users_path, :class => 'btn btn-default' %>
+      </div>
+    </div>
+
+  <% end %>
+</div>

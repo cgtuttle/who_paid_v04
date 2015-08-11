@@ -1,0 +1,57 @@
+<table class="table">
+	<thead>
+	  <th class="col-md-2">Email</th>
+	  <th class="col-md-2">Name</th>
+	  <th class="col-md-2">Role</th>
+	  <th class="col-md-2 text-center">Invitation Sent</th>
+	  <th class="col-md-1 text-center">Invitation Accepted</th>
+	  <th class="col-md-1 text-center">Edit</th>
+	  <th class="col-md-1 text-center">Delete</th>
+	</thead>
+	<tbody>
+	  <% @users.each do |user| %>
+	    <tr>
+	    	<td>
+					<%= user.email %>
+				</td>
+				<td>
+					<%= user.display_name if !user.display_name.blank? %>
+				</td>
+				<td class="control-group">
+					<%= form_for(user) do |f| %>
+						<% if policy(user).change_role? %>
+							<%= f.select(:role, User.roles.keys.map {|role| [role.titleize,role]}) %>
+							<%= f.submit 'Change Role', :class => "btn btn-primary btn-xs" %>
+						<% end %>
+					<% end %>
+				</td>
+				<td class="text-center">
+					<% if !user.invitation_sent_at.blank? %>
+						<%= user.invitation_sent_at.localtime.strftime("%F %H:%M:%S %Z")  %>
+					<% else %>
+						<%= link_to "Send invitation", create_user_invitation_path(user), class: "btn btn-primary btn-xs" %>
+					<% end %>
+				</td>
+				<td class="text-center">
+					<% if !user.invitation_accepted_at.blank? %>
+						<div class="control-icon">&checkmark;</div>
+					<% elsif !user.invitation_sent_at.blank? %>
+						<%= link_to "Resend invitation", create_user_invitation_path(user), class: "btn btn-default btn-xs" %>
+					<% end %>
+				</td>
+				<td class="text-center" >
+					<% if policy(user).edit? %>
+						<%= link_to glyphicon_edit.html_safe, edit_user_path(user) %>
+					<% end %>
+				</td>
+				<td class="text-center">
+					<% if policy(user).destroy? && user != current_user %>
+						<%= link_to user_path(user), method: :delete, title: "Delete this transaction", data: { confirm: 'Are you sure?' } do %>
+							<div class="control-icon">&times;</div>
+						<% end %>
+					<% end %>
+				</td>
+	    </tr>
+	  <% end %>
+	</tbody>
+</table>

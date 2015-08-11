@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  account_id: 1
+  parent_id: 1
+  occured_on: 2015-07-12
+  debit: 9.99
+  credit: 9.99
+  type:
+  allocation: 9.99
+  allocation_type: MyString
+
+two:
+  id: 2
+  account_id: 2
+  parent_id: 1
+  occured_on: 2015-07-12
+  debit: 9.99
+  credit: 9.99
+  type:
+  allocation: 9.99
+  allocation_type: MyString
