@@ -39,7 +39,7 @@ class EventsController < ApplicationController
     @participants = @event.accounts.where(source_type: "User")
     @friends = current_user.all_friends - @event.users
     @account = @event.accounts.new
-    @transactions = @event.parent_entries
+    @transactions = @event.account_transactions.joins(:account)
   end
 
   private

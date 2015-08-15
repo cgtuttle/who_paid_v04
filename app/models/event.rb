@@ -15,7 +15,7 @@ class Event < ActiveRecord::Base
   def create_event_owner_account(user)
     self.accounts.create!(source: user, name: user.display_name)
   end
-
+  
   def parent_entries
     self.account_transactions.where(parent_entry_id: 0)
   end

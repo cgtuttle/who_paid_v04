@@ -12,4 +12,8 @@ class AccountTransaction < ActiveRecord::Base
     self.account.account_name
   end
 
+  def net_amount
+    self.debit || 0 - self.credit || 0
+  end
+
 end

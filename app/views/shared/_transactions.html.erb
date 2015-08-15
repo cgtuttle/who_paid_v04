@@ -3,9 +3,8 @@
 	<table class="table table-responsive table-condensed">
 		<thead>
 			<th class="col-md-2">Paid On</th>
-			<th class="col-md-2">Paid by</th>
-			<th class="col-md-2">To</th>
-			<th class="col-md-2 text-center">For</th>
+			<th class="col-md-2">Account</th>
+			<th class="col-md-4">For</th>
 			<th class="col-md-2 text-center">Amount</th>
 		</thead>
 
@@ -14,27 +13,10 @@
 			<% @transactions.each do |t| %>
 				<tr>
 					<td><%= t.occured_on %></td>
-					<td><%= t.payer.display_name %></td>
-					<td><%= t.payee.display_name if t.payee %></td>
-
+					<td><%= t.account.account_name %></td>
+					<td><%= t.entry_type.titlecase %></td>
 					<td>
-							<span><%= t.activity.name %></span>
-							<%= link_to edit_event_activity_path(@event, t.activity), title: "Edit activity" do %>
-								<span class="glyphicon glyphicon-pencil control-icon-small pull-right"></span>
-							<% end %>
-							<span data-toggle="collapse" data-target="#collapseActivityRow<%= t.id %>"
-							class="accordion-toggle-people collapsed control-icon-small pull-right"
-							aria-expanded="false" title="Edit participants" id="users-collapse"></span>
-					</td>
-
-					<td>
-						<span class="text-right col-md-8"><%= number_to_currency(t.amount) %></span>
-							<%= link_to edit_event_event_transaction_path(:event_id => @event.id, :id => t.id, :payee_type => 'Event'), title: "Edit payment" do %>
-								<span class="glyphicon glyphicon-pencil pull-right control-icon-small"></span>
-							<% end %>
-							<%= link_to event_event_transaction_path(:event_id => @event, :id => t), method: :delete, title: "Delete this transaction", data: {confirm: 'Are you sure?'} do %>
-								<span class="control-icon pull-right">&times;</span>
-							<% end %>
+						<span class="text-right col-md-8"><%= number_to_currency(t.net_amount) %></span>
 					</td>
 				</tr>
 			<% end %>
