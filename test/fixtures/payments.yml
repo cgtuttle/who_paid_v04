@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  event_id: 1
+  payment_date: 2015-08-22
+  account_from: 1
+  account_to: 2
+  amount: 9.99
+  for: MyString
+
+two:
+  id: 2
+  event_id: 1
+  payment_date: 2015-08-22
+  account_from: 1
+  account_to: 2
+  amount: 9.99
+  for: MyString

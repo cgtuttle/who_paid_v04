@@ -3,7 +3,9 @@
 one:
   id: 1
   name: event_one
+  owner_id: 1
 
 two:
   id: 2
   name: event_two
+  owner_id: 2

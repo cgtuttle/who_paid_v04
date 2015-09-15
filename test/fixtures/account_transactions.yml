@@ -3,21 +3,58 @@
 one:
   id: 1
   account_id: 1
-  parent_id: 1
+  transaction_set: 1
   occured_on: 2015-07-12
-  debit: 9.99
-  credit: 9.99
-  type:
-  allocation: 9.99
-  allocation_type: MyString
+  debit: 50.00
+  credit:
+  entry_type: payment
+  journal_id: 1
+  journal_type: Payment
 
 two:
   id: 2
-  account_id: 2
-  parent_id: 1
+  account_id: 3
+  transaction_set: 1
   occured_on: 2015-07-12
-  debit: 9.99
-  credit: 9.99
-  type:
-  allocation: 9.99
-  allocation_type: MyString
+  debit:
+  credit: 50.00
+  entry_type: receipt
+  journal_id: 1
+  journal_type: Payment
+
+three:
+  id: 3
+  account_id: 3
+  transaction_set: 2
+  occured_on: 2015-07-12
+  debit: 50.00
+  credit:
+  entry_type: distribution
+  journal_id: 1
+  journal_type: Payment
+
+four:
+  id: 4
+  account_id: 1
+  transaction_set: 2
+  occured_on: 2015-07-12
+  debit:
+  credit:
+  entry_type: allocation
+  journal_id: 1
+  journal_type: Payment
+  allocation_entry: 1
+  allocation_method: "qty"
+
+five:
+  id: 5
+  account_id: 2
+  transaction_set: 2
+  occured_on: 2015-07-12
+  debit:
+  credit:
+  entry_type: allocation
+  journal_id: 1
+  journal_type: Payment
+  allocation_entry: 1
+  allocation_method: "qty"

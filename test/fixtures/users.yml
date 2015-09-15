@@ -10,13 +10,16 @@ one:
   first_name: user
   last_name: one
   user_name: user_one
+  role: 0
 
 two:
   id: 2
   email: user2@test.com
   first_name: user
   user_name: user_two
+  role: 0
 
 three:
   id: 3
   email: user3@test.com
+  role: 0

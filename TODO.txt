@@ -1,0 +1,3 @@
+TODO: Add "Enter Payment" form to views/events/show
+TODO: Restrict visibility of payment types in views/shared/transactions
+TODO: Group journal sets in views/shared/transaction

@@ -17,6 +17,13 @@ class AccountsController < ApplicationController
   end
 
   def index
+    @event = Event.find(event_params)
+    @accounts = @event.accounts
+    logger.debug "@accounts = #{@accounts}"
+    respond_to do |format|
+      format.html
+      format.json { render json: @accounts}
+    end
   end
 
   def new

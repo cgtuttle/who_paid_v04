@@ -31,7 +31,6 @@ class EventsController < ApplicationController
   end
 
   def new
-    logger.debug "Running EventsController.new"
     @event = Event.new
   end
 
@@ -40,6 +39,7 @@ class EventsController < ApplicationController
     @friends = current_user.all_friends - @event.users
     @account = @event.accounts.new
     @transactions = @event.account_transactions.joins(:account)
+    @new_event_payment = @event.payments.new
   end
 
   private

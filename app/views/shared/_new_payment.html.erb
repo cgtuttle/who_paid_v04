@@ -1,0 +1,29 @@
+
+  <%= form_for @new_event_payment, html: {class: "form-inline"} do |f| %>
+    <%= render 'layouts/errors', index: @new_event_payment %>
+
+    <div class="form-group">
+      <%= f.label "from" %>
+      <%= f.collection_select :account_from, @participants, :id, :account_name, {}, {class: "form-control"} %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label "To" %>
+      <%= f.text_field :account_to, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label "Amount" %>
+      <%= f.text_field :amount, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label "For" %>
+      <%= f.text_field :for, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.submit 'Submit', :class => 'btn btn-success btn-sm' %>
+    </div>
+
+  <% end %>

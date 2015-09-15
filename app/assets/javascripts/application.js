@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.tokeninput
 //= require bootstrap-datepicker
 //= require data-confirm-modal
 //= require turbolinks

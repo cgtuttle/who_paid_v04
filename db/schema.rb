@@ -11,26 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150815163035) do
+ActiveRecord::Schema.define(version: 20150829225401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "account_transactions", force: :cascade do |t|
     t.integer  "account_id"
-    t.integer  "parent_entry_id"
+    t.integer  "transaction_set"
     t.date     "occured_on"
     t.decimal  "debit"
     t.decimal  "credit"
     t.string   "entry_type"
-    t.decimal  "allocation"
-    t.string   "allocation_type"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.decimal  "allocation_factor"
+    t.string   "allocation_method"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "journal_id"
+    t.string   "journal_type"
+    t.float    "allocation_entry"
   end
 
   add_index "account_transactions", ["account_id"], name: "index_account_transactions_on_account_id", using: :btree
-  add_index "account_transactions", ["parent_entry_id"], name: "index_account_transactions_on_parent_entry_id", using: :btree
+  add_index "account_transactions", ["transaction_set"], name: "index_account_transactions_on_transaction_set", using: :btree
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "source_id"
@@ -56,6 +59,19 @@ ActiveRecord::Schema.define(version: 20150815163035) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "payments", force: :cascade do |t|
+    t.integer  "event_id"
+    t.date     "payment_date"
+    t.integer  "account_from"
+    t.integer  "account_to"
+    t.decimal  "amount"
+    t.string   "for"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "payments", ["event_id"], name: "index_payments_on_event_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -92,4 +108,5 @@ ActiveRecord::Schema.define(version: 20150815163035) do
 
   add_foreign_key "account_transactions", "accounts"
   add_foreign_key "accounts", "events"
+  add_foreign_key "payments", "events"
 end

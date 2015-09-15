@@ -1,0 +1,28 @@
+Payment Process
+---------------
+1	Enter payment
+2	Create payment transaction set
+3	Add receipt to transaction set
+4	Create distribution transaction set
+5	Add allocation to transaction set
+6	Verify journal set
+
+Participant Addition Process
+----------------------------
+1	Select account
+2	Add account to journal
+3	Reallocate journal set
+4	Verify journal set
+
+Participant Removal Process
+---------------------------
+1	Select account
+2	Destroy account
+3	Reallocate journal set
+4	Verify journal set
+
+Settlement Process
+------------------
+1	Enter payment
+2	Create settlement transaction set
+3	Add receipt to transaction set

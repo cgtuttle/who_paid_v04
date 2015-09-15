@@ -15,7 +15,10 @@ Rails.application.routes.draw do
   resources :events do
     resources :accounts
     post 'accounts/create'
+    resources :payments
   end
+
+  resources :payments
 
   resources :users
 
