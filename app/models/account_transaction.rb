@@ -16,9 +16,9 @@ class AccountTransaction < ActiveRecord::Base
   #   :transaction_set - identifier to group a set of balancing cr/dr transactions
   #     defaults to this transaction
   #
-  def self.add_to_set(account, transaction_date, type, options={})
+  def self.add_to_set(account_id, transaction_date, type, options={})
     entry = self.new
-    entry.account_id = account.id
+    entry.account_id = account_id
     entry.occured_on = transaction_date
     entry.credit = options[:credit]
     entry.debit = options[:debit]
@@ -41,6 +41,11 @@ class AccountTransaction < ActiveRecord::Base
     allocation_count = @journal_set.where(entry_type: "allocation").count
     return ((payment_count > 0) and (allocation_count > 0))
   end
+
+  #============================================
+  # This should actually be handled by
+  # allocation tables if there are more
+  # than a few ways of allocating
 
   def self.reallocate(journal_id, journal_type)
     @journal_set = journal_set(journal_id, journal_type)
@@ -68,11 +73,6 @@ class AccountTransaction < ActiveRecord::Base
       entry.save
     end
   end
-
-  #============================================
-  # This should actually be handled by
-  # allocation tables if there are more
-  # than a few ways of allocating
 
   def self.amt_factors(journal_id, journal_type)
     @amt_set = @journal_set.where(allocation_method: "amt")

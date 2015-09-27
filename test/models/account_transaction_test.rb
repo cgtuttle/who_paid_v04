@@ -7,7 +7,7 @@ class AccountTransactionTest < ActiveSupport::TestCase
 
   test 'added to set?' do
     assert_difference('AccountTransaction.count') do
-      AccountTransaction.add_to_set(@account, Time.now, 'payment', journal_id: 1, journal_type:  'Payment')
+      AccountTransaction.add_to_set(@account.id, Time.now, 'payment', journal_id: 1, journal_type:  'Payment')
     end
   end
 

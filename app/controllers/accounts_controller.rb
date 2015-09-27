@@ -20,13 +20,14 @@ class AccountsController < ApplicationController
     @event = Event.find(event_params)
     @accounts = @event.accounts
     logger.debug "@accounts = #{@accounts}"
-    respond_to do |format|
-      format.html
-      format.json { render json: @accounts}
-    end
   end
 
   def new
+    @account = Account.new
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def participants

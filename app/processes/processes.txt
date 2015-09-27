@@ -1,11 +1,3 @@
-Payment Process
----------------
-1	Enter payment
-2	Create payment transaction set
-3	Add receipt to transaction set
-4	Create distribution transaction set
-5	Add allocation to transaction set
-6	Verify journal set
 
 Participant Addition Process
 ----------------------------

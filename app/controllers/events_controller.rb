@@ -28,6 +28,8 @@ class EventsController < ApplicationController
   end
 
   def index
+    reset_current_event    
+    logger.info "current_event = #{current_event.inspect}"
   end
 
   def new
@@ -35,11 +37,13 @@ class EventsController < ApplicationController
   end
 
   def show
+    set_current_event(@event)
     @participants = @event.accounts.where(source_type: "User")
     @friends = current_user.all_friends - @event.users
     @account = @event.accounts.new
     @transactions = @event.account_transactions.joins(:account)
-    @new_event_payment = @event.payments.new
+    @new_event_payment = @event.payments.new    
+    logger.info "current_event = #{current_event.inspect}"
   end
 
   private

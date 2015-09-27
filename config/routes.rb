@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   end
 
   resources :payments
-
+  resources :accounts
   resources :users
 
   # Example of regular route:

@@ -1,25 +1,32 @@
 
-  <%= form_for @new_event_payment, html: {class: "form-inline"} do |f| %>
+  <%= form_for [@event, @new_event_payment], html: {class: "form-inline"} do |f| %>
     <%= render 'layouts/errors', index: @new_event_payment %>
 
+    <span>Add a Payment </span>
+
     <div class="form-group">
-      <%= f.label "from" %>
-      <%= f.collection_select :account_from, @participants, :id, :account_name, {}, {class: "form-control"} %>
+      <%= f.label "Amount", class: 'sr-only' %>
+      <%= f.text_field :amount, class: "form-control input-sm", placeholder: "Amount..." %>
     </div>
 
     <div class="form-group">
-      <%= f.label "To" %>
-      <%= f.text_field :account_to, class: "form-control" %>
+      <%= f.label "On", class: 'sr-only' %>
+      <%= f.text_field :payment_date, 'data-provide'=>'datepicker', :class => "form-control input-sm datepicker", placeholder: "Paid on..." %>
     </div>
 
     <div class="form-group">
-      <%= f.label "Amount" %>
-      <%= f.text_field :amount, class: "form-control" %>
+      <%= f.label :account_from, class: 'sr-only' %>
+      <%= f.text_field :payer_name, class: "form-control input-sm", placeholder: "From...", data: {autocomplete_source: @event.accounts.list} %>
     </div>
 
     <div class="form-group">
-      <%= f.label "For" %>
-      <%= f.text_field :for, class: "form-control" %>
+      <%= f.label :account_to, class: 'sr-only' %>
+      <%= f.text_field :payee_name, class: "form-control input-sm", placeholder: "To...", data: {autocomplete_source: @event.accounts.list} %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label "For", class: 'sr-only' %>
+      <%= f.text_field :for, class: "form-control input-sm", placeholder: "For..." %>
     </div>
 
     <div class="form-group">

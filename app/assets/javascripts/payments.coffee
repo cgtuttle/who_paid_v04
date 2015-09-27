@@ -1,6 +1,6 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
 jQuery ->
-  $('#payment_account_to').tokenInput '/accounts.json'
-  theme: 'bootstrap'
+	$('#payment_payee_name').autocomplete
+		source: $('#payment_payee_name').data('autocomplete-source')
+
+	$('#payment_payer_name').autocomplete
+		source: $('#payment_payer_name').data('autocomplete-source')
