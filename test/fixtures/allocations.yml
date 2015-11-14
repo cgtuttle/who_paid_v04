@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  event_id: 
+  allocation_method: MyString
+  allocation_entry: 9.99
+  allocation_factor_decimal: MyString
+
+two:
+  event_id: 
+  allocation_method: MyString
+  allocation_entry: 9.99
+  allocation_factor_decimal: MyString

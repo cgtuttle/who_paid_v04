@@ -12,7 +12,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  config.mailer_sender = 'no-reply@' + Rails.application.secrets.domain_name
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -124,7 +124,7 @@ Devise.setup do |config|
 
   # Flag that force a record to be valid before being actually invited
   # Default: false
-  # config.validate_on_invite = true
+  config.validate_on_invite = true
 
   # Resend invitation if user with invited status is invited again
   # Default: true

@@ -8,10 +8,21 @@
 		<tbody>
 			<% participants.each do |participant| %>
 				<tr>
-					<td>
-						<span><%= participant.account_name %></span>
-					</td>
-					<td></td>
+					<% if participant.source_id.blank? %>
+						<td>
+							<span class="text-muted"><%= participant.account_name %></span>
+						</td>
+						<td>
+							<%= link_to new_user_from_account_path(participant), title: "Add to WhoPaid users" do %>
+								<i class="fa fa-user-plus"></i>
+							<% end %>
+						</td>
+					<% else %>
+						<td>
+							<span><%= participant.account_name %></span>
+						</td>
+					<% end %>
+				</tr>
 			<% end %>
 		</tbody>
 	</table>

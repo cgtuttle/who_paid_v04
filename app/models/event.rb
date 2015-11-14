@@ -15,7 +15,11 @@ class Event < ActiveRecord::Base
 	end
 
   def create_event_owner_account(user)
-    self.accounts.create!(source: user, name: user.display_name)
+    self.accounts.create!(source: user, account_name: user.display_name)
+  end
+
+  def create_event_default_account
+    self.accounts.create!(account_name: self.name)
   end
 
   def entries_of_type(entry_type)

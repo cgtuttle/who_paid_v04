@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  journal_id: 
+  journal_type: Journal
+  occured_on: 2015-10-03
+
+two:
+  journal_id: 
+  journal_type: Journal
+  occured_on: 2015-10-03

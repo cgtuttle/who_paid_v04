@@ -1,10 +1,17 @@
 
-Participant Addition Process
-----------------------------
-1	Select account
-2	Add account to journal
-3	Reallocate journal set
-4	Verify journal set
+x Participant Addition Process
+x ----------------------------
+x 1	Select account
+x 2	Add account to journal
+x 3	Reallocate journal set
+x 4	Verify journal set
+
+Allocation Process
+------------------
+1. Reverse any previous allocation sets
+2. Create distribution transaction set for allocation journal
+3. Add distribution for total amount of payment receipt
+4. Add allocation to transaction set for each allocation account
 
 Participant Removal Process
 ---------------------------
@@ -18,3 +25,4 @@ Settlement Process
 1	Enter payment
 2	Create settlement transaction set
 3	Add receipt to transaction set
+

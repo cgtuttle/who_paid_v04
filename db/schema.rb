@@ -11,29 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150829225401) do
+ActiveRecord::Schema.define(version: 20151024143627) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "account_transactions", force: :cascade do |t|
     t.integer  "account_id"
-    t.integer  "transaction_set"
-    t.date     "occured_on"
     t.decimal  "debit"
     t.decimal  "credit"
     t.string   "entry_type"
-    t.decimal  "allocation_factor"
-    t.string   "allocation_method"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.integer  "journal_id"
     t.string   "journal_type"
-    t.float    "allocation_entry"
+    t.integer  "sub_journal_id"
+    t.string   "sub_journal_type"
+    t.integer  "reversal_id"
+    t.date     "occurred_on"
   end
 
   add_index "account_transactions", ["account_id"], name: "index_account_transactions_on_account_id", using: :btree
-  add_index "account_transactions", ["transaction_set"], name: "index_account_transactions_on_transaction_set", using: :btree
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "source_id"
@@ -46,6 +44,19 @@ ActiveRecord::Schema.define(version: 20150829225401) do
 
   add_index "accounts", ["event_id"], name: "index_accounts_on_event_id", using: :btree
   add_index "accounts", ["source_type", "source_id"], name: "index_accounts_on_source_type_and_source_id", using: :btree
+
+  create_table "allocations", force: :cascade do |t|
+    t.integer  "journal_id"
+    t.string   "journal_type"
+    t.integer  "account_id"
+    t.string   "allocation_method"
+    t.decimal  "allocation_entry"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.decimal  "allocation_factor"
+  end
+
+  add_index "allocations", ["account_id"], name: "index_allocations_on_account_id", using: :btree
 
   create_table "events", force: :cascade do |t|
     t.string   "name"
@@ -67,8 +78,9 @@ ActiveRecord::Schema.define(version: 20150829225401) do
     t.integer  "account_to"
     t.decimal  "amount"
     t.string   "for"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.boolean  "deleted",      default: false, null: false
   end
 
   add_index "payments", ["event_id"], name: "index_payments_on_event_id", using: :btree
@@ -108,5 +120,6 @@ ActiveRecord::Schema.define(version: 20150829225401) do
 
   add_foreign_key "account_transactions", "accounts"
   add_foreign_key "accounts", "events"
+  add_foreign_key "allocations", "accounts"
   add_foreign_key "payments", "events"
 end

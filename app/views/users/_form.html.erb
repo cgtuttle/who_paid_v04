@@ -3,8 +3,13 @@
     <%= render 'layouts/errors', index: @user %>
 
     <div class="form-group">
-      <%= f.label :name %>
-      <%= f.text_field :name, :class => "form-control" %>
+      <%= f.label :first_name %>
+      <%= f.text_field :first_name, :class => "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :last_name %>
+      <%= f.text_field :last_name, :class => "form-control" %>
     </div>
 
     <div class="form-group">
@@ -18,6 +23,8 @@
         <%= link_to 'Cancel', users_path, :class => 'btn btn-default' %>
       </div>
     </div>
+
+    <%= hidden_field :account, :id, value: @account.id if not @account.blank? %>
 
   <% end %>
 </div>

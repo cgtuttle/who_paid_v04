@@ -4,3 +4,6 @@ jQuery ->
 
 	$('#payment_payer_name').autocomplete
 		source: $('#payment_payer_name').data('autocomplete-source')
+
+	$(document).ready(ready)
+	$(document).on('page:load', ready)

@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
 
+  validates :email, presence: true, uniqueness: true
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
@@ -15,6 +17,10 @@ class User < ActiveRecord::Base
   after_initialize :set_default_role, :if => :new_record?
 
   scope :invited_by_user, ->(user) {where(invited_by_id: user)}
+
+  def password_required?
+    new_record? ? false : true
+  end
 
   def set_default_role
     self.role ||= :user
@@ -49,4 +55,11 @@ class User < ActiveRecord::Base
       self.email
     end
   end
+
+  def parse_display_name(display_name)
+    self.first_name = display_name.split[0]
+    self.last_name = display_name.split[1]
+    display_name
+  end
+
 end

@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
 
-  root 'visitors#welcome'
-
-  devise_for :users
+#  devise_for :users, controllers: { registrations: 'users', invitations: 'users/invitations'  }
+  devise_for :users, controllers: { invitations: 'users/invitations'  }
 
   devise_scope :user do
     get '/users/send_invitation/:id', to: 'users/invitations#deliver', as: 'send_user_invitation'
@@ -11,6 +10,8 @@ Rails.application.routes.draw do
 
   get '/visitors/welcome' => 'visitors#welcome', as: 'welcome'
   get '/visitors/learn' => 'visitors#learn', as: 'learn_more'
+  get '/payments/delete/:id' => 'payments#set_delete', as: 'delete_payment'
+  get '/users/new_from_account/:id', to: 'users#new_from_account', as: 'new_user_from_account'
 
   resources :events do
     resources :accounts
@@ -22,43 +23,7 @@ Rails.application.routes.draw do
   resources :accounts
   resources :users
 
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
+  root 'visitors#welcome'
 
-  # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
-  # Example resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Example resource route with more complex sub-resources:
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', on: :collection
-  #     end
-  #   end
-
-  # Example resource route with concerns:
-  #   concern :toggleable do
-  #     post 'toggle'
-  #   end
-  #   resources :posts, concerns: :toggleable
-  #   resources :photos, concerns: :toggleable
-
-  # Example resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
 end

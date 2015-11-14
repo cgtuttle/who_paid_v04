@@ -1,0 +1,36 @@
+<!-- for larger formats... -->
+
+	<table class="table table-responsive table-condensed">
+		<thead>
+			<th class="col-lg-2 col-md-12">Paid On</th>
+			<th class="col-lg-2 col-md-12">By</th>
+			<th class="col-lg-2 col-md-12">To</th>
+			<th class="col-lg-4 col-md-12">For</th>
+			<th class="col-lg-2 col-md-12 text-center">Amount</th>
+		</thead>
+
+		<tbody>
+
+			<% payments.each do |p| %>
+				<% if not p.new_record? %>
+					<tr>
+						<td>
+							<%= link_to edit_event_payment_path(@event, p), title: "Edit payment" do %>
+								<i class="fa fa-edit"></i>
+							<% end %>
+							<%= link_to delete_payment_path(p), title: "Delete payment", data: {confirm: "Deleting a payment..."} do %>
+								<i class="fa fa-trash"></i>
+							<% end %>
+							<%= p.payment_date  %>
+						</td>
+						<td><%= p.payer_account.account_name %></td>
+						<td><%= p.payee_account.account_name %></td>
+						<td><%= p.for %></td>
+						<td>
+							<span class="text-right col-md-8"><%= number_to_currency(p.amount) %></span>
+						</td>
+					</tr>
+				<% end %>
+			<% end %>
+		</tbody>
+	</table>

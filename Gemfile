@@ -16,6 +16,7 @@ gem 'devise_invitable'
 gem 'pundit'
 gem 'bootstrap-sass'
 gem 'bootstrap-datepicker-rails'
+gem 'font-awesome-rails'
 gem 'data-confirm-modal', github: 'ifad/data-confirm-modal'
 
 # Use ActiveModel has_secure_password

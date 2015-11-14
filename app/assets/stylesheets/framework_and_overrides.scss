@@ -87,6 +87,16 @@ button.form-control-alert {
   height: 32px;
 }
 
+a:hover i[class^="icon-"],
+a:hover i[class*=" icon-"]{
+   text-decoration: none;
+}
+
+i {
+  margin-left: 3px;
+  margin-right: 2px;
+}
+
 .alert.navbar-alert {
   margin-bottom: 0;
   padding: 0;
