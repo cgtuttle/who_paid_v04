@@ -55,6 +55,7 @@ class AllocationProcess
 				t.debit = a.credit
 				t.credit = a.debit
 				t.entry_type = "reversal"
+				t.reversal_id = a.id
 			end
 			a.reversal_id = @reversal.id
 			a.save

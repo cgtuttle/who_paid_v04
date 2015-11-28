@@ -21,7 +21,7 @@
 
     <div class="form-group">
       <%= f.label :account_to, class: 'sr-only' %>
-      <%= f.text_field :payee_name, class: "form-control input-sm", placeholder: "To...", data: {autocomplete_source: accounts_list(@event) } %>
+      <%= f.text_field :payee_name, class: "form-control input-sm", value: @event.name, data: {autocomplete_source: accounts_list(@event) } %>
     </div>
 
     <div class="form-group">

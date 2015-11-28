@@ -2,7 +2,7 @@ class AccountsController < ApplicationController
 
   def create
     @event = Event.find(event_params)
-    @account = @event.accounts.new(source_id: params[:source_id], source_type: params[:source_type], name: params[:name])
+    @account = @event.accounts.new(source_id: params[:source_id], source_type: params[:source_type], account_name: params[:name])
     if @account.save
       redirect_to event_path(@event), notice:'Successfully added user.'
     else

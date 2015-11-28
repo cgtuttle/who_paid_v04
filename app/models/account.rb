@@ -4,9 +4,20 @@ class Account < ActiveRecord::Base
 
   has_many :account_transactions
   has_many :allocations
+  has_many :payments, through: :allocations
 
 # Journal relationships
   has_many :payments_paid, class_name: "Payment", foreign_key: :account_from
   has_many :payments_received, class_name: "Payment", foreign_key: :account_to
+
+  scope :user, -> { joins("join users on users.id = accounts.source_id").where(source_type: "User").order("users.last_name") }
+
+  def self.available_for_payment(payment)
+    where(source_type: "User") - payment.accounts
+  end
+
+  def balance
+  	self.account_transactions.sum(:credit) - self.account_transactions.sum(:debit)
+  end
 
 end

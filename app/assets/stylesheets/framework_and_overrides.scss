@@ -2,17 +2,14 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-// @media print {
-//   .table td.red, .table th.red {
-//     color: green !important;
-//   }
-//   .table td.green, .table th.green {
-//     color: green !important;
-//   }
-// }
-
 $bg-color: #EEEEEE;
 $visitor-bg-color: #9BBEFF;
+
+$bg-color-lightness: lightness($bg-color);
+$bg-color-hue: hue($bg-color);
+$bg-color-saturation: saturation($bg-color);
+$bg-color-alpha: alpha($bg-color);
+$bg-color-dark: hsla($bg-color-hue, $bg-color-saturation, $bg-color-lightness * .99, $bg-color-alpha);
 
 // apply styles to HTML elements
 // to make views framework-neutral
@@ -68,10 +65,6 @@ img {
   margin-top: 8px;
 }
 
-//.form-group-alert {
-//   white-space: nowrap;
-// }
-
 h4.form-title {
   margin-top: 0;
 }
@@ -85,6 +78,8 @@ button.form-control-alert {
   @extend button.close;
   padding: 5px;
   height: 32px;
+  margin-right: 10px;
+  margin-left: 15px;
 }
 
 a:hover i[class^="icon-"],
@@ -109,6 +104,12 @@ i {
 
 .h0 {
   font-size: 400%;
+}
+
+.line {
+  border-top-width: 2px;
+  border-top-style: solid;
+  border-top-color: $table_border_color;
 }
 
 // THESE ARE EXAMPLES YOU CAN MODIFY
@@ -290,6 +291,21 @@ span.check-box-label {
   margin: 0;
 }
 
+.row-heading {
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: $table_border_color;
+  margin-bottom: 5px;
+}
+
+.row-list {
+  margin-bottom: 5px;
+}
+
+.collapse .well {
+  background-color: lighten($bg-color, 10%);
+}
+
 table.table .table-inner {
   margin-bottom: 0px;
   background-color: $bg-color;
@@ -310,48 +326,3 @@ table.table td.table-inner {
   padding-left: 2px;
 }
 
-
-/* make sidebar nav vertical */
-@media (min-width: 768px) {
-    .sidebar-nav .navbar .navbar-collapse {
-      padding: 0;
-      max-height: none;
-  }
-    .sidebar-nav .navbar ul {
-      float: none;
-  }
-    .sidebar-nav .navbar ul:not {
-      display: block;
-  }
-    .sidebar-nav .navbar li {
-      float: none;
-      display: block;
-  }
-    .sidebar-nav .navbar li a {
-      padding-top: 12px;
-      padding-bottom: 12px;
-  }
-}
-
-
-/* Show plus or minus for collapsed or expanded items */
-.accordion-toggle:after {
-    /* symbol for "opening" panels */
-    font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
-    content:"\e082";    /* adjust as needed, taken from bootstrap.css */
-}
-.accordion-toggle.collapsed:after {
-    /* symbol for "collapsed" panels */
-    content:"\e081";   /* adjust as needed, taken from bootstrap.css */
-}
-
-/* Show people or minus for collapsed or expanded items */
-.accordion-toggle-people:after {
-    /* symbol for "opening" panels */
-    font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
-    content:"\e082";    /* adjust as needed, taken from bootstrap.css */
-}
-.accordion-toggle-people.collapsed:after {
-    /* symbol for "collapsed" panels */
-    content:"\e008";   /* adjust as needed, taken from bootstrap.css */
-}

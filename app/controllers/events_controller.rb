@@ -38,7 +38,7 @@ class EventsController < ApplicationController
 
   def show
     set_current_event(@event)
-    @participants = @event.accounts.where(source_type: 'User')
+    @participants = @event.accounts.user
     @friends = current_user.all_friends - @event.users
     @account = @event.accounts.new
     @payments = @event.payments.active

@@ -28,16 +28,19 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @cancel_path = users_path
   end
 
   def new
     @user = User.new
+    @cancel_path = users_path
   end
 
   def new_from_account
     @account = Account.find(params[:id])
     @user = User.new
     @user.parse_display_name(@account.account_name)
+    @cancel_path = event_path(current_event.id)
   end
 
   def show

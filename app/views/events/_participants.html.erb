@@ -4,6 +4,7 @@
 		<thead>
 			<th class="col-md-2"></th>
 			<th class="col-md-2"></th>
+			<th class="col-md-2"></th>
 		</thead>
 		<tbody>
 			<% participants.each do |participant| %>
@@ -21,7 +22,9 @@
 						<td>
 							<span><%= participant.account_name %></span>
 						</td>
+						<td></td>
 					<% end %>
+					<td class="text-right"><%= number_to_currency(participant.balance) %></td>
 				</tr>
 			<% end %>
 		</tbody>

@@ -1,9 +1,8 @@
 class Event < ActiveRecord::Base
-  has_many :accounts
+  has_many :accounts, dependent: :destroy
   has_many :payments
   has_many :account_transactions, through: :accounts
-  has_many :users, through: :accounts, source: :source, source_type: "User", dependent: :destroy
-  has_many :payees, through: :accounts, source: :source, source_type: "Payee", dependent: :destroy
+  has_many :users, through: :accounts, source: :source, source_type: "User"
   belongs_to :owner, class_name: "User"
 
   def owner?(user)

@@ -1,0 +1,50 @@
+<!-- for larger formats... -->
+<div class="row row-heading">
+	<strong class="col-lg-1 col-md-12"></strong>
+	<strong class="col-lg-2 col-md-12">Paid On</strong>
+	<strong class="col-lg-2 col-md-12">By</strong>
+	<strong class="col-lg-2 col-md-12">To</strong>
+	<strong class="col-lg-3 col-md-12">For</strong>
+	<strong class="col-lg-2 col-md-12 text-center">Amount</strong>
+</div>
+
+<% payments.each do |p| %>						
+	<% if not p.new_record? %>							
+		<div class="row row-list">															
+			<div class="col-lg-1 col-md-12">
+
+<!-- beginning of collapse control -->								
+				<%= link_to "#collapse-#{p.id}", title: "Participants", data: { toggle: :collapse }, aria: { controls: "collapse-#{p.id}", expanded: false } do %>
+					<i class="fa fa-user"></i>
+				<% end %>								
+<!-- end of collapse control -->
+
+				<%= link_to edit_event_payment_path(@event, p), title: "Edit payment" do %>
+					<i class="fa fa-edit"></i>
+				<% end %>
+				<%= link_to delete_payment_path(p), method: :get, title: "Delete payment", data: {confirm: "Are you sure?"} do %>
+					<i class="fa fa-trash"></i>
+				<% end %>
+			</div>
+			<div class="col-lg-2 col-md-12">
+				<%= p.payment_date  %>
+			</div>
+			<div class="col-lg-2 col-md-12"><%= p.payer_account.account_name %></div>
+			<div class="col-lg-2 col-md-12"><%= p.payee_account.account_name %></div>
+			<div class="col-lg-3 col-md-12"><%= p.for %></div>
+			<div class="col-lg-2 col-md-12 text-right"><%= number_to_currency(p.amount) %></div>
+		</div>
+
+<!-- Beginning of collapsible section -->
+		<div id="collapse-<%= p.id %>" class="collapse">
+			<div class="row">
+				<div class="well col-lg-7 col-md-offset-1 col-md-12">
+					<h4><%= p.for %></h4>
+					<%= render partial: 'payment_form', locals: { payment: p} %>
+				</div>
+			</div>
+		</div>						        																	
+<!-- End of collapsible section -->
+
+	<% end %>												
+<% end %>
