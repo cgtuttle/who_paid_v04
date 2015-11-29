@@ -60,6 +60,7 @@ class PaymentsController < ApplicationController
 
   def payment_params
     params.require(:payment).permit(:payment_date, :account_from, :account_to, :amount, :for, :payee_name, :payer_name, :id, allocations_attributes: [:id, :_destroy, :account_id, :allocation_entry, :allocation_method])
+    params.require(:payment).permit(:payment_date, :account_from, :amount, :for, :payer_name, :id, allocations_attributes: [:id, :_destroy, :account_id, :allocation_entry, :allocation_method])
   end
 
   def event_params
