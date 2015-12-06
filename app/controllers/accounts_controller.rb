@@ -2,7 +2,8 @@ class AccountsController < ApplicationController
 
   def create
     @event = Event.find(event_params)
-    @account = @event.accounts.new(source_id: params[:source_id], source_type: params[:source_type], account_name: params[:name])
+    @account = @event.accounts.new(account_params)
+    @account.source_type = "User"
     if @account.save
       redirect_to event_path(@event), notice:'Successfully added user.'
     else
@@ -23,7 +24,8 @@ class AccountsController < ApplicationController
   end
 
   def new
-    @account = Account.new
+    @event = Event.find(event_params)
+    @account = @event.accounts.new
     respond_to do |format|
       format.html
       format.js
@@ -40,6 +42,10 @@ class AccountsController < ApplicationController
   end
 
   private
+
+  def account_params
+    params.require(:account).permit(:account_name, :source_id, :source_type)
+  end
 
   def event_params
     params.require(:event_id)

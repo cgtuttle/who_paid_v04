@@ -11,9 +11,14 @@ class Users::InvitationsController < Devise::InvitationsController
 		@content = params[:message]
 		@subject = "Invitation to WhoPaid from #{current_user.display_name}"
 		@from = "no-reply@test.com"
-		InvitationMailer.invite_message(user, @from, @subject, @content, current_user).deliver if user.errors.empty? # mailers/invitation_mailer.rb
-		user.invitation_sent_at = Time.now.utc # mark invitation as delivered
-		redirect_to users_path, notice: "Sent invitation to #{user.display_name}"
+		InvitationMailer.invite_message(user, @from, @subject, @content, current_user).deliver_now if user.errors.empty? # mailers/invitation_mailer.rb
+		if user.errors.empty?			
+			redirect_to users_path, notice: "Sent invitation to #{user.display_name}"
+			user.invitation_sent_at = Time.now.utc
+			user.save(validate: false)
+		else
+			render 'new'
+		end
 	end
 
 	private

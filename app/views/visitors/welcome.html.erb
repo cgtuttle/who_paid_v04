@@ -15,7 +15,7 @@
       <div class="panel panel-default visitor">
         <div class="panel-heading"><h2>Hello. Did your recent trip include...</h2></div>
         <div class="panel-body">
-        	<h4>Two families,</h4>
+        	<h4>Two famipes,</h4>
         	<h4>three extra guests,</h4> 
         	<h4>a dinner in,</h4> 
         	<h4>a dinner out,</h4>
@@ -27,11 +27,17 @@
     </div>
     <div class="col-md-6">
       <div class="panel panel-default visitor">
-        <div class="panel-heading"><h2>We can make it easier!</h2></div>
+
+        <div class="panel-heading"><h2>We can make it easier</h2></div>
         <div class="panel-body">
-        	<span class="h3 col-md-8">Join Who Paid...it's free</span>
-        	<span class="h4 col-md-4 text-right"><%= link_to "learn more...", learn_more_path %></span>
-        		<%= render 'form' %>
+          <div class="row vertical-align">
+        	  <p class="col-md-8 h3">Join Who Paid...it's free</p>
+            <p class="col-md-4 h4 text-right"><%= link_to "Learn more", learn_more_path %></p>
+          </div>
+          <div class="row">
+            <div class="h3 col-md-12 text-center">Sign up!</div>
+          </div> 
+        	<%= render 'form' %>
         </div>          
       </div>
     </div>

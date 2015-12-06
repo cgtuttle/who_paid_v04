@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :set_resources, :only => [:edit, :show, :new, :destroy]
+  before_action :set_resources, :only => [:edit, :show, :new, :destroy, :update]
   before_filter :authenticate_user!
   before_filter :authorize_action, :only => [:edit, :new, :show, :update, :destroy]
   before_filter :scope_policy, :only => :index
@@ -38,11 +38,21 @@ class EventsController < ApplicationController
 
   def show
     set_current_event(@event)
-    @participants = @event.accounts.user
+    @participants = @event.accounts.people
     @friends = current_user.all_friends - @event.users
     @account = @event.accounts.new
     @payments = @event.payments.active
     @new_event_payment = @event.payments.new     
+  end
+
+  def update
+    set_current_event(@event)
+    @event.update(event_params)
+    if @event.save  
+      redirect_to events_path, notice: 'Successfully updated event.'
+    else
+      render action: 'edit', notice: 'Unable to update event'
+    end
   end
 
   private

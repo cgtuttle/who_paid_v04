@@ -7,6 +7,7 @@ class PaymentsController < ApplicationController
     @payer_account = current_event.accounts.find_or_create_by(account_name: params[:payment][:payer_name]) do |account|
       account.source_type = "User"
     end
+
     params[:payment][:account_to] = @payee_account.id
     params[:payment][:account_from] = @payer_account.id
     @payment = current_event.payments.new(payment_params)
@@ -59,7 +60,7 @@ class PaymentsController < ApplicationController
   private
 
   def payment_params
-    params.require(:payment).permit(:payment_date, :account_from, :account_to, :amount, :for, :payee_name, :payer_name, :id, allocations_attributes: [:id, :_destroy, :account_id, :allocation_entry, :allocation_method])
+    # params.require(:payment).permit(:payment_date, :account_from, :account_to, :amount, :for, :payee_name, :payer_name, :id, allocations_attributes: [:id, :_destroy, :account_id, :allocation_entry, :allocation_method])
     params.require(:payment).permit(:payment_date, :account_from, :amount, :for, :payer_name, :id, allocations_attributes: [:id, :_destroy, :account_id, :allocation_entry, :allocation_method])
   end
 

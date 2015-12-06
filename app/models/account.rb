@@ -12,12 +12,24 @@ class Account < ActiveRecord::Base
 
   scope :user, -> { joins("join users on users.id = accounts.source_id").where(source_type: "User").order("users.last_name") }
 
+  def self.people
+    Account.user + Account.where(source_type: "User", source_id: nil).sort_by(&:last_name)
+  end
+
   def self.available_for_payment(payment)
     where(source_type: "User") - payment.accounts
   end
 
   def balance
   	self.account_transactions.sum(:credit) - self.account_transactions.sum(:debit)
+  end
+
+  def first_name
+    self.account_name.split[0]
+  end
+
+  def last_name
+    self.account_name.split[1] || self.account_name
   end
 
 end

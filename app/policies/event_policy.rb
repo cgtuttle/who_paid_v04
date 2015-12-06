@@ -5,7 +5,7 @@ class EventPolicy < ApplicationPolicy
       if user.admin?
         scope.all
       else
-    		scope.joins(:accounts).where("accounts.source_id = ? AND accounts.source_type = ?", user.id, "User")
+    		scope.joins(:accounts).where("accounts.source_id = ? AND accounts.source_type = ?", user.id, "User").order(:name)
     	end
     end
   end

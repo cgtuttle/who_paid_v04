@@ -23,7 +23,7 @@
 					<%= form_for(user) do |f| %>
 						<% if policy(user).change_role? %>
 							<%= f.select(:role, User.roles.keys.map {|role| [role.titleize,role]}) %>
-							<%= f.submit 'Change Role', :class => "btn btn-primary btn-xs" %>
+							<%= f.submit 'Change role', :class => "btn btn-primary btn-xs" %>
 						<% end %>
 					<% end %>
 				</td>
@@ -41,7 +41,7 @@
 					</td>
 					<!-- Resend -->
 					<td class="text-center">
-						<%= link_to "Resend invitation", create_user_invitation_path(user), class: "btn btn-primary btn-xs" %>
+						<%= link_to "Resend invitation", create_user_invitation_path(user), class: "btn btn-primary btn-xs btn-block" %>
 					</td>
 				<% else %>
 					<!-- Status - Entered -->
@@ -50,7 +50,7 @@
 					</td>
 					<!-- Invite -->
 					<td class="text-center">
-						<%= link_to "Send invitation", create_user_invitation_path(user), class: "btn btn-primary btn-xs" %>
+						<%= link_to "Send invitation", create_user_invitation_path(user), class: "btn btn-primary btn-xs btn-block" %>
 					</td>
 				<% end %>
 				<!-- Edit user link -->

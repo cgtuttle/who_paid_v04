@@ -6,24 +6,24 @@ class UsersController < ApplicationController
 
 
   def create
-    @user = User.new
-    @account = Account.find(params[:account][:id])
+    @user = User.new    
     @email = params[:user][:email].downcase
     logger.debug "@email = #{@email}"
     if !User.exists?(["lower(email) = (?)", @email])
       @user.email = params[:user][:email]
       @user.first_name = params[:user][:first_name]
       @user.last_name = params[:user][:last_name]
-      if !@user.save
-        render 'users/new_from_account' and return
-      end
+      @user.save
     else
       @user = User.where('lower(email) = (?)', @email).first
       logger.debug "User #{@user.display_name} exists"
     end
-    @account.source_id = @user.id
-    @account.source_type = "User"
-    @account.save
+    if params[:account]
+      @account = Account.find(params[:account][:id])
+      @account.source_id = @user.id
+      @account.source_type = "User"
+      @account.save
+    end
     redirect_to event_path(current_event)
   end
 
@@ -34,13 +34,11 @@ class UsersController < ApplicationController
   def new
     @user = User.new
     @cancel_path = users_path
-  end
-
-  def new_from_account
-    @account = Account.find(params[:id])
-    @user = User.new
-    @user.parse_display_name(@account.account_name)
-    @cancel_path = event_path(current_event.id)
+    if params[:account]
+      @account = Account.find(params[:id])
+      @user.parse_display_name(@account.account_name)
+      @cancel_path = event_path(current_event.id)
+    end
   end
 
   def show
