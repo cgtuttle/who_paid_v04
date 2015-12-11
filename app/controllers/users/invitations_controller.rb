@@ -11,6 +11,7 @@ class Users::InvitationsController < Devise::InvitationsController
 		@content = params[:message]
 		@subject = "Invitation to WhoPaid from #{current_user.display_name}"
 		@from = "no-reply@test.com"
+		puts "Calling InvitationMailer from InvitationsController"
 		InvitationMailer.invite_message(user, @from, @subject, @content, current_user).deliver_now if user.errors.empty? # mailers/invitation_mailer.rb
 		if user.errors.empty?			
 			redirect_to users_path, notice: "Sent invitation to #{user.display_name}"
