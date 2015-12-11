@@ -2,6 +2,7 @@ class InvitationMailer < ActionMailer::Base
 	default from: 'noreply@whopaid.us'
 
 	def invite_message(user, from, subject, content, sender)
+		puts "Running InvitationMailer.invite_message"
 		@user = user
 		@token = user.raw_invitation_token
 		invitation_link = accept_user_invitation_url(:invitation_token => @token)

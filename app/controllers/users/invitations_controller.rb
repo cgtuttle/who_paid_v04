@@ -2,6 +2,7 @@ class Users::InvitationsController < Devise::InvitationsController
 	before_filter :configure_permitted_parameters, if: :devise_controller?
 
 	def create
+		puts "Running invitations_controller.create"
 		@user = User.find(params[:id])
 		render 'devise/mailer/invitation_message'
 	end
