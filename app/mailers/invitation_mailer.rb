@@ -4,7 +4,8 @@ class InvitationMailer < ActionMailer::Base
 	def invite_message(user, from, subject, content, sender)
 		puts "Running InvitationMailer.invite_message"
 		@user = user
-		@token = '1000000000'#user.raw_invitation_token
+		puts "user = #{user}"
+		@token = user.raw_invitation_token
 		invitation_link = accept_user_invitation_url(:invitation_token => @token)
 		puts "@user = #{@user} from InvitationMailer.invite_message"
 		@message = content
