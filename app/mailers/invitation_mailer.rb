@@ -1,4 +1,5 @@
 class InvitationMailer < ActionMailer::Base
+	default from: 'noreply@whopaid.us'
 
 	def invite_message(user, from, subject, content, sender)
 		@user = user
