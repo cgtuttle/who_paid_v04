@@ -7,6 +7,7 @@ class Users::InvitationsController < Devise::InvitationsController
 	end
 
 	def deliver
+		puts "params = #{params.inspect}"
 		user = User.find(params[:id])
 		@content = params[:message]
 		@subject = "Invitation to WhoPaid from #{current_user.display_name}"
