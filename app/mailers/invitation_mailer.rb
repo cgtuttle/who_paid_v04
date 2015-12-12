@@ -3,7 +3,6 @@ class InvitationMailer < ActionMailer::Base
 
 	def invite_message(user, from, subject, content, sender)
 		@user = user
-		user.invite!
 		@token = user.raw_invitation_token
 		invitation_link = accept_user_invitation_url(:invitation_token => @token)
 		@message = content
