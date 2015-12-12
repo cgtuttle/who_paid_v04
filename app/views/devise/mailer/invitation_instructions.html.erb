@@ -4,6 +4,8 @@
 
 <p><%= t("devise.mailer.invitation_instructions.someone_invited_you", url: root_url) %></p>
 
+<p>Invitation Token: <%= @token %></p>
+
 <p><%= link_to t("devise.mailer.invitation_instructions.accept"), accept_invitation_url(@user, :invitation_token => @token) %></p>
 
 <p><%= t("devise.mailer.invitation_instructions.ignore").html_safe %></p>
