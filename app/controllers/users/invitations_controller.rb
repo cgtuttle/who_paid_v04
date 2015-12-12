@@ -3,6 +3,7 @@ class Users::InvitationsController < Devise::InvitationsController
 
 	def create
 		@user = User.find(params[:id])
+		@token = @user.raw_invitation_token
 		render 'devise/mailer/invitation_message'
 	end
 
