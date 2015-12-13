@@ -28,7 +28,7 @@
 					
 					<div class="form-group col-md-2">
 						<%= ff.label "Method", class: "sr-only" %>
-						<%= ff.select :allocation_method, Allocation::ALLOCATION_METHODS.collect {|x| [x, Allocation::ALLOCATION_METHODS.index(x) + 1] }, {}, {class: "form-control input-sm"} %>
+						<%= ff.select :allocation_method, Allocation::ALLOCATION_METHODS, {}, {class: "form-control input-sm"} %>
 					</div>
 				</div>
 					
