@@ -22,6 +22,9 @@
 			<%= link_to "Add participant", new_event_account_path(@event), title: "Add new account" %>
 		</div>
 		<%= render partial: 'participants', locals: { participants: @participants } %>
+		<div class="row vertical-align">		
+			<h4 class="col-md-6">Friends</h4>
+		</div>
 		<%= render partial: 'friends', locals: { friends: @friends } %>
 	</div>
 

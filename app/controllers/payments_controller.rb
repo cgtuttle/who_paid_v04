@@ -11,7 +11,7 @@ class PaymentsController < ApplicationController
     params[:payment][:account_to] = @payee_account.id
     params[:payment][:account_from] = @payer_account.id
     @payment = current_event.payments.new(payment_params)
-    @payment.allocations.new(account_id: @payer_account.id)
+    @payment.add_allocations
     if @payment.save
       PaymentProcess.new(@payment).execute
       redirect_to event_path(current_event), notice: 'Successfully recorded a new payment'

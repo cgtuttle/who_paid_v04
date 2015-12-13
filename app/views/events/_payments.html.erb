@@ -13,10 +13,14 @@
 		<div class="row row-list">															
 			<div class="col-lg-1 col-md-12">
 
-<!-- beginning of collapse control -->								
-				<%= link_to "#collapse-#{p.id}", title: "Participants", data: { toggle: :collapse }, aria: { controls: "collapse-#{p.id}", expanded: false } do %>
-					<i class="fa fa-user"></i>
-				<% end %>								
+<!-- beginning of collapse control -->
+				<% if p.can_allocate? %>								
+					<%= link_to "#collapse-#{p.id}", title: "Participants", data: { toggle: :collapse }, aria: { controls: "collapse-#{p.id}", expanded: false } do %>
+						<i class="fa fa-user"></i>
+					<% end %>
+				<% else %>
+					<i class="fa fa-user text-muted"></i>
+				<% end %>							
 <!-- end of collapse control -->
 
 				<%= link_to edit_event_payment_path(@event, p), title: "Edit payment" do %>
