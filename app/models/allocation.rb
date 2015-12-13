@@ -6,6 +6,8 @@ class Allocation < ActiveRecord::Base
   belongs_to :account
   has_many :account_transactions, as: :sub_journal
 
+  ALLOCATION_METHODS = ['qty','amt','pct']
+
   scope :amt_allocation, -> {where(allocation_method: "amt")}
   scope :pct_allocation, -> {where(allocation_method: "pct")}
   scope :qty_allocation, -> {where(allocation_method: "qty")}

@@ -23,12 +23,12 @@
 
 					<div class="form-group col-md-4">
 						<%= ff.label "Share", class: "sr-only" %>						
-						<%= ff.text_field :allocation_entry, value: 1, class: "form-control input-sm" %>						
+						<%= ff.text_field :allocation_entry, class: "form-control input-sm" %>						
 					</div>
 					
-					<div class="form-group col-md-4">
+					<div class="form-group col-md-2">
 						<%= ff.label "Method", class: "sr-only" %>
-						<%= ff.text_field :allocation_method, value: "qty", class: "form-control input-sm" %>
+						<%= ff.select :allocation_method, Allocation::ALLOCATION_METHODS.collect {|x| [x, Allocation::ALLOCATION_METHODS.index(x) + 1] }, {}, {class: "form-control input-sm"} %>
 					</div>
 				</div>
 					
