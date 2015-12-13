@@ -18,8 +18,6 @@
 
 	<p><%= t("devise.mailer.invitation_instructions.someone_invited_you", url: "WhoPaid") %></p>
 
-	<p>Token: <%= @token %></p>
-
 	<p><%= accept_invitation_url(@user, :invitation_token => @token) %></p>
 
 	<p><%= t("devise.mailer.invitation_instructions.ignore").html_safe %></p>
