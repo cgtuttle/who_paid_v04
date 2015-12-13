@@ -5,7 +5,7 @@ module PaymentsHelper
 	end
 
 	def setup_payment(event, payment)
-		(event.accounts.user - payment.accounts).each do |account|
+		(event.accounts.people - payment.accounts).each do |account|
 			payment.allocations.build(account: account)
 		end
 		payment
