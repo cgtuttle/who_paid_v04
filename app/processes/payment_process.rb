@@ -93,7 +93,7 @@ class PaymentProcess
     	t.journal_type = "Payment"
     	t.account_id = @to
     	t.credit = @amount
-      r.reversal_id = @receipt_transaction.id
+      t.reversal_id = @receipt_transaction.id
   	end	
   	@receipt_transaction.reversal_id = @receipt_reversal_transaction.id
   	@receipt_transaction.save
