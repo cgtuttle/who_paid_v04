@@ -30,14 +30,15 @@ class Payment < ActiveRecord::Base
     User.all_friends(user).order(:user_name).map(&:user_name)
   end
 
-  def can_allocate?
+  def user_to_user?
     self.payer_account.source_type != "User" || self.payee_account.source_type != "User"
   end
 
   def add_allocations
-    if self.can_allocate?
+    if self.user_to_user?
       self.allocations.new(account: self.payer_account, allocation_entry: 0.0)
       self.allocations.new(account: self.payee_account)
+      self.for = Event::USER_TO_USER_PAYMENT
     else
       self.allocations.new(account: self.payer_account)
     end

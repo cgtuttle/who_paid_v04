@@ -5,6 +5,21 @@
     <span>Add a Payment </span>
 
     <div class="form-group">
+      <div class="radio">
+        <%= label_tag "For an activity" do %>
+          <%= radio_button_tag :payment_type, class: "form-control" %>
+          For an activity
+        <% end %>
+      </div>
+      <div class="radio">
+        <%= label_tag "To a user" do %>
+          <%= radio_button_tag :payment_type, class: "form-control" %>
+          To a user
+        <% end %>
+      </div>
+    </div>
+
+    <div class="form-group">
       <%= f.label "Amount", class: 'sr-only' %>
       <%= f.text_field :amount, class: "form-control input-sm", placeholder: "Amount..." %>
     </div>

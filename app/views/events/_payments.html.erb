@@ -14,7 +14,7 @@
 			<div class="col-lg-1 col-md-12">
 
 <!-- beginning of collapse control -->
-				<% if p.can_allocate? %>								
+				<% if p.user_to_user? %>								
 					<%= link_to "#collapse-#{p.id}", title: "Participants", data: { toggle: :collapse }, aria: { controls: "collapse-#{p.id}", expanded: false } do %>
 						<i class="fa fa-user"></i>
 					<% end %>

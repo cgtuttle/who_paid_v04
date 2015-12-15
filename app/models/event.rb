@@ -5,6 +5,8 @@ class Event < ActiveRecord::Base
   has_many :users, through: :accounts, source: :source, source_type: "User"
   belongs_to :owner, class_name: "User"
 
+  USER_TO_USER_PAYMENT = "Settlement"
+
   def owner?(user)
 		self.owner_id == (user.id)
 	end
