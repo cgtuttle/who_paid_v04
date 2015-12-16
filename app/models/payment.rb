@@ -31,12 +31,10 @@ class Payment < ActiveRecord::Base
   end
 
   def user_to_user?
-    self.payer_account.source_type != "User" || self.payee_account.source_type != "User"
+    self.payer_account.source_type == "User" && self.payee_account.source_type == "User"
   end
 
   def add_allocations
-    puts "Running Payment.add_allocations"
-    puts "Is user-to-user? #{self.user_to_user?}"
     if self.user_to_user?
       self.allocations.new(account: self.payer_account, allocation_entry: 0.0)
       self.allocations.new(account: self.payee_account)
