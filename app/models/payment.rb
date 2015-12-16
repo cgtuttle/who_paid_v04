@@ -36,6 +36,7 @@ class Payment < ActiveRecord::Base
 
   def add_allocations
     puts "Running Payment.add_allocations"
+    puts "Is user-to-user? #{self.user_to_user?}"
     if self.user_to_user?
       self.allocations.new(account: self.payer_account, allocation_entry: 0.0)
       self.allocations.new(account: self.payee_account)
