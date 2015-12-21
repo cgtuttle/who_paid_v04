@@ -1,20 +1,21 @@
 <!-- for larger formats... -->
+
 <div class="row row-heading">
-	<strong class="col-lg-1 col-md-12"></strong>
+	<strong class="col-lg-2 col-md-12"></strong>
 	<strong class="col-lg-2 col-md-12">Paid On</strong>
 	<strong class="col-lg-2 col-md-12">By</strong>
 	<strong class="col-lg-2 col-md-12">To</strong>
-	<strong class="col-lg-3 col-md-12">For</strong>
+	<strong class="col-lg-2 col-md-12">For</strong>
 	<strong class="col-lg-2 col-md-12 text-center">Amount</strong>
 </div>
 
 <% payments.each do |p| %>						
 	<% if not p.new_record? %>							
 		<div class="row row-list">															
-			<div class="col-lg-1 col-md-12">
+			<div class="col-lg-2 col-md-12">
 
 <!-- beginning of collapse control -->
-				<% if p.user_to_user? %>								
+				<% if !p.user_to_user? %>								
 					<%= link_to "#collapse-#{p.id}", title: "Participants", data: { toggle: :collapse }, aria: { controls: "collapse-#{p.id}", expanded: false } do %>
 						<i class="fa fa-user"></i>
 					<% end %>
@@ -35,7 +36,7 @@
 			</div>
 			<div class="col-lg-2 col-md-12"><%= p.payer_account.account_name %></div>
 			<div class="col-lg-2 col-md-12"><%= p.payee_account.account_name %></div>
-			<div class="col-lg-3 col-md-12"><%= p.for %></div>
+			<div class="col-lg-2 col-md-12"><%= p.for %></div>
 			<div class="col-lg-2 col-md-12 text-right"><%= number_to_currency(p.amount) %></div>
 		</div>
 

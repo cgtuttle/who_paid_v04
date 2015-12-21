@@ -3,6 +3,7 @@ class AccountTransaction < ActiveRecord::Base
   belongs_to :sub_journal, polymorphic: true
   belongs_to :account
 
+  scope :not_reversed, -> {where(reversal_id: nil)}
 
   def self.journal_allocation_set?(journal_id, journal_type)
     @journal_set = journal_set(journal_id, journal_type)
@@ -28,7 +29,7 @@ class AccountTransaction < ActiveRecord::Base
   end
 
   def self.entries_of_type(entry_type)
-    where(entry_type: entry_type).includes(:account)
+    not_reversed.where(entry_type: entry_type).includes(:account)
   end
 
   def name

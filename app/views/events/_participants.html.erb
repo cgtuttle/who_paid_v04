@@ -2,26 +2,26 @@
 
 	<table class="table">
 		<thead>
-			<th class="col-md-2"></th>
-			<th class="col-md-2"></th>
-			<th class="col-md-2"></th>
+			<tr class="flattened">
+				<th class="col-md-6">User</th>
+				<th class="col-md-3"></th>
+				<th class="col-md-3">Balance</th>
+			</tr>
 		</thead>
 		<tbody>
 			<% participants.each do |participant| %>
-				<tr>
+				<tr class="flattened">
 					<% if participant.source_id.blank? %>
-						<td>
-							<span class="text-muted"><%= participant.account_name %></span>
-						</td>
+						
+						<td class="text-muted"><%= participant.account_name %></td>
+						
 						<td>
 							<%= link_to new_user_path(participant), title: "Add to WhoPaid users" do %>
 								<i class="fa fa-user-plus"></i>
 							<% end %>
 						</td>
 					<% else %>
-						<td>
-							<span><%= participant.account_name %></span>
-						</td>
+						<td><%= participant.account_name %></td>
 						<td></td>
 					<% end %>
 					<td class="text-right"><%= number_to_currency(participant.balance) %></td>

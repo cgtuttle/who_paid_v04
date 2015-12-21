@@ -1,51 +1,75 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h4 class="panel-title">Add a Payment</h4>
+  </div>
 
-  <%= form_for [@event, @new_event_payment], html: {class: "form-inline"} do |f| %>
-    <%= render 'layouts/errors', index: @new_event_payment %>
+  <div class="panel-body">
+    <%= form_for [@event, @new_event_payment] do |f| %>
+      <%= render 'layouts/errors', index: @new_event_payment %>
 
-    <span>Add a Payment </span>
-
-    <div class="form-group">
-      <div class="radio">
-        <%= label_tag "For an activity" do %>
-          <%= radio_button_tag :payment_type, class: "form-control" %>
-          For an activity
-        <% end %>
+      <div class="form-group">
+        <%= f.label "Amount", class: 'sr-only' %>
+        <%= f.text_field :amount, class: "form-control input-sm", placeholder: "Amount..." %>
       </div>
-      <div class="radio">
-        <%= label_tag "To a user" do %>
-          <%= radio_button_tag :payment_type, class: "form-control" %>
-          To a user
-        <% end %>
+
+      <div class="form-group">
+        <%= f.label "On", class: 'sr-only' %>
+        <%= f.text_field :payment_date, 'data-provide'=>'datepicker', :class => "form-control input-sm datepicker", placeholder: "Paid on..." %>
       </div>
-    </div>
 
-    <div class="form-group">
-      <%= f.label "Amount", class: 'sr-only' %>
-      <%= f.text_field :amount, class: "form-control input-sm", placeholder: "Amount..." %>
-    </div>
+      <div class="form-group">
+        <%= f.label :account_from, class: 'sr-only' %>
+        <%= f.text_field :payer_name, class: "form-control input-sm", placeholder: "From...", data: {autocomplete_source: accounts_list(@event)} %>
+      </div>
 
-    <div class="form-group">
-      <%= f.label "On", class: 'sr-only' %>
-      <%= f.text_field :payment_date, 'data-provide'=>'datepicker', :class => "form-control input-sm datepicker", placeholder: "Paid on..." %>
-    </div>
+      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
 
-    <div class="form-group">
-      <%= f.label :account_from, class: 'sr-only' %>
-      <%= f.text_field :payer_name, class: "form-control input-sm", placeholder: "From...", data: {autocomplete_source: accounts_list(@event)} %>
-    </div>
+          <div class="panel-heading" role="tab" id="expense_payment_heading">
+            <div class="panel-title">
+              <div class="form-group">
+                <%= link_to "#payment_form", title: "Payment details", data: { toggle: :collapse, parent: "#accordion" }, aria: { controls: "payment_form" } do %>
+                <i class="fa fa-plus-circle"></i> To an expense or merchant
+                <% end %>
+              </div>
+            </div>
+          </div>
 
-    <div class="form-group">
-      <%= f.label :account_to, class: 'sr-only' %>
-      <%= f.text_field :payee_name, class: "form-control input-sm", value: @event.name, data: {autocomplete_source: accounts_list(@event) } %>
-    </div>
+          <div id="payment_form", class="panel-collapse collapse" role="tabpanel" aria-labelledby="expense_payment_heading">
+            <div class="panel-body">
+              <div class="form-group">
+                <%= f.label "For", class: 'sr-only' %>
+                <%= f.text_field :for, class: "form-control input-sm", placeholder: "For..." %>
+              </div>
+            </div>
+          </div>
 
-    <div class="form-group">
-      <%= f.label "For", class: 'sr-only' %>
-      <%= f.text_field :for, class: "form-control input-sm", placeholder: "For..." %>
-    </div>
+          <div class="panel-heading" role="tab" id="user_payment_heading">
+            <div class="panel-title">
+              <div class="form-group">
+                <%= link_to "#user_payment_form", title: "For a User", data: { toggle: :collapse, parent: "#accordion" }, aria: { controls: "user_payment_form" } do %>
+                <i class="fa fa-plus-circle"></i> To another user
+                <% end %>
+              </div>
+            </div>
+          </div>
 
-    <div class="form-group">
-      <%= f.submit 'Submit', :class => 'btn btn-success btn-sm' %>
-    </div>
+          <div id="user_payment_form", class="panel-collapse collapse" role="tabpanel" aria-labelledby="user_payment_heading">
+            <div class="panel-body">
+              <div class="form-group">
+                <%= f.label :account_to, class: 'sr-only' %>
+                <%= f.text_field :payee_name, class: "form-control input-sm", placeholder: "To...", data: {autocomplete_source: accounts_list(@event) } %>
+              </div>
+            </div>
+          </div>
 
-  <% end %>
+        </div>
+      </div>
+        
+      <div class="form-group">
+        <%= f.submit 'Submit', :class => 'btn btn-primary btn-sm' %>
+      </div>
+
+    <% end %>
+  </div>
+</div>

@@ -175,6 +175,16 @@ i {
   color: white;
 }
 
+a.panel-title:focus{
+  color: white;
+  text-decoration: none;
+}
+
+a.panel-title:hover{
+  color: darken(white, 10);
+  text-decoration: none;
+}
+
 .vertical-align {
   @media (min-width: 768px){
     display: flex;
@@ -302,27 +312,26 @@ span.check-box-label {
   margin-bottom: 5px;
 }
 
+.row-list:nth-child(4n-1) {
+  background-color: darken($bg-color, 5)
+}
+
 .collapse .well {
-  background-color: lighten($bg-color, 10%);
+  background-color: lighten($bg-color, 10);
 }
 
-table.table .table-inner {
-  margin-bottom: 0px;
-  background-color: $bg-color;
+table.table > thead > tr.flattened > th {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
-table.table td.td-inner {
-  padding: 3px;
+table.table > tbody > tr.flattened:first-child > td {
+  padding-top: 5px;
+}
+
+table.table > tbody > tr.flattened > td {
+  padding-top: 0;
+  padding-bottom: 5px;
   border-top-style: none;
-}
-
-table.table td.table-inner {
-  width: 100%;
-  padding: 0;
-  border-top-style: none;
-}
-
-.table-condensed > tbody > tr > td.control {
-  padding-left: 2px;
 }
 
