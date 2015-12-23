@@ -5,11 +5,11 @@
 		<%= f.hidden_field :payer_name, value: payment.payer_account.account_name %>
 
 		<div class="row bottom-space-10"></div>
-		<div class="row row-heading">
-			<strong class="col-md-4">Participant</strong>
-			<strong class="col-md-4">Share</strong>
-			<strong class="col-md-4">Method</strong>
-		</div>
+			<div class="row row-heading hidden-xs hidden-sm">
+				<strong class="col-md-4">Participant</strong>
+				<strong class="col-md-4">Share</strong>
+				<strong class="col-md-4">Method</strong>
+			</div>
 			<%= f.fields_for :allocations do |ff| %>
 				<%= ff.hidden_field :account_id, value: ff.object.account_id %>
 

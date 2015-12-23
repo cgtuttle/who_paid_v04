@@ -1,18 +1,18 @@
 <!-- for larger formats... -->
 
-<div class="row row-heading">
-	<strong class="col-lg-2 col-md-12"></strong>
-	<strong class="col-lg-2 col-md-12">Paid On</strong>
-	<strong class="col-lg-2 col-md-12">By</strong>
-	<strong class="col-lg-2 col-md-12">To</strong>
-	<strong class="col-lg-2 col-md-12">For</strong>
-	<strong class="col-lg-2 col-md-12 text-center">Amount</strong>
+<div class="row row-heading hidden-xs">
+	<strong class="col-sm-2 col-xs-12"></strong>
+	<strong class="col-sm-2 col-xs-12">Paid On</strong>
+	<strong class="col-sm-2 col-xs-12">By</strong>
+	<strong class="col-sm-2 col-xs-12">To</strong>
+	<strong class="col-sm-2 col-xs-12">For</strong>
+	<strong class="col-sm-2 col-xs-12 text-center">Amount</strong>
 </div>
 
 <% payments.each do |p| %>						
 	<% if not p.new_record? %>							
 		<div class="row row-list">															
-			<div class="col-lg-2 col-md-12">
+			<div class="col-sm-2 col-xs-12">
 
 <!-- beginning of collapse control -->
 				<% if !p.user_to_user? %>								
@@ -31,13 +31,13 @@
 					<i class="fa fa-trash"></i>
 				<% end %>
 			</div>
-			<div class="col-lg-2 col-md-12">
+			<div class="col-sm-2 col-xs-12">
 				<%= p.payment_date  %>
 			</div>
-			<div class="col-lg-2 col-md-12"><%= p.payer_account.account_name %></div>
-			<div class="col-lg-2 col-md-12"><%= p.payee_account.account_name %></div>
-			<div class="col-lg-2 col-md-12"><%= p.for %></div>
-			<div class="col-lg-2 col-md-12 text-right"><%= number_to_currency(p.amount) %></div>
+			<div class="col-sm-2 col-xs-12"><%= p.payer_account.account_name %></div>
+			<div class="col-sm-2 col-xs-12"><%= p.payee_account.account_name %></div>
+			<div class="col-sm-2 col-xs-12"><%= p.for %></div>
+			<div class="col-sm-2 col-xs-12 text-right"><%= number_to_currency(p.amount) %></div>
 		</div>
 
 <!-- Beginning of collapsible section -->
