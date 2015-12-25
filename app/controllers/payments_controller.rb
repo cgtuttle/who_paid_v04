@@ -1,13 +1,15 @@
 class PaymentsController < ApplicationController
 
   def create
-    if params[:payment][:payee_name] = ""
+    if params[:payment][:payee_name] == ""
       @payee_account = current_event.event_account
+      params[:payment][:for] = "Settlement"
     else
       @payee_account = current_event.accounts.find_or_create_by(account_name: params[:payment][:payee_name]) do |account|
         account.source_type = "User"
       end
     end
+
     @payer_account = current_event.accounts.find_or_create_by(account_name: params[:payment][:payer_name]) do |account|
       account.source_type = "User"
     end
