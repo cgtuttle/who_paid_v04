@@ -35,11 +35,7 @@ class Payment < ActiveRecord::Base
   end
 
   def add_allocations
-    if self.user_to_user?
-      self.allocations.new(account: self.payer_account, allocation_entry: 0.0)
-      self.allocations.new(account: self.payee_account)
-      self.for = Event::USER_TO_USER_PAYMENT
-    else
+    if not self.user_to_user?
       self.allocations.new(account: self.payer_account)
     end
   end

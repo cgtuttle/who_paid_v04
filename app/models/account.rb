@@ -21,7 +21,15 @@ class Account < ActiveRecord::Base
   end
 
   def balance
-  	self.account_transactions.sum(:credit) - self.account_transactions.sum(:debit)
+  	self.account_transactions.not_reversed.sum(:credit) - self.account_transactions.not_reversed.sum(:debit)
+  end
+
+  def owes?
+    self.balance < 0
+  end
+
+  def statement_transactions
+    self.account_transactions.not_reversed.includes(:journal)
   end
 
   def first_name

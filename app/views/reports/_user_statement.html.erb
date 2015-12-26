@@ -1,0 +1,39 @@
+<table class="table table-responsive table-condensed">
+	<thead>
+		<tr>
+			<th class="col-md-1">Date</th>
+			<th class="col-md-1 hidden-print">Type</th>
+			<th class="col-md-3">For</th>
+			<th class="col-md-2">From</th>
+			<th class="col-md-2">To</th>
+			<th class="col-md-1">Debit</th>
+			<th class="col-md-1">Credit</th>
+			<th class="col-md-1">Balance</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% running_balance = 0 %>
+		<% @account.statement_transactions.each do |t| %>
+			<tr>
+				<td><%= t.occurred_on %></td>
+				<td class="hidden-print"><%= t.entry_type %></td>
+				<td><%= t.journal.for %></td>
+				<td><%= t.journal.payer_account.account_name %></td>
+				<td><%= t.journal.payee_account.account_name %></td>
+				<td><%= number_to_currency(t.debit) %></td>
+				<td><%= number_to_currency(t.credit) %></td>
+				<% running_balance = running_balance + (t.credit || 0) - (t.debit || 0) %>
+				<td><%= number_to_currency(running_balance) %></td>
+			</tr>
+		<% end %>		
+	</tbody>
+</table>
+<table class="table table-responsive rable-condensed">
+	<tfoot>
+		<tr class="summary-row">
+			<td class="h4 col-md-3">Current Balance</td>
+			<td class="hidden-print col-md-1"></td>
+			<td class="h4 col-md-8 text-right"><%= number_to_currency(running_balance) %></td>
+		</tr>
+	</tfoot>
+</table>

@@ -3,27 +3,25 @@
 	<table class="table">
 		<thead>
 			<tr class="flattened">
-				<th class="col-md-6">User</th>
-				<th class="col-md-3"></th>
+				<th class="col-md-4"></th>
+				<th class="col-md-5">User</th>
 				<th class="col-md-3">Balance</th>
 			</tr>
 		</thead>
 		<tbody>
 			<% participants.each do |participant| %>
 				<tr class="flattened">
-					<% if participant.source_id.blank? %>
-						
-						<td class="text-muted"><%= participant.account_name %></td>
-						
-						<td>
+					<td>
+						<% if participant.source_id.blank? %>						
 							<%= link_to new_user_path(participant), title: "Add to WhoPaid users" do %>
 								<i class="fa fa-user-plus"></i>
 							<% end %>
-						</td>
-					<% else %>
-						<td><%= participant.account_name %></td>
-						<td></td>
-					<% end %>
+						<% end %>
+						<%= link_to account_statement_path(participant), title: "Statement for #{participant.account_name}" do %>
+							<i class="fa fa-file-text"></i>
+						<% end %>
+					</td>
+					<td class="text-muted"><%= participant.account_name %></td>
 					<td class="text-right"><%= number_to_currency(participant.balance) %></td>
 				</tr>
 			<% end %>

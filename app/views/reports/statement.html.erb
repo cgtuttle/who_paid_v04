@@ -1,0 +1,18 @@
+<div class="container">
+
+	<h1 class="visible-print-block statement"><%= @event.name %></h1>
+	<h3>Statement for <%= @account.account_name %></h3>
+	<h4>
+		<% if @account.owes? %>
+			Owes <%= number_to_currency(-@account.balance) %>
+		<% else %>
+			Is Owed <%= number_to_currency(@account.balance) %>
+		<% end %>
+	</h4>
+
+	<div class="row">
+		<div class="col-md-6"><%= link_to "Return to Event: #{@event.name}", event_path(@event), class: "hidden-print" %></div>
+		<div class="col-md-6 text-right bottom-space-10"><%= link_to 'Print', '#', onclick: 'window.print();return false;', class: 'hidden-print' %></div>
+	</div>
+	<%= render partial: '/reports/user_statement' %>
+</div>

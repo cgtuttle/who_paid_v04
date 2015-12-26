@@ -3,17 +3,20 @@
 	<table class="table">
 		<thead>
 			<tr class="flattened">
-				<th class="col-md-6">User</th>
-	  		<th class="col-md-6"></th>
+				<th class="col-md-4"></th>
+	  		<th class="col-md-5">Users</th>
+	  		<th class="col-md-3"></th>
 	  	</tr>
 		</thead>
 		<tbody>
 			<% friends.each do |friend| %>
-				<tr class="flattened">					
-					<td class="text-muted"><%= friend.display_name %></td>          
+				<tr class="flattened">        
           <td class="text-muted">
-            <%= link_to "Add to #{@event.name}", event_accounts_create_path(@event, source_id: friend.id, source_type: 'User', name: friend.display_name), method: "post" %>
-          </td>          
+            <%= link_to event_accounts_create_path(@event, source_id: friend.id, source_type: 'User', name: friend.display_name), title: "Add #{friend.display_name} to #{@event.name}", method: "post" do %>
+							<i class="fa fa-user-plus"></i>
+						<% end %>
+          </td> 					
+					<td class="text-muted"><%= friend.display_name %></td>           
         </tr>
 			<% end %>
 		</tbody>

@@ -1,5 +1,9 @@
 class AccountsController < ApplicationController
 
+  def balances
+    @event = Event.find(event_params)
+  end
+
   def create
     @event = Event.find(event_params)
     @account = @event.accounts.new(account_params)
@@ -36,6 +40,12 @@ class AccountsController < ApplicationController
   end
 
   def show
+  end
+
+  def statement
+    @account = Account.find(params[:id])
+    @event = @account.event
+    render '/reports/statement'
   end
 
   def update
