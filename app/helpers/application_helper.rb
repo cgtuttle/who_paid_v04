@@ -12,8 +12,12 @@ module ApplicationHelper
 		'<span class="glyphicon-class glyphicon glyphicon-plus-sign control-icon" aria-hidden="true"></span> Add new'
 	end
 
-	def browser_date(time_value)
-		time_value.utc.in_time_zone(Time.zone).strftime("%m/%d/%Y")
+	def browser_date(value)
+		if value.is_a?(Time)
+			value.utc.in_time_zone(Time.zone).strftime("%m/%d/%Y")
+		elsif value.is_a?(Date)
+			value.strftime("%m/%d/%Y")
+		end
 	end
 
 end
