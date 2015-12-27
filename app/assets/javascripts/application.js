@@ -14,8 +14,10 @@
 //= require jquery-ui
 //= require jquery_ujs
 //= require jquery.tokeninput
+//= require js-cookie
 //= require bootstrap-datepicker
 //= require data-confirm-modal
+//= require jstz
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require_tree .

@@ -29,7 +29,7 @@ class Account < ActiveRecord::Base
   end
 
   def statement_transactions
-    self.account_transactions.not_reversed.includes(:journal)
+    self.account_transactions.not_reversed.includes(:journal).order(:occurred_on, :created_at)
   end
 
   def first_name

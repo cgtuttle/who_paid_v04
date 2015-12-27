@@ -12,4 +12,8 @@ module ApplicationHelper
 		'<span class="glyphicon-class glyphicon glyphicon-plus-sign control-icon" aria-hidden="true"></span> Add new'
 	end
 
+	def browser_date(time_value)
+		time_value.utc.in_time_zone(Time.zone).strftime("%m/%d/%Y")
+	end
+
 end

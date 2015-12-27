@@ -13,9 +13,9 @@
 	</thead>
 	<tbody>
 		<% running_balance = 0 %>
-		<% @account.statement_transactions.each do |t| %>
+		<% @transactions.each do |t| %>
 			<tr>
-				<td><%= t.occurred_on %></td>
+				<td><%= browser_date(t.occurred_on || t.created_at) %></td>
 				<td class="hidden-print"><%= t.entry_type %></td>
 				<td><%= t.journal.for %></td>
 				<td><%= t.journal.payer_account.account_name %></td>

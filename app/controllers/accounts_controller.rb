@@ -44,6 +44,7 @@ class AccountsController < ApplicationController
 
   def statement
     @account = Account.find(params[:id])
+    @transactions = @account.statement_transactions
     @event = @account.event
     render '/reports/statement'
   end
