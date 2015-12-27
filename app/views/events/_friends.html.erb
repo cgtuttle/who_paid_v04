@@ -12,7 +12,7 @@
 			<% friends.each do |friend| %>
 				<tr class="flattened">        
           <td class="text-muted">
-            <%= link_to event_accounts_create_path(@event, source_id: friend.id, source_type: 'User', name: friend.display_name), title: "Add #{friend.display_name} to #{@event.name}", method: "post" do %>
+            <%= link_to event_accounts_create_path(@event, account: {source_id: friend.id, source_type: 'User', account_name: friend.display_name}), title: "Add #{friend.display_name} to #{@event.name}", method: "post" do %>
 							<i class="fa fa-user-plus"></i>
 						<% end %>
           </td> 					
