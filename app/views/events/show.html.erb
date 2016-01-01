@@ -19,7 +19,12 @@
 			<div class="well">
 				<div class="row vertical-align">
 					<h4 class="col-lg-6">Participants</h4>
-					<%= link_to "Add participant", new_event_account_path(@event), title: "Add new account" %>
+					<%= link_to new_event_account_path(@event), title: "Add new account" do %>
+						<i class="fa fa-user-plus"></i>
+					<% end %>
+					<%= link_to statements_email_event_accounts_path(@event), title: "Send account statements to all users." do %>
+						<i class="fa fa-envelope"></i>
+					<% end %>
 				</div>
 				<%= render partial: 'participants', locals: { participants: @participants } %>
 				<div class="row vertical-align">		

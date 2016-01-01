@@ -82,6 +82,10 @@ GEM
     devise_invitable (1.5.1)
       actionmailer (>= 3.2.6, < 5)
       devise (>= 3.2.0)
+    dotenv (2.0.2)
+    dotenv-rails (2.0.2)
+      dotenv (= 2.0.2)
+      railties (~> 4.0)
     erubis (2.7.0)
     execjs (2.5.2)
     font-awesome-rails (4.4.0.0)
@@ -199,6 +203,7 @@ DEPENDENCIES
   data-confirm-modal!
   devise
   devise_invitable
+  dotenv-rails
   font-awesome-rails
   hirb
   jbuilder (~> 2.0)

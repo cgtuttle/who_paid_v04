@@ -1,11 +1,10 @@
 class AccountsController < ApplicationController
+  before_action :set_resources, except: [:destroy]
 
   def balances
-    @event = Event.find(event_params)
   end
 
   def create
-    @event = Event.find(event_params)
     @account = @event.accounts.new(account_params)
     @account.source_type = "User"
     if @account.save
@@ -22,13 +21,9 @@ class AccountsController < ApplicationController
   end
 
   def index
-    @event = Event.find(event_params)
-    @accounts = @event.accounts
-    logger.debug "@accounts = #{@accounts}"
   end
 
   def new
-    @event = Event.find(event_params)
     @account = @event.accounts.new
     respond_to do |format|
       format.html
@@ -43,10 +38,24 @@ class AccountsController < ApplicationController
   end
 
   def statement
-    @account = Account.find(params[:id])
     @transactions = @account.statement_transactions
     @event = @account.event
-    render '/reports/statement'
+    render 'statement'
+  end
+
+  def statement_email
+    @transactions = @account.statement_transactions
+    AccountMailer.statement_email(@user, @account, @transactions).deliver_now if @user
+    redirect_to event_path(@event), notice:'Sent statement email.'
+  end
+
+  def statements_email
+    @participants = @event.participants
+    @user = current_user
+    @participants.each do |p|
+      AccountMailer.statement_email(@user, p, p.statement_transactions).deliver_now
+    end
+    redirect_to event_path(@event), notice:'Sent statement email.'    
   end
 
   def update
@@ -54,12 +63,17 @@ class AccountsController < ApplicationController
 
   private
 
-  def account_params
-    params.require(:account).permit(:account_name, :source_id, :source_type)
+  def set_resources
+    if params[:account_id]
+      @account = Account.find(params[:account_id])
+      @user = User.find(@account.source_id) if @account.source_type = "User"
+    end
+    @event = Event.find(params[:event_id])
+    @accounts = @event_accounts
   end
 
-  def event_params
-    params.require(:event_id)
+  def account_params
+    params.require(:account).permit(:account_name, :source_id, :source_type)
   end
 
 end

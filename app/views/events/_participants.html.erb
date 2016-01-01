@@ -17,7 +17,7 @@
 								<i class="fa fa-user-plus"></i>
 							<% end %>
 						<% end %>
-						<%= link_to account_statement_path(participant), title: "Statement for #{participant.account_name}" do %>
+						<%= link_to event_account_statement_path(@event, participant), title: "Statement for #{participant.account_name}" do %>
 							<i class="fa fa-file-text"></i>
 						<% end %>
 					</td>

@@ -1,0 +1,11 @@
+<%= @event.name %>
+
+Statement for <%= @account.account_name %>
+
+<% if @account.owes? %>
+Owes <%= number_to_currency(-@account.balance) %>
+<% else %>
+Is Owed <%= number_to_currency(@account.balance) %>
+<% end %>
+
+<%= render partial: 'statement_transactions_email' %>

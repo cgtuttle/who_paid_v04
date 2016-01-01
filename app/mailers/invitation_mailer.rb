@@ -1,5 +1,4 @@
 class InvitationMailer < ActionMailer::Base
-	# default from: 'noreply@whopaid.us'
 
 	def invite_message(user, from, subject, content, sender)
 		@user = user
@@ -7,7 +6,6 @@ class InvitationMailer < ActionMailer::Base
 			u.skip_invitation = true
 		end
 		@token = user.raw_invitation_token
-		puts "raw_invitation_token = #{user.raw_invitation_token}"
 		invitation_link = accept_user_invitation_url(:invitation_token => @token)
 		@message = content
 		mail(:from => from, :bcc => from, :to => @user.email, :subject => subject) do |format|

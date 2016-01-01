@@ -31,19 +31,27 @@ class User < ActiveRecord::Base
   end
 
   def self.all_friends(user)
-    query1 = user.event_friends
-    query2 = User.where('id = ?', user.id)
-    query3 = User.invited_by_user(user)
-    sql = User.connection.unprepared_statement{"((#{query1.to_sql}) UNION (#{query2.to_sql}) UNION (#{query3.to_sql})) as users"}
-    User.from(sql)
+    if user.role == 'admin'
+      User.all
+    else
+      query1 = user.event_friends
+      query2 = User.where('id = ?', user.id)
+      query3 = User.invited_by_user(user)
+      sql = User.connection.unprepared_statement{"((#{query1.to_sql}) UNION (#{query2.to_sql}) UNION (#{query3.to_sql})) as users"}
+      User.from(sql)
+    end
   end
 
   def all_friends
-    query1 = self.event_friends
-    query2 = User.where('id = ?', self.id)
-    query3 = User.invited_by_user(self)
-    sql = User.connection.unprepared_statement{"((#{query1.to_sql}) UNION (#{query2.to_sql}) UNION (#{query3.to_sql})) as users"}
-    User.from(sql)
+    if self.role == 'admin'
+      User.all
+    else
+      query1 = self.event_friends
+      query2 = User.where('id = ?', self.id)
+      query3 = User.invited_by_user(self)
+      sql = User.connection.unprepared_statement{"((#{query1.to_sql}) UNION (#{query2.to_sql}) UNION (#{query3.to_sql})) as users"}
+      User.from(sql)
+    end
   end
 
   def display_name

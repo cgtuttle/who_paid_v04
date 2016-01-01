@@ -11,6 +11,10 @@ class Event < ActiveRecord::Base
     Account.where(source_type: "Event", source_id: self.id).first
   end
 
+  def participants
+    self.accounts.user
+  end
+
   def owner?(user)
 		self.owner_id == (user.id)
 	end

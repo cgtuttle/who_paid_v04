@@ -13,11 +13,17 @@ Rails.application.routes.draw do
   get '/payments/delete/:id' => 'payments#set_delete', as: 'delete_payment'
   get '/payments/update_allocations/:id' => 'payments#update_allocations', as: "update_allocations"
   get '/users/new(/:id)', to: 'users#new', as: 'new_user'
-  get '/accounts/balances', to: 'accounts#balances', as: 'accounts_balances'
-  get '/accounts/statement/:id', to: 'accounts#statement', as: 'account_statement'
+  # get '/accounts/balances', to: 'accounts#balances', as: 'accounts_balances'
+  # get '/accounts/statement/:id', to: 'accounts#statement', as: 'account_statement'
 
   resources :events do
-    resources :accounts
+    resources :accounts do
+      get 'statement'
+      get 'statement_email'
+      collection do
+        get 'statements_email'
+      end
+    end
     post 'accounts/create'
     resources :payments
   end

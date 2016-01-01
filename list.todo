@@ -1,3 +1,5 @@
  ✔ Set up default admin user @done (15-12-11 09:59)
  ☐ Set up monthly statement report
  ☐ Validate source id and type for accounts
+ ☐ Fix user edit functionality
+ ☐ Fix new user password setup view

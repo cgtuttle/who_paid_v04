@@ -1,0 +1,26 @@
+<%= '%-15s%-20s%-20s%-20s%-20s%15s%15s%15s' % [
+	'Date',
+	'Type',
+	'For',
+	'From',
+	'To',
+	'Debit',
+	'Credit',
+	'Balance' ] %>
+<%= "-" * 140 %>
+<% running_balance = 0 %>
+<% @transactions.each do |t| %>
+<% running_balance = running_balance + (t.credit || 0) - (t.debit || 0) %>
+<%= '%-15s%-20s%-20s%-20s%-20s%15s%15s%15s' % [
+	browser_date(t.occurred_on || t.created_at),
+	t.entry_type.titlecase,
+	t.journal.for,
+	t.journal.payer_account.account_name,
+	t.journal.payee_account.account_name,
+	number_to_currency(t.debit),
+	number_to_currency(t.credit),
+	number_to_currency(running_balance) ]%>
+<% end %>
+
+
+Current Balance <%= number_to_currency(running_balance) %>
