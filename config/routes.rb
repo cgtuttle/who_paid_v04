@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  # devise_for :users, controllers: { registrations: 'users', invitations: 'users/invitations' }
   devise_for :users, path_prefix: 'authenticate'
 
   devise_scope :user do

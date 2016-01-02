@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   attr_reader :raw_invitation_token
+  attr_accessor :current_password
 
   has_many :accounts, as: :source
   has_many :events, through: :accounts
@@ -19,7 +20,12 @@ class User < ActiveRecord::Base
   scope :invited_by_user, ->(user) {where(invited_by_id: user)}
 
   def password_required?
-    new_record? ? false : true
+    # new_record? ? false : true
+    if (self.changed.include?("email") || self.changed.include?("password")) && !self.new_record?
+      true
+    else
+      false
+    end
   end
 
   def set_default_role

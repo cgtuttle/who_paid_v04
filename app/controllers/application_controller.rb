@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-
   around_filter :set_time_zone
 
   include Pundit

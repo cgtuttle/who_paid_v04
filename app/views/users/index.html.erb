@@ -1,7 +1,7 @@
 <div class="row well col-md-8 col-md-offset-2">
 
     <h3 class="text-left">Users</h3>
-    <%= link_to new_user_path, title: 'Add new user' do %>
+    <%= link_to new_user_path(:return_path => @return_path), title: 'Add new user' do %>
       <span class="control-icon-light">&oplus;</span> Add user
     <% end %>
     <%= render 'table' %>

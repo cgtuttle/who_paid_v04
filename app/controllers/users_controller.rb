@@ -13,7 +13,7 @@ class UsersController < ApplicationController
       @user.email = params[:user][:email]
       @user.first_name = params[:user][:first_name]
       @user.last_name = params[:user][:last_name]
-      @user.save
+      @user.save!
     else
       @user = User.where('lower(email) = (?)', @email).first
       logger.debug "User #{@user.display_name} exists"
@@ -22,9 +22,15 @@ class UsersController < ApplicationController
       @account = Account.find(params[:account][:id])
       @account.source_id = @user.id
       @account.source_type = "User"
-      @account.save
+      @account.save!
     end
-    redirect_to event_path(current_event)
+    redirect_to users_path
+  end
+
+  def destroy
+    if @user.destroy
+      redirect_to users_path, :notice => "User deleted."
+    end
   end
 
   def edit
@@ -45,17 +51,14 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update_attributes(user_params)
-      redirect_to users_path, :notice => "User updated."
-    else
-      redirect_to users_path, :alert => "Unable to update user."
-    end
-  end
-
-  def destroy
-    if @user.destroy
-      redirect_to users_path, :notice => "User deleted."
-    end
+    @user.attributes = user_params
+    @user.save!
+    redirect_to users_path
+    # if @user.update_attributes(user_params)
+    #   redirect_to users_path, :notice => "User updated."
+    # else
+    #   redirect_to users_path, :alert => "Unable to update user."
+    # end
   end
 
   private

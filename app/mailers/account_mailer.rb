@@ -1,6 +1,5 @@
-class AccountMailer < ActionMailer::Base
+class AccountMailer < ApplicationMailer
 	add_template_helper(ApplicationHelper)
-	default from: 'noreply@whopaid.us'
 
 	def statement_email(user, account, transactions)
 		@user = user
