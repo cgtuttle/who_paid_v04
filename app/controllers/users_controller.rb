@@ -24,11 +24,12 @@ class UsersController < ApplicationController
       @account.source_type = "User"
       @account.save!
     end
-    redirect_to users_path
+    redirect_to users_path, notice: "New user successfully created."
   end
 
   def destroy
     if @user.destroy
+      @user.update_accounts
       redirect_to users_path, :notice => "User deleted."
     end
   end
@@ -51,14 +52,13 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user.attributes = user_params
-    @user.save!
-    redirect_to users_path
-    # if @user.update_attributes(user_params)
-    #   redirect_to users_path, :notice => "User updated."
-    # else
-    #   redirect_to users_path, :alert => "Unable to update user."
-    # end
+    if @user.update_attributes(user_params)
+      logger.debug "User updated: #{@user.display_name}"
+      @user.update_accounts
+      redirect_to users_path, :notice => "User and Account details updated."
+    else
+      redirect_to users_path, :alert => "Unable to update user."
+    end
   end
 
   private

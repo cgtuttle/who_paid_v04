@@ -42,7 +42,7 @@ class EventsController < ApplicationController
     @friends = current_user.all_friends - @event.users
     @account = @event.accounts.new
     @payments = @event.payments.active.order(:payment_date, :created_at)
-    @new_event_payment = @event.payments.new     
+    @new_event_payment = @event.payments.new
   end
 
   def update

@@ -2,7 +2,7 @@
 
 <% flash.each do |name, msg| %>
   <% if msg.is_a?(String) %>
-    <div class="alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %> fade in flash navbar-alert" role="alert">
+    <div class="alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %> fade in flash navbar-alert" role="alert" id="flash-alert">
       <button type="button" class="close form-control-alert" data-dismiss="alert" aria-hidden="true">&times;</button>
       <%= content_tag :div, msg, :id => "flash_#{name}", class: "form-control-static-alert" %>
     </div>

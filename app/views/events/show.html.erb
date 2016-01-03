@@ -22,7 +22,7 @@
 					<%= link_to new_event_account_path(@event), title: "Add new account" do %>
 						<i class="fa fa-user-plus"></i>
 					<% end %>
-					<%= link_to statements_email_event_accounts_path(@event), title: "Send account statements to all users." do %>
+					<%= link_to statements_email_event_accounts_path(@event), title: "Send account statements to all users.", confirm: "Send email statments to all participants?" do %>
 						<i class="fa fa-envelope"></i>
 					<% end %>
 				</div>

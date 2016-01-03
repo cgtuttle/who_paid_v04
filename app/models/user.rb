@@ -32,6 +32,16 @@ class User < ActiveRecord::Base
     self.role ||= :user
   end
 
+  def update_accounts
+    self.accounts.each do |account|
+      if self.destroyed?
+        account.source_id = nil
+      end
+      account.account_name = self.display_name
+      account.save!
+    end
+  end
+
   def event_friends
     User.joins(accounts: :event).where("event_id IN (?)", self.events.select('id'))
   end
