@@ -65,6 +65,16 @@ ActiveRecord::Schema.define(version: 20151024143627) do
     t.integer  "owner_id"
   end
 
+  create_table "participants", id: false, force: :cascade do |t|
+    t.integer  "event_id",   null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "participants", ["event_id"], name: "index_participants_on_event_id", using: :btree
+  add_index "participants", ["user_id"], name: "index_participants_on_user_id", using: :btree
+
   create_table "payees", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
