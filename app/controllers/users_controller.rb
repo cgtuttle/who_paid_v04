@@ -8,22 +8,23 @@ class UsersController < ApplicationController
   def create
     @user = User.new    
     @email = params[:user][:email].downcase
-    logger.debug "@email = #{@email}"
-    if !User.exists?(["lower(email) = (?)", @email])
+    if !User.exists?(["lower(email) = (?)", @email]) || @email == ""
+      logger.debug "Path: User Does Not Exist"
       @user.email = params[:user][:email]
       @user.first_name = params[:user][:first_name]
       @user.last_name = params[:user][:last_name]
+      @user.role = "guest"
       @user.save!
     else
+      logger.debug "Path: User Exists"
       @user = User.where('lower(email) = (?)', @email).first
-      logger.debug "User #{@user.display_name} exists"
     end
-    if params[:account]
-      @account = Account.find(params[:account][:id])
-      @account.source_id = @user.id
-      @account.source_type = "User"
-      @account.save!
-    end
+    # if params[:account]
+    #   @account = Account.find(params[:account][:id])
+    #   @account.source_id = @user.id
+    #   @account.source_type = "User"
+    #   @account.save!
+    # end
     redirect_to users_path, notice: "New user successfully created."
   end
 
@@ -45,6 +46,13 @@ class UsersController < ApplicationController
       @account = Account.find(params[:id])
       @user.parse_display_name(@account.account_name)
       @cancel_path = event_path(current_event.id)
+    end
+  end
+
+  def new_guest
+    respond_to do |format|
+      format.html
+      format.js
     end
   end
 

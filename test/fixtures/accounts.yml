@@ -1,22 +1,10 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  id: 1
-  source_id: 1
-  source_type: User
-  event_id: 1
-  account_name: user_one
+event_account_one:
+  source: one (Event)
+  event: one
+  account_name: "Test Event #1"
 
-two:
-  id: 2
-  source_id: 2
-  source_type: User
-  event_id: 1
-  account_name: user_two
-
-three:
-  id: 3
-  source_id: 1
-  source_type: Payee
-  event_id: 1
-  account_name: Restaurant_1
+user_account_one:
+  source: user_one (User)
+  event: one
+  account_name: "User One"

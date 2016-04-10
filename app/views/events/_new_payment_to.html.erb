@@ -1,0 +1,40 @@
+<div class="panel-group" id="to_accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+
+    <div class="panel-heading" role="tab" id="expense_payment_heading">
+      <div class="panel-title">
+        <div class="form-group">
+          <%= link_to "#payment_form", title: "Payment details", data: { toggle: :collapse, parent: "#to_accordion" }, aria: { controls: "payment_form" } do %>
+          <i class="fa fa-plus-circle"></i> To a merchant or for an expense
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div id="payment_form", class="panel-collapse collapse" role="tabpanel" aria-labelledby="expense_payment_heading">
+      <div class="panel-body">
+        <div class="form-group">
+          <%= f.label "For", class: 'sr-only' %>
+          <%= f.text_field :for, class: "form-control input-sm", placeholder: "For..." %>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-heading" role="tab" id="user_payment_heading">
+      <div class="panel-title">
+        <div class="form-group">
+          <%= link_to "#user_payment_form", title: "For a User", data: { toggle: :collapse, parent: "#to_accordion" }, aria: { controls: "user_payment_form" } do %>
+          <i class="fa fa-plus-circle"></i> To another user
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div id="user_payment_form", class="panel-collapse collapse" role="tabpanel" aria-labelledby="user_payment_heading">
+      <div class="panel-body">
+        <%= render partial: 'new_payment_user_to', locals: {f: f} %>
+      </div>
+    </div>
+
+  </div>
+</div>

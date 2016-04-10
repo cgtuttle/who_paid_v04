@@ -4,15 +4,17 @@ class Payment < ActiveRecord::Base
 #
  
   belongs_to :event
+
   belongs_to :payer_account, class_name: "Account", foreign_key: :account_from
   belongs_to :payee_account, class_name: "Account", foreign_key: :account_to
+
   has_many :account_transactions, as: :journal
   has_many :allocations, as: :journal, dependent: :destroy
   has_many :accounts, through: :allocations
 
   accepts_nested_attributes_for :allocations, allow_destroy: true
 
-  attr_accessor :payee_name, :payer_name
+  attr_accessor :from_user_id, :to_user_id
 
   scope :active, -> {where(deleted: false)}
 
@@ -31,7 +33,11 @@ class Payment < ActiveRecord::Base
   end
 
   def user_to_user?
-    self.payer_account.source_type == "User" && self.payee_account.source_type == "User"
+    # if self.payer_account && self.payee_account
+      self.payer_account.source_type == "User" && self.payee_account.source_type == "User"
+    # else
+    #   false
+    # end
   end
 
   def add_allocations

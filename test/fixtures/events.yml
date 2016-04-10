@@ -1,11 +1,8 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  id: 1
-  name: event_one
-  owner_id: 1
+  name: Test Event 1
+  owner: user_one
 
 two:
-  id: 2
-  name: event_two
-  owner_id: 2
+  name: Test Event 2
+  owner: user_one

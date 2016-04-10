@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-  validates :email, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true, if: :email_required?
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -14,18 +14,21 @@ class User < ActiveRecord::Base
   has_many :events, through: :accounts
   has_many :owned_events, class_name: "Event", foreign_key: "owner_id"
 
-  enum role: [:user, :editor, :admin]
+  enum role: [:guest, :user, :editor, :admin]
   after_initialize :set_default_role, :if => :new_record?
 
   scope :invited_by_user, ->(user) {where(invited_by_id: user)}
 
-  def password_required?
-    # new_record? ? false : true
-    if (self.changed.include?("email") || self.changed.include?("password")) && !self.new_record?
-      true
-    else
-      false
-    end
+  def self.new_guest(event)
+    new { |u| u.role = "guest"}
+  end
+
+  def password_required?    
+    self.role != "guest"
+  end
+
+  def email_required?
+    self.role != "guest"
   end
 
   def set_default_role
@@ -42,8 +45,12 @@ class User < ActiveRecord::Base
     end
   end
 
+  def friend_accounts(event)
+    Account.where("event_id IN (?) AND source_type = 'User' AND source_id is null", self.events.select('id')) - Account.where(event_id: event.id)
+  end
+
   def event_friends
-    User.joins(accounts: :event).where("event_id IN (?)", self.events.select('id'))
+    User.joins(accounts: :event).where("event_id IN (?)", self.events.select('id')).distinct
   end
 
   def self.all_friends(user)
@@ -60,14 +67,21 @@ class User < ActiveRecord::Base
 
   def all_friends
     if self.role == 'admin'
-      User.all
+      users = User.all
     else
       query1 = self.event_friends
       query2 = User.where('id = ?', self.id)
       query3 = User.invited_by_user(self)
       sql = User.connection.unprepared_statement{"((#{query1.to_sql}) UNION (#{query2.to_sql}) UNION (#{query3.to_sql})) as users"}
-      User.from(sql)
+      users = User.from(sql)
     end
+  end
+
+  def friends(event)
+    all_friends = self.all_friends - event.users
+    all_friends = all_friends.map{|x| [x.id, x.display_name]}
+    friend_accounts = self.friend_accounts(event).map{|x| [""] + [x.account_name]}.flatten(1)
+    all_friends.push(friend_accounts)
   end
 
   def display_name

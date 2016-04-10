@@ -6,11 +6,10 @@ class AccountsController < ApplicationController
 
   def create
     @account = @event.accounts.new(account_params)
-    @account.source_type = "User"
-    if @account.save
-      redirect_to event_path(@event), notice:'Successfully added user.'
+    if @account.save      
+      redirect_to event_path(@event), notice:'Successfully added participant.'
     else
-      redirect_to event_path(@event), alert:'Unable to add user.'
+      redirect_to event_path(@event), alert:'Unable to add participant.'
     end
   end
 

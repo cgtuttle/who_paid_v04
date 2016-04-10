@@ -34,8 +34,8 @@
 			<div class="col-sm-2 col-xs-12">
 				<%= p.payment_date  %>
 			</div>
-			<div class="col-sm-2 col-xs-12"><%= p.payer_account.account_name %></div>
-			<div class="col-sm-2 col-xs-12"><%= p.payee_account.account_name %></div>
+			<div class="col-sm-2 col-xs-12"><%= p.payer_account.account_name if p.payer_account %></div>
+			<div class="col-sm-2 col-xs-12"><%= p.payee_account.account_name if p.payee_account %></div>
 			<div class="col-sm-2 col-xs-12"><%= p.for %></div>
 			<div class="col-sm-2 col-xs-12 text-right"><%= number_to_currency(p.amount) %></div>
 		</div>

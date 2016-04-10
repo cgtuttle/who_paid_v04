@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   devise_scope :user do
     get '/users/send_invitation/:id', to: 'users/invitations#deliver', as: 'send_user_invitation'
     get '/users/create_invitations/:id', to: 'users/invitations#create', as: 'create_user_invitation'
+    get '/new_guest', to: 'users#new_guest', as: 'new_guest'
   end
 
   get '/visitors/welcome' => 'visitors#welcome', as: 'welcome'

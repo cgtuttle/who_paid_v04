@@ -13,6 +13,7 @@ class EventsController < ApplicationController
     if @event.save
       @event.create_event_owner_account(current_user)
       @event.create_event_default_account
+      set_current_event(@event)
       redirect_to events_path, notice:'Successfully created a new event.'
     end
   end
@@ -38,9 +39,8 @@ class EventsController < ApplicationController
 
   def show
     set_current_event(@event)
-    @participants = @event.accounts.people
+    @participants = @event.participants
     @friends = current_user.all_friends - @event.users
-    @account = @event.accounts.new
     @payments = @event.payments.active.order(:payment_date, :created_at)
     @new_event_payment = @event.payments.new
   end

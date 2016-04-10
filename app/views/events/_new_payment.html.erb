@@ -17,54 +17,15 @@
         <%= f.text_field :payment_date, 'data-provide'=>'datepicker', :class => "form-control input-sm datepicker", placeholder: "Paid on..." %>
       </div>
 
-      <div class="form-group">
-        <%= f.label :account_from, class: 'sr-only' %>
-        <%= f.text_field :payer_name, class: "form-control input-sm", placeholder: "From...", data: {autocomplete_source: accounts_list(@event)} %>
-      </div>
+      <%= hidden_field_tag "is_new_user_from", false, id: "is_new_user_from" %>
+      <%= hidden_field_tag "is_new_user_to", false, id: "is_new_user_to" %>
+      <%= hidden_field_tag "account_to_status", "event_account", id: "account_to_status" %>
+      <%= hidden_field_tag "account_from_status", "event_account", id: "account_from_status" %>
 
-      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-        <div class="panel panel-default">
 
-          <div class="panel-heading" role="tab" id="expense_payment_heading">
-            <div class="panel-title">
-              <div class="form-group">
-                <%= link_to "#payment_form", title: "Payment details", data: { toggle: :collapse, parent: "#accordion" }, aria: { controls: "payment_form" } do %>
-                <i class="fa fa-plus-circle"></i> To a merchant or for an expense
-                <% end %>
-              </div>
-            </div>
-          </div>
+      <%= render partial: 'new_payment_from', locals: { f: f } %>
 
-          <div id="payment_form", class="panel-collapse collapse" role="tabpanel" aria-labelledby="expense_payment_heading">
-            <div class="panel-body">
-              <div class="form-group">
-                <%= f.label "For", class: 'sr-only' %>
-                <%= f.text_field :for, class: "form-control input-sm", placeholder: "For..." %>
-              </div>
-            </div>
-          </div>
-
-          <div class="panel-heading" role="tab" id="user_payment_heading">
-            <div class="panel-title">
-              <div class="form-group">
-                <%= link_to "#user_payment_form", title: "For a User", data: { toggle: :collapse, parent: "#accordion" }, aria: { controls: "user_payment_form" } do %>
-                <i class="fa fa-plus-circle"></i> To another user
-                <% end %>
-              </div>
-            </div>
-          </div>
-
-          <div id="user_payment_form", class="panel-collapse collapse" role="tabpanel" aria-labelledby="user_payment_heading">
-            <div class="panel-body">
-              <div class="form-group">
-                <%= f.label :account_to, class: 'sr-only' %>
-                <%= f.text_field :payee_name, class: "form-control input-sm", placeholder: "To...", data: {autocomplete_source: accounts_list(@event) } %>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
+      <%= render partial: 'new_payment_to', locals: { f: f } %>
         
       <div class="form-group">
         <%= f.submit 'Submit', :class => 'btn btn-primary btn-sm' %>

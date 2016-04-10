@@ -1,5 +1,10 @@
  ✔ Set up default admin user @done (15-12-11 09:59)
  ☐ Set up monthly statement report
  ☐ Validate source id and type for accounts
- ☐ Fix user edit functionality
- ☐ Fix new user password setup view
+ ✔ Fix user edit functionality @done (16-04-10 13:30)
+ ✔ Fix new user password setup view @done (16-04-10 13:32)
+ ☐ Add participants statement
+ ☐ Add payments summary statement
+ ☐ Create participants report
+ ☐ Add payment amount to user statement
+ ☐ Drop transactions instead of reversing for re-allocations

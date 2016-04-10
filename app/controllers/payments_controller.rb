@@ -1,21 +1,41 @@
 class PaymentsController < ApplicationController
 
   def create
-    if params[:payment][:payee_name] == ""
-      @payee_account = current_event.event_account
+
+    @account_to_source = params[:account_to_status]
+    @account_from_source = params[:account_from_status]
+
+    case @account_to_source
+    when "event_account"
+      @payee_account = current_event.accounts.where(source_type: "Event", source_id: current_event.id).first
+    when "user_account"
+      @payee_account = find_or_create_user_account(params[:payment][:to_user_id])
+    when "new_user_email"
+      @user = find_or_create_user(params[:user_to][:email].downcase, params[:user_to][:first_name], params[:user_to][:last_name])
+      @payee_account = find_or_create_user_account(@user.id)
     else
-      @payee_account = current_event.accounts.find_or_create_by(account_name: params[:payment][:payee_name]) do |account|
-        account.source_type = "User"
-      end
-      params[:payment][:for] = "Settlement"
+      @user = create_user(params[:user_to][:first_name], params[:user_to][:last_name])
+      @payee_account = find_or_create_user_account(@user.id)
     end
 
-    @payer_account = current_event.accounts.find_or_create_by(account_name: params[:payment][:payer_name]) do |account|
-      account.source_type = "User"
+    case @account_from_source
+    when "event_account"
+      @payer_account = current_event.accounts.where(source_type: "Event", source_id: current_event.id).first
+    when "user_account"
+      @payer_account = find_or_create_user_account(params[:payment][:from_user_id])
+    when "new_user_email"
+      @user = find_or_create_user(params[:user_from][:email].downcase, params[:user_from][:first_name], params[:user_from][:last_name])
+      @payer_account = find_or_create_user_account(@user.id)
+    else
+      @user = create_user(params[:user_from][:first_name], params[:user_from][:last_name])
+      @payer_account = find_or_create_user_account(@user.id)
     end
 
+    # Assign accounts
     params[:payment][:account_to] = @payee_account.id
     params[:payment][:account_from] = @payer_account.id
+
+    # Create payment
     @payment = current_event.payments.new(payment_params)
     @payment.add_allocations
     if @payment.save
@@ -61,17 +81,40 @@ class PaymentsController < ApplicationController
     redirect_to event_path(current_event), notice: 'successfully updated payment'    
   end
 
-
-
   private
 
   def payment_params
-    # params.require(:payment).permit(:payment_date, :account_from, :account_to, :amount, :for, :payee_name, :payer_name, :id, allocations_attributes: [:id, :_destroy, :account_id, :allocation_entry, :allocation_method])
-    params.require(:payment).permit(:payment_date, :account_from, :account_to, :amount, :for, :payer_name, :payee_name, :id, allocations_attributes: [:id, :_destroy, :account_id, :allocation_entry, :allocation_method])
+    params.require(:payment).permit(:payment_date, :account_from, :account_to, :amount, :for, :id, :from_user_id,
+      :to_user_id, allocations_attributes: [:id, :_destroy, :account_id, :allocation_entry, :allocation_method])
   end
 
   def event_params
     params.require(:event_id)
+  end
+
+  def find_or_create_user_account(user_id)
+    user = User.find(user_id)
+    new_account = current_event.accounts.find_or_create_by(source_type: "User", source_id: user_id) do |account|
+      account.source_type = "User"
+      account.source_id = user_id
+      account.account_name = user.display_name
+    end
+  end
+
+  def find_or_create_user(email, first_name, last_name)
+    email = email.downcase
+    user = User.find_or_create_by(email: email) do |u|
+      u.email = email
+      u.first_name = first_name
+      u.last_name = last_name
+      u.role = "guest"
+    end
+  end
+
+  def create_user(first_name, last_name)
+    user = User.new(first_name: first_name, last_name: last_name, role: "guest")
+    user.save
+    user
   end
 
 end

@@ -7,8 +7,9 @@ class Account < ActiveRecord::Base
   has_many :payments, through: :allocations
 
 # Journal relationships
-  has_many :payments_paid, class_name: "Payment", foreign_key: :account_from
-  has_many :payments_received, class_name: "Payment", foreign_key: :account_to
+  has_many :payments_paid, foreign_key: :account_from, class_name: "Payment"
+  has_many :payments_received, foreign_key: :account_to, class_name: "Payment"
+
 
   scope :user, -> { joins("join users on users.id = accounts.source_id").where(source_type: "User").order("users.last_name") }
 
@@ -33,11 +34,11 @@ class Account < ActiveRecord::Base
   end
 
   def first_name
-    self.account_name.split[0]
+    self.account_name.split[0] if self.account_name
   end
 
   def last_name
-    self.account_name.split[1] || self.account_name
+    (self.account_name.split[1] || self.account_name) if self.account_name
   end
 
 end
