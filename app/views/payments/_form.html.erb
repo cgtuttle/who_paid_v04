@@ -1,24 +1,38 @@
   <%= form_for [@event, @event_payment] do |f| %>
     <%= render 'layouts/errors', index: @event_payment %>
 
+    <%= hidden_field_tag "is_new_user_from", false, id: "is_new_user_from" %>
+    <%= hidden_field_tag "is_new_user_to", false, id: "is_new_user_to" %>
+    <%= hidden_field_tag "account_to_status", "event_account", id: "account_to_status" %>
+    <%= hidden_field_tag "account_from_status", "event_account", id: "account_from_status" %>
+
+
     <div class="form-group">
       <%= f.label "Amount", class: 'sr-only' %>
-      <%= f.text_field :amount, class: "form-control input-sm", placeholder: "Amount..." %>
+      <%= f.text_field :amount, 
+        class: "form-control input-sm", 
+        placeholder: "Amount..." %>
     </div>
 
     <div class="form-group">
       <%= f.label "On", class: 'sr-only' %>
-      <%= f.text_field :payment_date, 'data-provide'=>'datepicker', :class => "form-control input-sm datepicker", placeholder: "Paid on..." %>
+      <%= f.text_field :payment_date, 'data-provide'=>'datepicker', 
+        :class => "form-control input-sm datepicker", 
+        placeholder: "Paid on..." %>
     </div>
 
     <div class="form-group">
       <%= f.label :account_from, class: 'sr-only' %>
-      <%= f.text_field :payer_name, class: "form-control input-sm", placeholder: "From...", data: {autocomplete_source: accounts_list(@event)} %>
+      <%= f.grouped_collection_select :account_from, [Event, User], :all, :model_name, :global_id, :display_name, 
+        {include_blank: "<New User>", prompt: "From..."}, 
+        {class: "account-selector form-control input-sm"} %>        
     </div>
 
     <div class="form-group">
       <%= f.label :account_to, class: 'sr-only' %>
-      <%= f.text_field :payee_name, class: "form-control input-sm", placeholder: "To...", data: {autocomplete_source: accounts_list(@event)} %>
+      <%= f.collection_select :to_user_id, current_user.all_friends, :id, :display_name, 
+        {include_blank: "<New User>", prompt: "To..."}, 
+        {class: "account-selector form-control input-sm", onchange: 'new_user_to();'} %>        
     </div>
 
     <div class="form-group">

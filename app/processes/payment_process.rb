@@ -9,6 +9,7 @@ class PaymentProcess
 		@to = @payment.account_to
 		@amount = @payment.amount
 		@id = @payment.id
+    @create_reversals = Rails.application.config_for(:process)["create_reversals"] # Choice to either create transaction reversals or delete them completely
 	end
 
 # Main Payment Process
@@ -26,11 +27,17 @@ class PaymentProcess
 # Delete Payment Process
 # ---------------
 	def delete
-    ActiveRecord::Base.transaction do
-  		create_payment_transaction_reversal
-  		create_receipt_transaction_reversal
+    if @create_reversals
+      ActiveRecord::Base.transaction do
+    		create_payment_transaction_reversal
+    		create_receipt_transaction_reversal
+      end
+      reverse_allocation_transactions
+    else
+      delete_payment_transaction
+      delete_receipt_transaction
+      delete_allocation_transactions
     end
-		reverse_allocation_transactions
 		verify_journal_set
 	end
 # ---------------
@@ -106,6 +113,22 @@ class PaymentProcess
 	def reverse_allocation_transactions
 		@allocation_process = AllocationProcess.new(@payment).reverse
 	end
+
+  def delete_payment_transaction
+    @payment.payment_transaction.delete
+  end
+
+  def delete_receipt_transaction
+    @payment.receipt_transaction.delete
+  end
+
+  def delete_allocation_transactions
+    @allocation_process = AllocationProcess.new(@payment).delete
+  end
+
+  def delete_allocation_reversals
+    @account_transaction_process = AccountTransactionProcess.new(@payment).remove_allocation_reversals
+  end
 
   def verify_journal_set
   end

@@ -43,4 +43,8 @@ class Event < ActiveRecord::Base
     self.account_transactions.entries_of_type("receipt").where(account_id: self.event_account.id).sum(:debit) 
   end
 
+  def display_name
+    self.name
+  end
+
 end

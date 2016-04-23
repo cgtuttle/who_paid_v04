@@ -22,6 +22,11 @@ class AllocationProcess
 		reverse_allocation_transactions
 		verify_journal_set
 	end
+
+	def delete
+		delete_allocation_transactions
+		verify_journal_set
+	end
 # ---------------
 
 	def update_allocation_factors
@@ -79,6 +84,10 @@ class AllocationProcess
 				t.entry_type = "allocation"
 			end
 		end
+	end
+
+	def delete_allocation_transactions
+		@journal.account_transactions.where(sub_journal_type: "Allocation").delete_all
 	end
 
 	def verify_journal_set
