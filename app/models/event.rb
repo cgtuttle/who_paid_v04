@@ -47,4 +47,8 @@ class Event < ActiveRecord::Base
     self.name
   end
 
+  def account_group
+    self.all
+  end
+
 end

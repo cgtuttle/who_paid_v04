@@ -67,14 +67,18 @@ class User < ActiveRecord::Base
 
   def all_friends
     if self.role == 'admin'
-      users = User.all
+      users = User.all.order(:last_name, :first_name)
     else
       query1 = self.event_friends
       query2 = User.where('id = ?', self.id)
       query3 = User.invited_by_user(self)
       sql = User.connection.unprepared_statement{"((#{query1.to_sql}) UNION (#{query2.to_sql}) UNION (#{query3.to_sql})) as users"}
-      users = User.from(sql)
+      users = User.from(sql).order(:last_name, :first_name)
     end
+  end
+
+  def account_group
+    self.all
   end
 
   def friends(event)

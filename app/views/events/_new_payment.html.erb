@@ -4,8 +4,8 @@
   </div>
 
   <div class="panel-body">
-    <%= form_for [@event, @new_event_payment] do |f| %>
-      <%= render 'layouts/errors', index: @new_event_payment %>
+    <%= form_for [@event, @event_payment] do |f| %>
+      <%= render 'layouts/errors', index: @event_payment %>
 
       <div class="form-group">
         <%= f.label "Amount", class: 'sr-only' %>
@@ -17,19 +17,28 @@
         <%= f.text_field :payment_date, 'data-provide'=>'datepicker', :class => "form-control input-sm datepicker", placeholder: "Paid on..." %>
       </div>
 
-      <%= hidden_field_tag "is_new_user_from", false, id: "is_new_user_from" %>
-      <%= hidden_field_tag "is_new_user_to", false, id: "is_new_user_to" %>
+      <%= hidden_field_tag "is_new_user_from", true, id: "is_new_user_from" %>
+      <%= hidden_field_tag "is_new_user_to", true, id: "is_new_user_to" %>
       <%= hidden_field_tag "account_to_status", "event_account", id: "account_to_status" %>
       <%= hidden_field_tag "account_from_status", "event_account", id: "account_from_status" %>
+      <%= hidden_field_tag "account_from_index", 0, id: "account_from_index" %>
+      <%= hidden_field_tag "account_to_index", 0, id: "account_to_index" %>
 
+      <%= content_tag "div", id: "to_source", data: { type: @event_payment.new_record? ? "None" : @event_payment.payee_account.source_type} do %>
+      <% end %>
 
-      <%= render partial: 'new_payment_from', locals: { f: f } %>
+      <%= render partial: 'events/new_payment_from', locals: { f: f } %>
 
-      <%= render partial: 'new_payment_to', locals: { f: f } %>
+      <%= render partial: 'events/new_payment_to', locals: { f: f } %>
         
       <div class="form-group">
         <%= f.submit 'Submit', :class => 'btn btn-primary btn-sm' %>
+        <% if controller.action_name == "edit" %>
+          <%= link_to 'Cancel', event_path(@event), :class => 'btn btn-primary btn-sm' %>
+        <% end %>
       </div>
+
+
 
     <% end %>
   </div>

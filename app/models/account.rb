@@ -10,7 +10,7 @@ class Account < ActiveRecord::Base
   has_many :payments_paid, foreign_key: :account_from, class_name: "Payment"
   has_many :payments_received, foreign_key: :account_to, class_name: "Payment"
 
-
+  scope :current_event, ->(event_id) { where( event_id: event_id )}
   scope :user, -> { joins("join users on users.id = accounts.source_id").where(source_type: "User").order("users.last_name") }
 
   def self.people

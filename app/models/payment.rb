@@ -46,5 +46,28 @@ class Payment < ActiveRecord::Base
     end
   end
 
+  def non_blank_payer_account
+    if self.payer_account.blank?
+      0
+    else
+      if self.payer_account.source_type == "User"
+        self.payer_account.source_id
+      else
+        0
+      end
+    end
+  end
+
+  def non_blank_payee_account
+    if self.payee_account.blank?
+      0
+    else
+      if self.payee_account.source_type == "User"
+        self.payee_account.source_id
+      else
+        0
+      end
+    end
+  end
 
 end

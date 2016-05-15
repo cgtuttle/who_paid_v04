@@ -15,6 +15,7 @@ class PaymentsController < ApplicationController
 
   def edit
     @event = current_event
+    @user = current_user
     @event_payment = current_event.payments.find(params[:id])
   end
 
@@ -42,7 +43,7 @@ class PaymentsController < ApplicationController
     set_account_from_param
     set_account_to_param
     params[:payment][:for] = "Settlement" unless params[:account_to_status] == "event_account"
-    
+
     @payment = Payment.find(params[:id])
     @payment.update(payment_params)
     PaymentProcess.new(@payment).update_allocations
