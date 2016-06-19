@@ -7,10 +7,10 @@ The key is that it focuses on simplicity for the users while maintaining
 a robust accounting process. Expenditures are entered with just four pieces
 of information:
 
-Amount
-Date
-Who paid
-Who received
+  1. Amount
+  2. Date
+  3. Who paid
+  4. Who received
 
 Most expenses are divided amongst several people, so participants can easily
 be added to a given activity and the rules for sharing the expenditure are flexible.
