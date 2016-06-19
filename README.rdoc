@@ -10,7 +10,7 @@ of information:
   1. Amount
   2. Date
   3. Who paid
-  4. Who received
+  4. Who received or what was paid for
 
 Most expenses are divided amongst several people, so participants can easily
 be added to a given activity and the rules for sharing the expenditure are flexible.
