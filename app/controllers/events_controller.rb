@@ -5,6 +5,7 @@ class EventsController < ApplicationController
   before_filter :scope_policy, :only => :index
   after_action :verify_authorized, :except => [:index, :audit]
   after_action :verify_policy_scoped, :only => :index
+  before_action :get_config_vars
 
   def create
     @event = Event.new(event_params)
@@ -78,6 +79,11 @@ class EventsController < ApplicationController
   def scope_policy
     @events = policy_scope(Event)
     logger.info "Policy scoping Event"
+  end
+
+  def get_config_vars
+    @create_reversals = Rails.application.config_for(:process)["create_reversals"]
+    @delete_payments = Rails.application.config_for(:process)["delete_payments"]
   end
 
   def event_params

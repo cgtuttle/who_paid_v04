@@ -1,11 +1,12 @@
 class AccountsController < ApplicationController
-  before_action :set_resources, except: [:destroy]
+  before_action :set_resources
 
   def balances
   end
 
   def create
     @account = @event.accounts.new(account_params)
+
     if @account.save      
       redirect_to event_path(@event), notice:'Successfully added participant.'
     else
@@ -14,6 +15,12 @@ class AccountsController < ApplicationController
   end
 
   def destroy
+    @account = Account.find(params[:id])
+    if AccountProcess.new(@account).delete
+      redirect_to event_path(@event), notice:'Successfully deleted participant.'
+    else
+      redirect_to event_path(@event), notice:'Unable to delete participant.'
+    end
   end
 
   def edit
@@ -72,7 +79,7 @@ class AccountsController < ApplicationController
   end
 
   def account_params
-    params.require(:account).permit(:account_name, :source_id, :source_type)
+    params.require(:account).permit(:account_name, :source_id, :source_type, :active)
   end
 
 end

@@ -20,6 +20,7 @@
 						<%= link_to event_account_statement_path(@event, participant), title: "Statement for #{participant.account_name}" do %>
 							<i class="fa fa-file-text"></i>
 						<% end %>
+						<%= link_to "Delete", event_account_path(@event, participant), method: :delete %>
 					</td>
 					<td class="<%= participant.source_id.blank? ? 'text-muted' : 'none' %>"><%= participant.account_name %></td>
 					<td class="text-right"><%= number_to_currency(participant.balance) %></td>

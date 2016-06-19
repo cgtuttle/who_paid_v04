@@ -1,6 +1,9 @@
 development:
   create_reversals: false
+  delete_payments: true
 test:
   create_reversals: false
+  delete_payments: true
 production:
   create_reversals: false
+  delete_payments: true

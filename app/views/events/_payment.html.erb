@@ -19,17 +19,18 @@
 
       <%= hidden_field_tag "is_new_user_from", true, id: "is_new_user_from" %>
       <%= hidden_field_tag "is_new_user_to", true, id: "is_new_user_to" %>
-      <%= hidden_field_tag "account_to_status", "event_account", id: "account_to_status" %>
-      <%= hidden_field_tag "account_from_status", "event_account", id: "account_from_status" %>
+      <%= hidden_field_tag "account_to_type", "event_account", id: "account_to_type" %>
+      <%= hidden_field_tag "account_from_type", "event_account", id: "account_from_type" %>
       <%= hidden_field_tag "account_from_index", 0, id: "account_from_index" %>
       <%= hidden_field_tag "account_to_index", 0, id: "account_to_index" %>
 
+      <!-- To allow js to decide to show the account_to user form, event form, or neither -->
       <%= content_tag "div", id: "to_source", data: { type: @event_payment.new_record? ? "None" : @event_payment.payee_account.source_type} do %>
-      <% end %>
+      <% end %> 
 
-      <%= render partial: 'events/new_payment_from', locals: { f: f } %>
+      <%= render partial: 'events/payment_from', locals: { f: f } %>
 
-      <%= render partial: 'events/new_payment_to', locals: { f: f } %>
+      <%= render partial: 'events/payment_to', locals: { f: f } %>
         
       <div class="form-group">
         <%= f.submit 'Submit', :class => 'btn btn-primary btn-sm' %>

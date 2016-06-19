@@ -1,9 +1,9 @@
 class PaymentsController < ApplicationController
 
   def create
-    set_account_from_param
-    set_account_to_param
-    params[:payment][:for] = "Settlement" unless params[:account_to_status] == "event_account"
+    params[:payment][:account_from] = assign_account("from")
+    params[:payment][:account_to] = assign_account("to")
+    params[:payment][:for] = "Settlement" unless params[:account_to_type] == "event_account"
 
     @payment = current_event.payments.new(payment_params)
     @payment.add_allocations
@@ -31,18 +31,9 @@ class PaymentsController < ApplicationController
   end
 
   def update
-    # @payee_account = current_event.accounts.find_or_create_by(account_name: params[:payment][:payee_name]) do |account|
-    #   account.source_type = "Payee"
-    # end
-    # @payer_account = current_event.accounts.find_or_create_by(account_name: params[:payment][:payer_name]) do |account|
-    #   account.source_type = "Payer"
-    # end
-    # params[:payment][:account_to] = @payee_account.id
-    # params[:payment][:account_from] = @payer_account.id
-
-    set_account_from_param
-    set_account_to_param
-    params[:payment][:for] = "Settlement" unless params[:account_to_status] == "event_account"
+    params[:payment][:account_from] = assign_account("from") if params[:payment][:account_from].blank?
+    params[:payment][:account_to] = assign_account("to") if params[:payment][:account_to].blank?
+    params[:payment][:for] = "Settlement" unless params[:account_to_type] == "event_account"
 
     @payment = Payment.find(params[:id])
     @payment.update(payment_params)
@@ -61,37 +52,21 @@ class PaymentsController < ApplicationController
     params.require(:event_id)
   end
 
-  def set_account_from_param
-    params[:payment][:account_from] = 
-      define_accounts(
-        params[:account_from_status], 
-        params[:payment][:from_user_id], 
-        params[:user_from][:email],
-        params[:user_from][:first_name],
-        params[:user_from][:last_name])
-  end
-
-  def set_account_to_param
-    params[:payment][:account_to] = 
-      define_accounts(
-        params[:account_to_status], 
-        params[:payment][:to_user_id], 
-        params[:user_to][:email],
-        params[:user_to][:first_name],
-        params[:user_to][:last_name])
-  end
-
-  def define_accounts(source, id, email, first_name, last_name)
-    case source
-    when "event_account"
+  def assign_account(direction)
+    id = params["payment"][direction + "_user_id"]
+    if params["payment"]["for"].present? && direction == "to"
       account = current_event.accounts.where(source_type: "Event", source_id: current_event.id).first
-    when "user_account"
+    elsif params["payment"][direction + "_user_id"] > ""
       account = find_or_create_user_account(id)
-    when "new_user_email"
-      user = find_or_create_user(email.downcase, first_name, last_name)
-      account = find_or_create_user_account(user.id)
-    else
-      user = create_user(first_name, last_name)
+    elsif params["user_" + direction].present?
+      first_name = params["user_" + direction]["first_name"] || ""
+      last_name = params["user_" + direction]["last_name"] || "" 
+      if params["user_" + direction]["email"].present?
+        email = params["user_" + direction]["email"]
+        user = find_or_create_user(email.downcase, first_name, last_name)
+      else
+        user = create_user(first_name, last_name)
+      end
       account = find_or_create_user_account(user.id)
     end
     return account.id

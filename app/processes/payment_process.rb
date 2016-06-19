@@ -115,18 +115,22 @@ class PaymentProcess
 	end
 
   def delete_payment_transaction
-    @payment.payment_transaction.delete
+    puts "Running delete_payment_transaction for payment #{@payment.id}"
+    @payment.payment_transaction.delete if @payment.payment_transaction.present?
   end
 
   def delete_receipt_transaction
-    @payment.receipt_transaction.delete
+    puts "Running delete_receipt_transaction for payment #{@payment.id}"
+    @payment.receipt_transaction.delete if @payment.receipt_transaction.present?
   end
 
   def delete_allocation_transactions
+    puts "Running delete_allocation_transactions for payment #{@payment.id}"
     @allocation_process = AllocationProcess.new(@payment).delete
   end
 
   def delete_allocation_reversals
+    puts "Running delete_allocation_reversals for payment #{@payment.id}"
     @account_transaction_process = AccountTransactionProcess.new(@payment).remove_allocation_reversals
   end
 

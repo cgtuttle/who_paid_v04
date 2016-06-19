@@ -4,14 +4,14 @@ class Account < ActiveRecord::Base
 
   has_many :account_transactions
   has_many :allocations
-  has_many :payments, through: :allocations
+  has_many :payments, through: :allocations, source: :journal, source_type: "Payment"
 
 # Journal relationships
   has_many :payments_paid, foreign_key: :account_from, class_name: "Payment"
   has_many :payments_received, foreign_key: :account_to, class_name: "Payment"
 
   scope :current_event, ->(event_id) { where( event_id: event_id )}
-  scope :user, -> { joins("join users on users.id = accounts.source_id").where(source_type: "User").order("users.last_name") }
+  scope :user, -> { joins("join users on users.id = accounts.source_id").where(source_type: "User", inactive: false).order("users.last_name") }
 
   def self.people
     Account.user + Account.where(source_type: "User", source_id: nil).sort_by(&:last_name)

@@ -4,8 +4,8 @@
     <div class="panel-heading" role="tab" id="account_from_heading">
       <div class="panel-title">
         <div class="form-group">
-          <%= f.label :account_from, class: "small text-muted" %>
-          <%= f.collection_select :from_user_id, current_user.all_friends, :id, :display_name, {selected: @event_payment.non_blank_payer_account, include_blank: true  }, {class: "account-selector form-control input-sm", onchange: 'toggle_new_user("from");'} %>        
+          <%= f.label :user_from, "From", class: "small text-muted" %>
+          <%= f.collection_select :from_user_id, current_user.all_friends, :id, :display_name, {selected: @event_payment.non_blank_payer_account, include_blank: true  }, {class: "account-selector form-control input-sm"} %>        
         </div>
         <div class="form-group">
           <%= link_to "New User", '#', onclick: 'toggle_new_user("from");', class: "btn btn-primary btn-sm" %>
@@ -25,7 +25,7 @@
         </div>
         <div class="form-group">
           <%= label_tag 'email', nil, class: 'sr-only' %>
-          <%= text_field_tag 'user_from[email]', nil, { placeholder: "Email (optional)", class: 'form-control input-sm', onchange: 'set_hidden_field("account_from_status", "new_user_email");' } %>
+          <%= text_field_tag 'user_from[email]', nil, { placeholder: "Email (optional)", class: 'form-control input-sm', onchange: 'set_hidden_field("account_from_type", "new_user_email");' } %>
         </div>
       </div>
     </div>

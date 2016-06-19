@@ -87,6 +87,7 @@ class AllocationProcess
 	end
 
 	def delete_allocation_transactions
+		puts "Running allocation_process.delete_allocation_transactions for payment #{@journal.id}"
 		@journal.account_transactions.where(sub_journal_type: "Allocation").delete_all
 	end
 

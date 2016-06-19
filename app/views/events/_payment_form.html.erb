@@ -3,6 +3,9 @@
 		<%= f.hidden_field :id, value: payment.id %>
 		<%= f.hidden_field :payee_name, value: payment.payee_account.account_name %>
 		<%= f.hidden_field :payer_name, value: payment.payer_account.account_name %>
+		<%= f.hidden_field :account_to, value: payment.payee_account.id %>
+		<%= f.hidden_field :account_from, value: payment.payer_account.id %>
+
 
 		<div class="row bottom-space-10"></div>
 			<div class="row row-heading hidden-xs hidden-sm">
@@ -14,13 +17,14 @@
 				<%= ff.hidden_field :account_id, value: ff.object.account_id %>
 
 				<div class="row row-data">
-					<div class="form-group col-md-4">
+					
+					<div class="form-group col-md-4">						
 						<%= ff.label :_destroy do %>
 							<%= ff.check_box :_destroy, {checked: ff.object.persisted?}, 0, 1 %>
-							<%= ff.object.account.account_name %>
-						<% end %>
+						<% end %>						
+						<%= ff.object.account.account_name %>
 					</div>
-
+					
 					<div class="form-group col-md-4">
 						<%= ff.label "Share", class: "sr-only" %>						
 						<%= ff.text_field :allocation_entry, class: "form-control input-sm" %>						
