@@ -1,6 +1,6 @@
 == README
 
-WhoPaid is a simple way to keep track of how much everyone has paid for
+<b>WhoPaid</b> is a simple way to keep track of how much everyone has paid for
 one or more events with multiple activities, and as a result, who owes how much.
 
 The key is that it focuses on simplicity for the users while maintaining 
@@ -15,10 +15,9 @@ of information:
 Most expenses are divided amongst several people, so participants can easily
 be added to a given activity and the rules for sharing the expenditure are flexible.
 
-New users can be added to WhoPaid on the fly by any other user, no need to sign them 
+New users can be added to <b>WhoPaid</b> on the fly by any other user, no need to sign them 
 up or provide any sensitive information (like email address). Invitations to join may be sent later
 if you choose to do so.
 
 Members of your other events are automatically available for your new events.
 
-<tt>rake doc:app</tt>.
