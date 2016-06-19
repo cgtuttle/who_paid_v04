@@ -1,28 +1,24 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+WhoPaid is a simple way to keep track of how much everyone has paid for
+one or more events with multiple activities, and as a result, who owes how much.
 
-Things you may want to cover:
+The key is that it focuses on simplicity for the users while maintaining 
+a robust accounting process. Expenditures are entered with just four pieces
+of information:
 
-* Ruby version
+	1)	Amount
+	2)	Date
+	3)	Who paid
+	4)	Who received
 
-* System dependencies
+Most expenses are divided amongst several people, so participants can easily
+be added to a given activity and the rules for sharing the expenditure are flexible.
 
-* Configuration
+New users can be added to WhoPaid on the fly by any other user, no need to sign them 
+up or provide any sensitive information (like email address). Invitations to join may be sent later
+if you choose to do so.
 
-* Database creation
+Members of your other events are automatically available for your new events.
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
