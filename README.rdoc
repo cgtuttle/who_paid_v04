@@ -1,4 +1,4 @@
-== README
+==WhoPaid
 
 <b>WhoPaid</b> is a simple way to keep track of how much everyone has paid for
 one or more events with multiple activities, and as a result, who owes how much.
