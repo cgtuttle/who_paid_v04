@@ -1,4 +1,4 @@
-class account_transaction_process
+class AccountTransactionProcess
 	def initialize(journal)
 		@journal = journal
 	end
