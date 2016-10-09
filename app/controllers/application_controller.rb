@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 
   def current_event
   	@current_event ||= session[:current_event_id] &&
-  	Event.find_by(id: session[:current_event_id])
+      Event.find_by(id: session[:current_event_id])
   end
 
   def set_current_event(event)

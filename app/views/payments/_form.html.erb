@@ -1,4 +1,4 @@
-  <%= form_for [@event, @event_payment] do |f| %>
+  <%= form_for [@payment] do |f| %>
     <%= render 'layouts/errors', index: @event_payment %>
 
     <%= hidden_field_tag "is_new_user_from", false, id: "is_new_user_from" %>

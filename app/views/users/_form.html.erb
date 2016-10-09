@@ -24,7 +24,8 @@
       </div>
     </div>
 
-    <%= hidden_field :account, :id, value: @account.id if not @account.blank? %>
+    <%= f.hidden_field :is_account_user, value: @is_account_user %>
+    <%= f.hidden_field :event_id, value: @current_event.id %>
 
   <% end %>
 </div>

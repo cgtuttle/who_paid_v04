@@ -6,26 +6,11 @@ class UsersController < ApplicationController
 
 
   def create
-    @user = User.new    
-    @email = params[:user][:email].downcase
-    if !User.exists?(["lower(email) = (?)", @email]) || @email == ""
-      logger.debug "Path: User Does Not Exist"
-      @user.email = params[:user][:email]
-      @user.first_name = params[:user][:first_name]
-      @user.last_name = params[:user][:last_name]
-      @user.role = "guest"
-      @user.save!
-    else
-      logger.debug "Path: User Exists"
-      @user = User.where('lower(email) = (?)', @email).first
-    end
-    # if params[:account]
-    #   @account = Account.find(params[:account][:id])
-    #   @account.source_id = @user.id
-    #   @account.source_type = "User"
-    #   @account.save!
-    # end
-    redirect_to users_path, notice: "New user successfully created."
+    @user = User.new
+    params[:current_user_id] = current_user.id
+    @new_user = UserSetupProcess.new(params)
+    @redirect_path = @new_user.setup
+    redirect_to @redirect_path, notice: "New user successfully created."
   end
 
   def destroy
@@ -40,8 +25,10 @@ class UsersController < ApplicationController
   end
 
   def new
+    @is_account_user = params[:is_account_user]
     @user = User.new
     @cancel_path = users_path
+    @current_event = current_event if !current_event.blank?
     if params[:account]
       @account = Account.find(params[:id])
       @user.parse_display_name(@account.account_name)
@@ -78,6 +65,7 @@ class UsersController < ApplicationController
       end
       logger.info "User = #{@user.inspect}"
       logger.info "Current User = #{current_user}"
+      logger.info "Current event = #{@current_event.inspect}"
     end
 
     def user_params

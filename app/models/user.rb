@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   after_initialize :set_default_role, :if => :new_record?
 
   scope :invited_by_user, ->(user) {where(invited_by_id: user)}
+  scope :created_by_user, ->(user) {where(created_by_id: user)}
 
   def self.new_guest(event)
     new { |u| u.role = "guest"}
@@ -71,7 +72,7 @@ class User < ActiveRecord::Base
     else
       query1 = self.event_friends
       query2 = User.where('id = ?', self.id)
-      query3 = User.invited_by_user(self)
+      query3 = User.created_by_user(self)
       sql = User.connection.unprepared_statement{"((#{query1.to_sql}) UNION (#{query2.to_sql}) UNION (#{query3.to_sql})) as users"}
       users = User.from(sql).order(:last_name, :first_name)
     end
