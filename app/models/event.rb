@@ -4,6 +4,7 @@ class Event < ActiveRecord::Base
   has_many :account_transactions, through: :accounts
   has_many :users, through: :accounts, source: :source, source_type: "User"
   belongs_to :owner, class_name: "User"
+  validates :name, uniqueness: { scope: :owner_id, message: "already exists"}
 
   USER_TO_USER_PAYMENT = "Settlement"
 

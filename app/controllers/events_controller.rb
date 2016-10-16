@@ -16,6 +16,8 @@ class EventsController < ApplicationController
       @event.create_event_default_account
       set_current_event(@event)
       redirect_to events_path, notice:'Successfully created a new event.'
+    else
+      render :new
     end
   end
 

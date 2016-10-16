@@ -25,7 +25,9 @@
     </div>
 
     <%= f.hidden_field :is_account_user, value: @is_account_user %>
-    <%= f.hidden_field :event_id, value: @current_event.id %>
+    <% if defined? current_event %>
+      <%= f.hidden_field :event_id, value: @current_event.id %>
+    <% end %>
 
   <% end %>
 </div>
