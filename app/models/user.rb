@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
   end
 
   def password_required?    
-    self.role != "guest"
+    false
   end
 
   def email_required?

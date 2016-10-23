@@ -47,8 +47,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update_attributes(user_params)
-      logger.debug "User updated: #{@user.display_name}"
+    if @user.update(user_params)
       @user.update_accounts
       redirect_to users_path, :notice => "User and Account details updated."
     else
@@ -65,11 +64,11 @@ class UsersController < ApplicationController
       end
       logger.info "User = #{@user.inspect}"
       logger.info "Current User = #{current_user}"
-      logger.info "Current event = #{@current_event.inspect}"
+      logger.info "Current event = #{current_event.inspect}"
     end
 
     def user_params
-      params.require(:user).permit(:role, :first_name, :last_name, :email)
+      params[:user].permit(:role, :first_name, :last_name, :email)
     end
 
     def account_params
