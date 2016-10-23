@@ -6,11 +6,11 @@ class UsersController < ApplicationController
 
 
   def create
-    @user = User.new
     params[:current_user_id] = current_user.id
-    @new_user = UserSetupProcess.new(params)
-    @redirect_path = @new_user.setup
-    redirect_to @redirect_path, notice: "New user successfully created."
+    @user = UserProcess.new(params)
+    @user.setup
+    @user.create_account(current_event) if session[:new_user_type] == "account_user"
+    redirect_to @user.redirect_path, notice: "New user successfully created."
   end
 
   def destroy
@@ -25,15 +25,15 @@ class UsersController < ApplicationController
   end
 
   def new
-    @is_account_user = params[:is_account_user]
-    @user = User.new
-    @cancel_path = users_path
-    @current_event = current_event if !current_event.blank?
-    if params[:account]
-      @account = Account.find(params[:id])
-      @user.parse_display_name(@account.account_name)
-      @cancel_path = event_path(current_event.id)
+    uri = URI.encode(request.referer)
+    if URI.split(uri)[5].include? "user"
+      session[:new_user_type] = "user"
+    else
+      session[:new_user_type] = "account_user"
     end
+    logger.debug "New user type = #{session[:new_user_type]}"
+    @user = User.new
+    @cancel_path = request.referer
   end
 
   def new_guest

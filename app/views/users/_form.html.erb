@@ -4,7 +4,7 @@
 
     <div class="form-group">
       <%= f.label :first_name %>
-      <%= f.text_field :first_name, :class => "form-control" %>
+      <%= f.text_field :first_name, :class => "form-control", autofocus: true %>
     </div>
 
     <div class="form-group">
@@ -23,11 +23,6 @@
         <%= link_to 'Cancel', @cancel_path, :class => 'btn btn-default' %>
       </div>
     </div>
-
-    <%= f.hidden_field :is_account_user, value: @is_account_user %>
-    <% if defined? current_event %>
-      <%= f.hidden_field :event_id, value: @current_event.id %>
-    <% end %>
 
   <% end %>
 </div>

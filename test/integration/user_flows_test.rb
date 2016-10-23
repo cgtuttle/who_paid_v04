@@ -11,7 +11,8 @@ class UserFlowsTest < ActionDispatch::IntegrationTest
 
   test "can see the new user form" do
   	Rails::logger.debug "Testing..."
-  	get "http://lvh.me:3000/users/new"
+
+  	get "http://lvh.me:3000/users/new", {}, {'HTTP_REFERER' => "http://lvh.me:3000/users"}
   	assert_response :success
   end
 
