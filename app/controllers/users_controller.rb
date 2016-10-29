@@ -4,6 +4,10 @@ class UsersController < ApplicationController
   before_filter :authenticate_user!
   before_filter :scope_policy, :only => :index
 
+# The purpose of this controller is for admins to manage users directly, independently
+# of the usual Devise signup/update process, which is why it does not extend Devise::WhateverController.
+# To allow this to work, password_required? is overridden to false in the user model. This only affects 
+# validations - passwords are always required for new records.
 
   def create
     params[:current_user_id] = current_user.id

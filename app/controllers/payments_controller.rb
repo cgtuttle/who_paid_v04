@@ -3,7 +3,9 @@ class PaymentsController < ApplicationController
   def create
     params[:payment][:account_from] = assign_account("from")
     params[:payment][:account_to] = assign_account("to")
-    params[:payment][:for] = "Settlement" unless params[:account_to_type] == "event_account"
+    if params[:payment][:to_user_id] != "" || params[:user_to][:first_name] != "" || params[:user_to][:last_name] != "" || params[:user_to][:email] != ""
+      params[:payment][:for] = "Settlement"
+    end
 
     @payment = current_event.payments.new(payment_params)
     @payment.add_allocations

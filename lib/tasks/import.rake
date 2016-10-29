@@ -3,17 +3,21 @@ require 'csv'
 namespace:import do
 	counter = 0
 
+	# rake import:users
+	desc "Import users from /vendor/imports/users.csv"
 	task users: :environment do
 		filename = File.join Rails.root, "/vendor/imports/users.csv"
-		CSV.foreach(filename) do |row|
+		CSV.foreach(filename, headers: true) do |row|
 			id,email,first,last = row
 			user = User.create(id: id, email: email, first_name: first, last_name: last, role: "guest")
 			puts "#{email} - #{user.errors.full_messages.join(',')}" if user.errors.any?
 			counter += 1 if user.persisted?
 		end
 		puts "Imported #{counter} users."
+		reset_key_sequence("users")
 	end
 
+	desc "Import events from /vendor/imports/events.csv"
 	task events: :environment do
 		filename = File.join Rails.root, "/vendor/imports/events.csv"
 		CSV.foreach(filename, headers: true) do |row|
@@ -26,8 +30,10 @@ namespace:import do
 			counter += 1 if event.persisted?
 		end
 		puts "Imported #{counter} events."
+		reset_key_sequence("events")
 	end
 
+	desc "Import accounts from /vendor/imports/accounts.csv"
 	task accounts: :environment do
 		filename = File.join Rails.root, "/vendor/imports/accounts.csv"
 		CSV.foreach(filename, headers: true) do |row|
@@ -42,8 +48,10 @@ namespace:import do
 			counter += 1 if account.persisted?
 		end
 		puts "Imported #{counter} accounts."
+		reset_key_sequence("accounts")
 	end
 
+	desc "Import payments from /vendor/imports/payments.csv"
 	task payments: :environment do
 		filename = File.join Rails.root, "/vendor/imports/payments.csv"
 		CSV.foreach(filename, headers: true) do |row|
@@ -61,8 +69,10 @@ namespace:import do
 			counter += 1 if new_record.persisted?
 		end
 		puts "Imported #{counter} new records."
+		reset_key_sequence("payments")
 	end
 
+	desc "Import allocations from /vendor/imports/allocations.csv"
 	task allocations: :environment do
 		filename = File.join Rails.root, "/vendor/imports/allocations.csv"
 		CSV.foreach(filename, headers: true) do |row|
@@ -79,8 +89,10 @@ namespace:import do
 			counter += 1 if new_record.persisted?
 		end
 		puts "Imported #{counter} new records."
+		reset_key_sequence("allocations")
 	end
 
+	desc "Import account_transactions from /vendor/imports/account_transactions.csv"
 	task account_transactions: :environment do
 		filename = File.join Rails.root, "/vendor/imports/account_transactions.csv"
 		CSV.foreach(filename, headers: true) do |row|
@@ -103,6 +115,13 @@ namespace:import do
 			counter += 1 if new_record.persisted?
 		end
 		puts "Imported #{counter} new records."
+		reset_key_sequence("account_transactions")
+	end
+
+	def reset_key_sequence(model)
+		sql = "SELECT setval(pg_get_serial_sequence('#{model}', 'id'), coalesce(max(id),0) + 1, false) FROM #{model};"
+		next_id = ActiveRecord::Base.connection.execute(sql)
+		puts "Updated primary key sequence"
 	end
 
 end
