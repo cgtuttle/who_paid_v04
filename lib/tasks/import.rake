@@ -8,6 +8,7 @@ namespace:import do
 	task users: :environment do
 		filename = File.join Rails.root, "/vendor/imports/users.csv"
 		CSV.foreach(filename, headers: true) do |row|
+			puts "importing #{row}"
 			id,email,first,last = row
 			user = User.create(id: id, email: email, first_name: first, last_name: last, role: "guest")
 			puts "#{email} - #{user.errors.full_messages.join(',')}" if user.errors.any?
@@ -21,6 +22,7 @@ namespace:import do
 	task events: :environment do
 		filename = File.join Rails.root, "/vendor/imports/events.csv"
 		CSV.foreach(filename, headers: true) do |row|
+			puts "importing #{row}"
 			event = Event.create(id: row["id"], 
 				name: row["name"], 
 				created_at: row["created_at"], 
@@ -37,6 +39,7 @@ namespace:import do
 	task accounts: :environment do
 		filename = File.join Rails.root, "/vendor/imports/accounts.csv"
 		CSV.foreach(filename, headers: true) do |row|
+			puts "importing #{row}"
 			account = Account.create(id: row["id"], 
 				source_id: row["source_id"], 
 				source_type: row["source_type"], 
@@ -55,6 +58,7 @@ namespace:import do
 	task payments: :environment do
 		filename = File.join Rails.root, "/vendor/imports/payments.csv"
 		CSV.foreach(filename, headers: true) do |row|
+			puts "importing #{row}"
 			new_record = Payment.create(id: row["id"], 
 				event_id: row["event_id"], 
 				payment_date: row["payment_date"], 
@@ -76,6 +80,7 @@ namespace:import do
 	task allocations: :environment do
 		filename = File.join Rails.root, "/vendor/imports/allocations.csv"
 		CSV.foreach(filename, headers: true) do |row|
+			puts "importing #{row}"
 			new_record = Allocation.create(id: row["id"], 
 				journal_id: row["journal_id"],
 				journal_type: row["journal_type"],
@@ -96,6 +101,7 @@ namespace:import do
 	task account_transactions: :environment do
 		filename = File.join Rails.root, "/vendor/imports/account_transactions.csv"
 		CSV.foreach(filename, headers: true) do |row|
+			puts "importing #{row}"
 			if row["account_exists"]
 				new_record = AccountTransaction.create(id: row["id"], 
 					journal_id: row["journal_id"],
