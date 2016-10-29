@@ -10,6 +10,10 @@ namespace:import do
 		CSV.foreach(filename, headers: true) do |row|
 			puts "importing #{row}"
 			id,email,first,last = row
+			puts "id = #{id}"
+			puts "email = #{email}"
+			puts "first = #{first}"
+			puts "last = #{last}"
 			user = User.create(id: id, email: email, first_name: first, last_name: last, role: "guest")
 			puts "#{email} - #{user.errors.full_messages.join(',')}" if user.errors.any?
 			counter += 1 if user.persisted?
