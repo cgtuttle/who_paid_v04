@@ -5,7 +5,7 @@
       <div class="panel-title">
         <div class="form-group">
           <%= f.label :user_to, "To", class: 'small text-muted' %>
-          <%= f.collection_select :to_user_id, current_user.all_friends, :id, :display_name, {selected: @event_payment.non_blank_payee_account, include_blank: true}, {class: "account-selector form-control input-sm"} %>        
+          <%= f.collection_select :to_user_id, current_user.all_friends, :id, :display_name, {selected: @payment.non_blank_payee_account, include_blank: true}, {class: "account-selector form-control input-sm"} %>        
         </div>
         <div class="form-group">
           <%= link_to "New User", '#', onclick: 'toggle_new_user("to");', class: "btn btn-primary btn-sm" %>

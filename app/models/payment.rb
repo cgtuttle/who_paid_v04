@@ -1,8 +1,11 @@
 class Payment < ActiveRecord::Base
 #
 # Journal type = 'Payment'
-#
- 
+# 
+  validates :payment_date, presence: true
+  validates :account_from, numericality: { greater_than: 0 }
+  validates :account_to, numericality: { greater_than: 0 }
+
   belongs_to :event
 
   belongs_to :payer_account, class_name: "Account", foreign_key: :account_from

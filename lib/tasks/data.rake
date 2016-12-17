@@ -3,6 +3,8 @@ require 'csv'
 namespace:data do	
 	namespace:clear do
 
+		# rake data:clear:all
+
 		desc "Delete all data"
 		task all: :environment do
 			["data:clear:transactions", 
@@ -15,6 +17,8 @@ namespace:data do
 			end
 		end
 
+		# rake data:clear transactions
+
 		desc "Delete all transactions and allocations"
 		task transactions: :environment do
 			puts "Deleting Account Transactions..."
@@ -24,12 +28,16 @@ namespace:data do
 			puts "Completed successfully."
 		end
 
+		# rake data:clear payments
+
 		desc "Delete all payments"
 		task payments: :environment do
 			puts "Deleting payments..."
 			Payment.delete_all
 			puts "Completed successfully."
 		end
+
+		# rake data:clear accounts
 
 		desc "Delete all Accounts"
 		task accounts: :environment do
@@ -38,12 +46,16 @@ namespace:data do
 			puts "Completed successfully."
 		end
 
+		# rake data:clear events
+
 		desc "Delete all events"
 		task events: :environment do
 			puts "Deleting events..."
 			Event.delete_all
 			puts "Completed successfully."
 		end
+
+		# rake data:clear users
 
 		desc "Delete all users except admin"
 		task users: :environment do
@@ -56,7 +68,8 @@ namespace:data do
 	namespace:import do
 		counter = 0
 
-		# rake import:users
+		# rake data:import:users
+
 		desc "Import users from /vendor/imports/users.csv"
 		task users: :environment do
 			filename = File.join Rails.root, "/vendor/imports/users.csv"
@@ -74,6 +87,8 @@ namespace:data do
 			reset_key_sequence("users")
 		end
 
+		# rake data:import:events
+
 		desc "Import events from /vendor/imports/events.csv"
 		task events: :environment do
 			filename = File.join Rails.root, "/vendor/imports/events.csv"
@@ -90,6 +105,8 @@ namespace:data do
 			puts "Imported #{counter} events."
 			reset_key_sequence("events")
 		end
+
+		# rake data:import:users
 
 		desc "Import accounts from /vendor/imports/accounts.csv"
 		task accounts: :environment do
@@ -109,6 +126,8 @@ namespace:data do
 			puts "Imported #{counter} accounts."
 			reset_key_sequence("accounts")
 		end
+
+		# rake data:import:payments
 
 		desc "Import payments from /vendor/imports/payments.csv"
 		task payments: :environment do
@@ -132,6 +151,8 @@ namespace:data do
 			reset_key_sequence("payments")
 		end
 
+		# rake data:import:allocations
+
 		desc "Import allocations from /vendor/imports/allocations.csv"
 		task allocations: :environment do
 			filename = File.join Rails.root, "/vendor/imports/allocations.csv"
@@ -152,6 +173,8 @@ namespace:data do
 			puts "Imported #{counter} new records."
 			reset_key_sequence("allocations")
 		end
+
+		# rake data:import:account_transactions
 
 		desc "Import account_transactions from /vendor/imports/account_transactions.csv"
 		task account_transactions: :environment do

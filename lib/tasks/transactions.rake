@@ -1,5 +1,7 @@
 namespace:transactions do
 
+	# rake transactions:reprocess
+
 	desc "Reprocess all payments"
 	task reprocess: :environment do
 		puts "Processing payments..."

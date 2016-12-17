@@ -6,12 +6,14 @@ class PaymentsController < ApplicationController
     if params[:payment][:to_user_id] != "" || params[:user_to][:first_name] != "" || params[:user_to][:last_name] != "" || params[:user_to][:email] != ""
       params[:payment][:for] = "Settlement"
     end
-
     @payment = current_event.payments.new(payment_params)
-    @payment.add_allocations
     if @payment.save
       PaymentProcess.new(@payment).execute
+      @payment.add_allocations
       redirect_to event_path(current_event), notice: 'Successfully recorded a new payment'
+    else
+      flash[:notice] = 'Could not add the payment'
+      render 'edit'
     end
   end
 
@@ -66,12 +68,10 @@ class PaymentsController < ApplicationController
       if params["user_" + direction]["email"].present?
         email = params["user_" + direction]["email"]
         user = find_or_create_user(email.downcase, first_name, last_name)
-      else
-        user = create_user(first_name, last_name)
       end
-      account = find_or_create_user_account(user.id)
+      account = find_or_create_user_account(user.id) if user
     end
-    return account.id
+    account.blank? ? false : account.id
   end
 
   def find_or_create_user_account(user_id)

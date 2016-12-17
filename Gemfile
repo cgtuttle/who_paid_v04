@@ -1,7 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'dotenv-rails', :groups => [:development, :test]
-
 gem 'rails', '4.2.1'
 gem 'pg'
 gem 'sass-rails', '~> 5.0'
@@ -35,6 +33,7 @@ group :development, :test do
   gem 'hirb'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'dotenv-rails'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'

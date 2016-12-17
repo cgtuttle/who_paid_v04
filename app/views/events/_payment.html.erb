@@ -4,8 +4,9 @@
   </div>
 
   <div class="panel-body">
-    <%= form_for [@event, @event_payment] do |f| %>
-      <%= render 'layouts/errors', index: @event_payment %>
+    <%= form_for @payment do |f| %>
+
+      <%= render 'layouts/errors', index: f.object %>
 
       <div class="form-group">
         <%= f.label "Amount", class: 'sr-only' %>
@@ -25,7 +26,7 @@
       <%= hidden_field_tag "account_to_index", 0, id: "account_to_index" %>
 
       <!-- To allow js to decide to show the account_to user form, event form, or neither -->
-      <%= content_tag "div", id: "to_source", data: { type: @event_payment.new_record? ? "None" : @event_payment.payee_account.source_type} do %>
+      <%= content_tag "div", id: "to_source", data: { type: @payment.new_record? ? "None" : @payment.payee_account.source_type} do %>
       <% end %> 
 
       <%= render partial: 'events/payment_from', locals: { f: f } %>
@@ -34,8 +35,8 @@
         
       <div class="form-group">
         <%= f.submit 'Submit', :class => 'btn btn-primary btn-sm' %>
-        <% if controller.action_name == "edit" %>
-          <%= link_to 'Cancel', event_path(@event), :class => 'btn btn-primary btn-sm' %>
+        <% if controller.action_name == "create" %>
+          <%= link_to 'Cancel', event_path(@payment.event), :class => 'btn btn-primary btn-sm' %>
         <% end %>
       </div>
 
