@@ -1,10 +1,10 @@
 
-# event_account_one:
-#   source: one (Event)
-#   event: one
-#   account_name: "Test Event #1"
+event_account_one:
+  source: one (Event)
+  event: one
+  account_name: "Test Event #1"
 
-# user_account_one:
-#   source: user_one (User)
-#   event: one
-#   account_name: "User One"
+user_account_one:
+  source: user_one (User)
+  event: one
+  account_name: "User One"

@@ -1,0 +1,7 @@
+one:
+  event: one
+  payment_date: 1/1/2016
+  payer_account: user_account_one
+  payee_account: event_account_one
+  amount: 100
+  for: Test

@@ -1,10 +1,10 @@
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h4 class="panel-title">Add a Payment</h4>
+    <h4 class="panel-title"><%= @title %></h4>
   </div>
 
   <div class="panel-body">
-    <%= form_for @payment do |f| %>
+    <%= form_for [@event, @payment] do |f| %>
 
       <%= render 'layouts/errors', index: f.object %>
 
@@ -20,9 +20,6 @@
 
       <%= hidden_field_tag "is_new_user_from", true, id: "is_new_user_from" %>
       <%= hidden_field_tag "is_new_user_to", true, id: "is_new_user_to" %>
-      <%= hidden_field_tag "account_to_type", "event_account", id: "account_to_type" %>
-      <%= hidden_field_tag "account_from_type", "event_account", id: "account_from_type" %>
-      <%= hidden_field_tag "account_from_index", 0, id: "account_from_index" %>
       <%= hidden_field_tag "account_to_index", 0, id: "account_to_index" %>
 
       <!-- To allow js to decide to show the account_to user form, event form, or neither -->
@@ -35,7 +32,7 @@
         
       <div class="form-group">
         <%= f.submit 'Submit', :class => 'btn btn-primary btn-sm' %>
-        <% if controller.action_name == "create" %>
+        <% if ["create", "edit"].include? controller.action_name %>
           <%= link_to 'Cancel', event_path(@payment.event), :class => 'btn btn-primary btn-sm' %>
         <% end %>
       </div>

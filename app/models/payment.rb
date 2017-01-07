@@ -7,7 +7,6 @@ class Payment < ActiveRecord::Base
   validates :account_to, numericality: { greater_than: 0 }
 
   belongs_to :event
-
   belongs_to :payer_account, class_name: "Account", foreign_key: :account_from
   belongs_to :payee_account, class_name: "Account", foreign_key: :account_to
 
@@ -36,17 +35,17 @@ class Payment < ActiveRecord::Base
   end
 
   def user_to_user?
-    # if self.payer_account && self.payee_account
-      self.payer_account.source_type == "User" && self.payee_account.source_type == "User"
-    # else
-    #   false
-    # end
+    self.payer_account.source_type == "User" && self.payee_account.source_type == "User"
   end
 
   def add_allocations
     if not self.user_to_user?
-      self.allocations.new(account: self.payer_account)
+      self.allocations.create(account: self.payer_account)
     end
+  end
+
+  def delete_allocations
+    self.allocations.destroy_all
   end
 
   def non_blank_payer_account

@@ -1,5 +1,5 @@
 class PaymentProcess
-# The goal here is to only create or reverse account transactions.
+# The goal here is to only create or reverse or delete account transactions.
 # CRUD operations on payments or allocations are out of the scope of this class.
 
 	def initialize(payment)
@@ -34,9 +34,10 @@ class PaymentProcess
       end
       reverse_allocation_transactions
     else
-      delete_payment_transaction
-      delete_receipt_transaction
-      delete_allocation_transactions
+      delete_journal_transactions
+      # delete_payment_transaction
+      # delete_receipt_transaction
+      # delete_allocation_transactions
     end
 		verify_journal_set
 	end
@@ -114,24 +115,29 @@ class PaymentProcess
 		@allocation_process = AllocationProcess.new(@payment).reverse
 	end
 
-  def delete_payment_transaction
-    puts "Running delete_payment_transaction for payment #{@payment.id}"
-    @payment.payment_transaction.delete if @payment.payment_transaction.present?
-  end
+  # def delete_payment_transaction
+  #   puts "Running delete_payment_transaction for payment #{@payment.id}"
+  #   @payment.payment_transaction.delete if @payment.payment_transaction.present?
+  # end
 
-  def delete_receipt_transaction
-    puts "Running delete_receipt_transaction for payment #{@payment.id}"
-    @payment.receipt_transaction.delete if @payment.receipt_transaction.present?
-  end
+  # def delete_receipt_transaction
+  #   puts "Running delete_receipt_transaction for payment #{@payment.id}"
+  #   @payment.receipt_transaction.delete if @payment.receipt_transaction.present?
+  # end
 
-  def delete_allocation_transactions
-    puts "Running delete_allocation_transactions for payment #{@payment.id}"
-    @allocation_process = AllocationProcess.new(@payment).delete
-  end
+  # def delete_allocation_transactions
+  #   puts "Running delete_allocation_transactions for payment #{@payment.id}"
+  #   @allocation_process = AllocationProcess.new(@payment).delete
+  # end
 
-  def delete_allocation_reversals
-    puts "Running delete_allocation_reversals for payment #{@payment.id}"
-    @account_transaction_process = AccountTransactionProcess.new(@payment).remove_allocation_reversals
+  # def delete_allocation_reversals
+  #   puts "Running delete_allocation_reversals for payment #{@payment.id}"
+  #   @account_transaction_process = AccountTransactionProcess.new(@payment).remove_allocation_reversals
+  # end
+
+  def delete_journal_transactions
+    puts "Running delete_journal_transactions for payment #{@payment.id}"
+    @payment.account_transactions.delete_all
   end
 
   def verify_journal_set

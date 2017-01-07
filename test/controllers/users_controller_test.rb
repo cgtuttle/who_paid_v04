@@ -8,11 +8,11 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should create new user" do
-  	puts "#{User.count}"
+  	# puts "#{User.count}"
     assert_difference ('User.count') do
     	post :create, user: {email: 'user4@test.com'} 
     end
-    puts "#{User.count}"
+    # puts "#{User.count}"
 
     assert_redirected_to users_path
   end

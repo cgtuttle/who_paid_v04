@@ -8,8 +8,8 @@ class PaymentsController < ApplicationController
     end
     @payment = current_event.payments.new(payment_params)
     if @payment.save
-      PaymentProcess.new(@payment).execute
       @payment.add_allocations
+      PaymentProcess.new(@payment).execute
       redirect_to event_path(current_event), notice: 'Successfully recorded a new payment'
     else
       flash[:notice] = 'Could not add the payment'
@@ -18,9 +18,10 @@ class PaymentsController < ApplicationController
   end
 
   def edit
+    @title = "Edit payment"
     @event = current_event
     @user = current_user
-    @event_payment = current_event.payments.find(params[:id])
+    @payment = current_event.payments.find(params[:id])
   end
 
   def new
@@ -29,6 +30,7 @@ class PaymentsController < ApplicationController
   def set_delete
     @payment = Payment.find(params[:id])
     PaymentProcess.new(@payment).delete
+    @payment.delete_allocations
     @payment.deleted = true
     @payment.save
     redirect_to event_path(current_event), notice: 'successfully deleted payment'
@@ -37,8 +39,7 @@ class PaymentsController < ApplicationController
   def update
     params[:payment][:account_from] = assign_account("from") if params[:payment][:account_from].blank?
     params[:payment][:account_to] = assign_account("to") if params[:payment][:account_to].blank?
-    params[:payment][:for] = "Settlement" unless params[:account_to_type] == "event_account"
-
+    params[:payment][:for] = "Settlement" if not params[:payment][:to_user_id].blank?
     @payment = Payment.find(params[:id])
     @payment.update(payment_params)
     PaymentProcess.new(@payment).update_allocations
@@ -57,15 +58,15 @@ class PaymentsController < ApplicationController
   end
 
   def assign_account(direction)
-    id = params["payment"][direction + "_user_id"]
+    id = params["payment"][direction + "_user_id"] # "payment"=>{"to_user_id"=>"5"}
     if params["payment"]["for"].present? && direction == "to"
       account = current_event.accounts.where(source_type: "Event", source_id: current_event.id).first
-    elsif params["payment"][direction + "_user_id"] > ""
+    elsif params["payment"][direction + "_user_id"] > "" # "payment"=>{"to_user_id"=>"5"}
       account = find_or_create_user_account(id)
     elsif params["user_" + direction].present?
-      first_name = params["user_" + direction]["first_name"] || ""
+      first_name = params["user_" + direction]["first_name"] || "" # "user_to"=>{"first_name"=>"john"}
       last_name = params["user_" + direction]["last_name"] || "" 
-      if params["user_" + direction]["email"].present?
+      if params["user_" + direction]["email"].present? # "user_to"=>{"email"=>"user@test.com"}
         email = params["user_" + direction]["email"]
         user = find_or_create_user(email.downcase, first_name, last_name)
       end

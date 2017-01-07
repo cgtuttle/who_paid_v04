@@ -41,6 +41,7 @@ class EventsController < ApplicationController
   end
 
   def show
+    @title = "Add a payment"
     set_current_event(@event)
     @participants = @event.participants
     @friends = current_user.all_friends - @event.users
