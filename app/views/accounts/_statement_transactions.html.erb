@@ -3,9 +3,11 @@
 		<tr>
 			<th class="col-md-1">Date</th>
 			<th class="col-md-1 hidden-print">Type</th>
-			<th class="col-md-3">For</th>
-			<th class="col-md-2">From</th>
-			<th class="col-md-2">To</th>
+			<th class="col-md-1">For</th>
+			<th class="col-md-1">From</th>
+			<th class="col-md-1">To</th>
+			<th class="col-md-1 text-right">Amount</th>
+			<th class="col-md-1 text-right">Share</th>
 			<th class="col-md-1 text-right">Debit</th>
 			<th class="col-md-1 text-right">Credit</th>
 			<th class="col-md-1 text-right">Balance</th>
@@ -20,6 +22,8 @@
 				<td><%= t.journal.for %></td>
 				<td><%= t.journal.payer_account.account_name %></td>
 				<td><%= t.journal.payee_account.account_name %></td>
+				<td class="text-right"><%= number_to_currency(t.journal.amount) %></td>
+				<td class="text-right"><%= number_to_percentage(t.allocation_factor * 100, precision: 1) if t.entry_type == "allocation" %></td>
 				<td class="text-right"><%= number_to_currency(t.debit) %></td>
 				<td class="text-right"><%= number_to_currency(t.credit) %></td>
 				<% running_balance = running_balance + (t.credit || 0) - (t.debit || 0) %>

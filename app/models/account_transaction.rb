@@ -40,4 +40,13 @@ class AccountTransaction < ActiveRecord::Base
     self.debit || 0 - self.credit || 0
   end
 
+  def allocation_factor
+    if self.entry_type == "allocation"
+      allocation = Allocation.find(self.sub_journal_id)
+      allocation.allocation_factor
+    else
+      1
+    end
+  end
+
 end
