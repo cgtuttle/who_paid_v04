@@ -41,4 +41,15 @@ class Account < ActiveRecord::Base
     (self.account_name.split[1] || self.account_name) if self.account_name
   end
 
+  def update_default_method(new_method)
+    self.default_method = new_method
+    self.save
+  end
+
+  def update_default_share(share)
+    puts "self.id = #{self.id}, self.default_share = #{share}"
+    self.default_share = share
+    self.save
+  end
+
 end

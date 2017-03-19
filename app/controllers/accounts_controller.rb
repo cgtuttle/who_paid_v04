@@ -24,6 +24,7 @@ class AccountsController < ApplicationController
   end
 
   def edit
+    @account = Account.find(params[:id]) 
   end
 
   def index
@@ -65,6 +66,13 @@ class AccountsController < ApplicationController
   end
 
   def update
+    @account = Account.find(params[:id])
+    @account.update(account_params)
+    if @event.save  
+      redirect_to event_path(@event), notice: 'Successfully updated account.'
+    else
+      render action: 'edit', notice: 'Unable to update account'
+    end
   end
 
   private
@@ -79,7 +87,7 @@ class AccountsController < ApplicationController
   end
 
   def account_params
-    params.require(:account).permit(:account_name, :source_id, :source_type, :active)
+    params.require(:account).permit(:account_name, :source_id, :source_type, :active, :default_share, :default_method)
   end
 
 end

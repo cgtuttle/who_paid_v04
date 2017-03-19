@@ -7,6 +7,16 @@
       <%= f.text_field :account_name, :class => "form-control" %>
     </div>
 
+    <div class="form-group">
+      <%= f.label :default_share %>
+      <%= f.text_field :default_share, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label "Default method" %>
+      <%= f.select :default_method, Allocation::ALLOCATION_METHODS, { }, {class: "form-control input-sm"} %>
+    </div>
+
     <div class="row">
       <div class="form-group col-md-4">
         <%= f.submit 'Submit', :class => 'btn btn-primary' %>

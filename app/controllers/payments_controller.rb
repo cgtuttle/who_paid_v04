@@ -43,6 +43,15 @@ class PaymentsController < ApplicationController
     @payment = Payment.find(params[:id])
     @payment.update(payment_params)
     PaymentProcess.new(@payment).update_allocations
+    @payment.event.accounts.user.each do |account|
+      @payment.allocations.each do |allocation|
+        logger.debug "account = #{account.id}, allocation = #{allocation.id}, allocation.account = #{allocation.account.id}"
+        if account.id == allocation.account.id
+          logger.debug "Running update_default_share with #{allocation.allocation_entry}"
+          account.update_default_share(allocation.allocation_entry)
+        end
+      end
+    end
     redirect_to event_path(current_event), notice: 'successfully updated payment'    
   end
 

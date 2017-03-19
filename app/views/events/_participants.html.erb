@@ -3,9 +3,10 @@
 	<table class="table">
 		<thead>
 			<tr class="flattened">
-				<th class="col-md-4"></th>
+				<th class="col-md-2"></th>
 				<th class="col-md-5">User</th>
-				<th class="col-md-3">Balance</th>
+				<th class="col-md-3">Default Share</th>
+				<th class="col-md-2">Balance</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -20,9 +21,15 @@
 						<%= link_to event_account_statement_path(@event, participant), title: "Statement for #{participant.account_name}" do %>
 							<i class="fa fa-file-text"></i>
 						<% end %>
-						<%= link_to "Delete", event_account_path(@event, participant), method: :delete %>
+						<%= link_to edit_event_account_path(@event, participant), title: "Edit #{participant.account_name}" do %>
+							<i class="fa fa-edit"></i>
+						<% end %>
+						<%= link_to event_account_path(@event, participant), method: :delete, title: "Remove from #{@event.name}" do %>
+							<i class="fa fa-trash"></i>
+						<% end %>
 					</td>
 					<td class="<%= participant.source_id.blank? ? 'text-muted' : 'none' %>"><%= participant.account_name %></td>
+					<td><%= participant.default_method %>: <%= participant.default_share %></td>
 					<td class="text-right"><%= number_to_currency(participant.balance) %></td>
 				</tr>
 			<% end %>

@@ -40,7 +40,9 @@ class Payment < ActiveRecord::Base
 
   def add_allocations
     if not self.user_to_user?
-      self.allocations.create(account: self.payer_account)
+      self.event.accounts.user.each do |account|
+        self.allocations.create(account: account, allocation_method: account.default_method, allocation_entry: account.default_share)
+      end
     end
   end
 
