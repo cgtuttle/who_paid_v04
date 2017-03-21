@@ -17,7 +17,7 @@
 		<% running_balance = 0 %>
 		<% @transactions.each do |t| %>
 			<tr>
-				<td><%= browser_date(t.occurred_on || t.created_at) %></td>
+				<td><%= browser_date(t.journal.payment_date || t.created_at) %></td>
 				<td class="hidden-print"><%= t.entry_type %></td>
 				<td><%= t.journal.for %></td>
 				<td><%= t.journal.payer_account.account_name %></td>

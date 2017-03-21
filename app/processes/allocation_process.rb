@@ -61,6 +61,7 @@ class AllocationProcess
 				t.credit = a.debit
 				t.entry_type = "reversal"
 				t.reversal_id = a.id
+				t.occurred_on = @journal.payment_date
 			end
 			a.reversal_id = @reversal.id
 			a.save
@@ -75,6 +76,7 @@ class AllocationProcess
 				t.sub_journal_type = "Allocation"
 				t.credit = @amount * a.allocation_factor
 				t.entry_type = "distribution"
+				t.occurred_on = @journal.payment_date
 			end
 			@journal.account_transactions.create do |t| # Create allocation entries
 				t.account_id = a.account_id
@@ -82,6 +84,7 @@ class AllocationProcess
 				t.sub_journal_type = "Allocation"
 				t.debit = @amount * a.allocation_factor
 				t.entry_type = "allocation"
+				t.occurred_on = @journal.payment_date
 			end
 		end
 	end
