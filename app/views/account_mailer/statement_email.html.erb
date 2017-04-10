@@ -7,13 +7,13 @@
 		<div class="container">
 
 			<h1><%= @event.name %></h1>
-			<h3>Statement for <%= @account.account_name %></h3>
+			<h2>Statement for <%= @account.account_name %></h2>
 			<br>
 			<h3>
 				<% if @account.owes? %>
-					Owes <%= number_to_currency(-@account.balance) %>
+					<%= @account.account_name %> <b>OWES</b> <%= number_to_currency(-@account.balance) %>
 				<% else %>
-					Is Owed <%= number_to_currency(@account.balance) %>
+					<%= @account.account_name %> <b>IS OWED</b> <%= number_to_currency(@account.balance) %>
 				<% end %>
 			</h3>
 			<br>

@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'account_mailers/index'
+
+  get 'account_mailers/show'
+
   devise_for :users, path_prefix: 'authenticate'
 
   devise_scope :user do

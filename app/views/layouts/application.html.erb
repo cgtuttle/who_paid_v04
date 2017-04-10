@@ -6,26 +6,14 @@
 		<meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Who Paid V04" %>">
 		<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
 		<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+		<%= render 'layouts/fonts' %>
 		<%= csrf_meta_tags %>
 	</head>
-	<div id="wrap" class="<%= @visitor_class %>">
-		<body>
-			<header>
-				<%= render 'layouts/navigation' %>
-			</header>
-			<main role="main">
-				<div class="container-fluid">
-					<div class='row'>
-						<%= yield %>
-					</div>
-				</div>
-			</main>
-		</body>
-		<div id="push"></div>
-	</div>
-  <div id="footer">
-    <div class="container-fluid">
-      <small class="hidden-print">Icons by <%= link_to "Glyphicons", 'http://glyphicons.com' %></small>
-    </div>
-  </div>
+
+	<% if @visitor_class == "visitor" %>
+		<%= render "layouts/unsecure_body" %>
+	<% else %>
+		<%= render "layouts/secure_body" %>
+	<% end %>
+
 </html>

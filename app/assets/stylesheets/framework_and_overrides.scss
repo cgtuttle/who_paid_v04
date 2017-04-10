@@ -32,16 +32,17 @@ main {
   height: 100%;
   // Negative indent footer by it's height
   margin: 0 auto -40px;
+  position: relative;
 }
 
 .container-fluid.visitor {
-  background-image: image-url('banner_HD_low.jpg');
+  background-image: image-url('friends_skyline.jpg');
   padding-top: 50px;
   padding-bottom: 70px;
   padding-left: 50px;
   margin-bottom: 20px;
   margin-top: -10px;
-  height: 300px;
+  height: 800px;
 }
 
 section {
@@ -167,7 +168,11 @@ i {
 }
 
 .banner {
-  color: #56F9F3
+  font-family: 'Didact Gothic';
+  color: #020273;
+  text-shadow: 0px 0px 6px $bg-color;
+  .links { 
+  }
 }
 
 .jumbotron {

@@ -2,9 +2,19 @@
 
 <div class="container-fluid visitor">
 	<div class="row">
-		<div class="banner">       
-		  <h1 class="text-left h0">Who Paid?</h1>
-		  <h1 class="text-left">Keep track of everyone's payments for all of your activities!</h1>
+		<div class="banner">
+      <div class="col-md-8">      
+  		  <h1 class="text-left h0">Who Paid?</h1>
+  		  <h1 class="text-left">Keep track of everyone's payments for all of your activities.</h1>
+      </div>
+      <div class="col-md-2 pull-right">        
+        <% if user_signed_in? %>
+          <h3><%= link_to 'Events', :events, class: 'banner links' %> / <%= link_to 'Sign out', destroy_user_session_path, :method=>'delete', class: 'banner links' %></h3>
+        <% else %>         
+          <h3><%= link_to 'Log in', new_user_session_path, class: 'banner links' %> / <%= link_to 'Sign up', new_user_registration_path, class: 'banner links' %></h3>
+        <% end %>         
+        </div>
+      </div>
 		</div>
   </div>
 </div>
