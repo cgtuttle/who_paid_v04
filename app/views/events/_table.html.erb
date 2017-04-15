@@ -9,22 +9,25 @@
 
 		<table class="table table-responsive">
 			<thead>
+        <th class="col-md-2 col-xs-12"></th>
 				<th class="col-md-4">Event</th>
 				<th class="col-md-4">Owner</th>
-				<th class="col-md-1"></th>
-				<th class="col-md-1"></th>
+        <th class="col-md-2">Balance</th>
 			</thead>
 			<tbody>
 				<% @events.each do |event| %>
 					<tr>
+            <td>
+              <%= link_to glyphicon_edit.html_safe, edit_event_path(event) if policy(event).edit? %>
+              <% if policy(event).destroy? %>
+                <%= link_to event_path(:id => event), method: :delete, data: { confirm: "Deleting event #{event.name}" } do %>
+                  <i class="control-icon">&times;</i>
+                <% end %>
+              <% end %>
+            </td>
 						<td><%= link_to event.name, event_path(event) %></td>
 						<td><%= event.owner.display_name %></td>
-						<td class="text-center"><%= link_to glyphicon_edit.html_safe, edit_event_path(event) if policy(event).edit? %></td>
-						<td class="text-center"><% if policy(event).destroy? %>
-							<%= link_to event_path(:id => event), method: :delete, data: { confirm: "Deleting event #{event.name}" } do %>
-								<div class="control-icon">&times;</div>
-							<% end %>
-						<% end %></td>
+            <td class="text-right"><%= number_to_currency(current_user.event_balance(event)) %></td>
 					</tr>
 				<% end %>
 			</tbody>

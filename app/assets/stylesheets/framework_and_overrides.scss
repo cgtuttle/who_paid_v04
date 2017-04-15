@@ -2,7 +2,10 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-$bg-color: #EEEEEE;
+$bg-color: #FFFFFF;
+$well-bg: #E4E6FF;
+$panel-default-heading-bg: #E4E6FF;
+$table-color: #DBFFDE;
 $visitor-bg-color: #9BBEFF;
 
 $bg-color-lightness: lightness($bg-color);
@@ -318,11 +321,11 @@ span.check-box-label {
 }
 
 .row-list:nth-child(4n-1) {
-  background-color: darken($bg-color, 5)
+  background-color: darken($table-color, 5)
 }
 
 .collapse .well {
-  background-color: lighten($bg-color, 10);
+  background-color: lighten($table-color, 10);
 }
 
 table.table > thead > tr.flattened > th {

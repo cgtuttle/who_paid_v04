@@ -46,6 +46,16 @@ class User < ActiveRecord::Base
     end
   end
 
+  def event_balance(event)
+    balance = 0
+    self.accounts.each do |account|
+      if account.event == event
+        balance = account.balance
+      end
+    end
+    return balance
+  end
+
   def friend_accounts(event)
     Account.where("event_id IN (?) AND source_type = 'User' AND source_id is null", self.events.select('id')) - Account.where(event_id: event.id)
   end
