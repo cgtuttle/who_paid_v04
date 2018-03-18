@@ -1,19 +1,25 @@
-<div class="panel-group" id="from_accordion" role="tablist" aria-multiselectable="true">
+<div class="panel-group" id="event_from_accordion" role="tablist" aria-multiselectable="true">
   <div class="panel panel-default">
 
-    <div class="panel-heading" role="tab" id="account_from_heading">
+    <div class="panel-heading" role="tab" id="event_account_from_heading">
       <div class="panel-title">
         <div class="form-group">
           <%= f.label :user_from, "From", class: "small text-muted" %>
           <%= f.collection_select :from_user_id, current_user.all_friends, :id, :display_name, {selected: @payment.non_blank_payer_account, include_blank: true  }, {class: "account-selector form-control input-sm"} %>        
         </div>
+
+        <!-- collapsable new user form control-->
         <div class="form-group">
-          <%= link_to "New User", '#', onclick: 'toggle_new_user("from");', class: "btn btn-primary btn-sm" %>
+          <%= link_to "#new_guest_from_event", title: "New user", data: { toggle: :collapse, parent: "#event_from_accordian"}, aria: {controls: "new_guest_from_event"} do %>
+            <i class="fa fa-plus-circle"></i> New user...
+          <% end %>
         </div>
+
       </div>
     </div>
 
-    <div id="new_guest_from", class="panel-collapse collapse" role="tabpanel" aria-labelledby="account_from_heading">
+    <!-- collapsable new user form -->    
+    <div id="new_guest_from_event", class="panel-collapse collapse" role="tabpanel" aria-labelledby="event_account_from_heading">
       <div class="panel-body">
         <div class="form-group">
           <%= label_tag 'first_name', nil, class: 'sr-only' %>

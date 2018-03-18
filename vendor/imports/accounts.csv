@@ -1,4 +1,4 @@
-id,source_id,source_type,account_name,event_id,created_at,updated_at,inactive
+id,source_id,source_type,name,event_id,created_at,updated_at,inactive
 3,3,User,Carl Tuttle,2,2015-12-12 18:51:09.399752,2015-12-12 18:51:09.399752,f
 4,2,Event,Ski Trip 2016,2,2015-12-12 18:51:09.564039,2015-12-12 18:51:09.564039,f
 5,10,User,John Tuttle,2,2015-12-12 19:04:59.595931,2015-12-12 19:04:59.595931,f

@@ -12,8 +12,8 @@ class EventsController < ApplicationController
     authorize @event
     @event.owner_id = current_user.id
     if @event.save
-      @event.create_event_owner_account(current_user)
-      @event.create_event_default_account
+      @event.create_account(name: @event.name)
+      @event.memberships.create(user: current_user)
       set_current_event(@event)
       redirect_to events_path, notice:'Successfully created a new event.'
     else
@@ -22,6 +22,7 @@ class EventsController < ApplicationController
   end
 
   def destroy
+    @event.payments.update_all event_id: nil
     if @event.destroy
       redirect_to events_path, notice:'Successfully deleted event.'
     else
@@ -33,6 +34,7 @@ class EventsController < ApplicationController
   end
 
   def index
+    # Set session:current_event to nil
     reset_current_event
   end
 
@@ -43,10 +45,11 @@ class EventsController < ApplicationController
   def show
     @title = "Add a payment"
     set_current_event(@event)
-    @participants = @event.participants
+    @participants = @event.users
     @friends = current_user.all_friends - @event.users
     @payments = @event.payments.active.order(:payment_date, :created_at)
     @payment = @event.payments.new
+    @transactions = @event.account.statement_transactions
   end
 
   def update
@@ -80,8 +83,8 @@ class EventsController < ApplicationController
   end
 
   def scope_policy
-    @events = policy_scope(Event)
     logger.info "Policy scoping Event"
+    @events = policy_scope(Event)
   end
 
   def get_config_vars

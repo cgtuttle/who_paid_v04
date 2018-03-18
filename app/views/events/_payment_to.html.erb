@@ -1,6 +1,7 @@
 <div class="panel-group" id="to_accordion" role="tablist" aria-multiselectable="true">
   <div class="panel panel-default">
 
+    <!-- collapsable form #1 control -->
     <div class="panel-heading" role="tab" id="expense_payment_heading">
       <div class="panel-title">
         <div class="form-group">
@@ -11,6 +12,7 @@
       </div>
     </div>
 
+    <!-- collapsable form #1 -->
     <div id="payment_form", class="panel-collapse collapse" role="tabpanel" aria-labelledby="expense_payment_heading">
       <div class="panel-body">
         <div class="form-group">
@@ -20,6 +22,7 @@
       </div>
     </div>
 
+    <!-- collapsable form #2 control -->
     <div class="panel-heading" role="tab" id="user_payment_heading">
       <div class="panel-title">
         <div class="form-group">
@@ -30,6 +33,7 @@
       </div>
     </div>
 
+    <!-- collapsable form #2 -->
     <div id="user_payment_form", class="panel-collapse collapse" role="tabpanel" aria-labelledby="user_payment_heading">
       <div class="panel-body">
         <%= render partial: 'events/payment_user_to', locals: {f: f} %>

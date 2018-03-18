@@ -11,7 +11,7 @@ class AccountProcess
 			@account.payments.each do |p|
 				PaymentProcess.new(p).delete
 				p.allocations.where(account: @account).delete_all
-				PaymentProcess.new(p).execute
+				PaymentProcess.new(p).create
 			end
 		end
 		if @delete_payments

@@ -1,11 +1,11 @@
 require 'test_helper'
-include Devise::TestHelpers
 
 class PaymentsControllerTest < ActionController::TestCase
+  include Devise::Test::ControllerHelpers
 	setup do
 		@event = events(:one)
     @request.env["devise.mapping"] = Devise.mappings[:user]
-    sign_in users :user_one
+    sign_in users :one
     @payment = payments(:one)
   end
 

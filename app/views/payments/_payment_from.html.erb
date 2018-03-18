@@ -1,0 +1,46 @@
+<div class="panel-group" id="from_accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+
+    <!-- collapsable form #1 control -->
+    <div class="panel-heading" role="tab" id="payment_from_heading">
+      <div class="panel-title">
+        <div class="form-group">
+          <%= link_to "#payment_from_form", title: "Payment details", data: { toggle: :collapse, parent: "#from_accordion" }, aria: { controls: "payment_from_form" } do %>
+          <i class="fa fa-plus-circle"></i> From...
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- collapsable form #1 -->
+    <div id="payment_from_form", class="panel-collapse collapse" role="tabpanel" aria-labelledby="payment_account_from_heading">
+      <div class="panel-body">
+        <div class="form-group">
+          <%= f.collection_select :from_user_id, current_user.all_friends, :id, :display_name, {selected: @payment.non_blank_payer_account, include_blank: true  }, {class: "account-selector form-control input-sm"} %>
+        </div>
+        <div class="form-group">
+          <%= link_to "New User", '#', onclick: 'toggle_new_user("from", "payment");', class: "btn btn-primary btn-sm" %>
+        </div>
+      </div>
+    </div>    
+
+    <!-- new user form -->
+    <div id="new_guest_from_payment", class="panel-collapse collapse" role="tabpanel" aria-labelledby="payment_account_from_heading">
+      <div class="panel-body">
+        <div class="form-group">
+          <%= label_tag 'first_name', nil, class: 'sr-only' %>
+          <%= text_field_tag 'user_from[first_name]', nil, placeholder: "First name", class: 'form-control input-sm' %>
+        </div>
+        <div class="form-group">
+          <%= label_tag 'last_name', nil, class: 'sr-only' %>
+          <%= text_field_tag 'user_from[last_name]', nil, placeholder: "Last name",  class: 'form-control input-sm' %>
+        </div>
+        <div class="form-group">
+          <%= label_tag 'email', nil, class: 'sr-only' %>
+          <%= text_field_tag 'user_from[email]', nil, { placeholder: "Email (optional)", class: 'form-control input-sm', onchange: 'set_hidden_field("account_from_type", "new_user_email");' } %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

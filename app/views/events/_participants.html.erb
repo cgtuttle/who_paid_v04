@@ -13,24 +13,19 @@
 			<% participants.each do |participant| %>
 				<tr class="flattened">
 					<td>
-						<% if participant.source_id.blank? %>						
-							<%= link_to new_user_path(participant), title: "Add to WhoPaid users" do %>
-								<i class="fa fa-user-plus"></i>
-							<% end %>
-						<% end %>
-						<%= link_to event_account_statement_path(@event, participant), title: "Statement for #{participant.account_name}" do %>
+						<%= link_to event_account_statement_path(@event, participant.account), title: "Statement for #{participant.display_name}" do %>
 							<i class="fa fa-file-text"></i>
 						<% end %>
-						<%= link_to edit_event_account_path(@event, participant), title: "Edit #{participant.account_name}" do %>
+						<%= link_to edit_user_path(participant), title: "Edit #{participant.display_name}" do %>
 							<i class="fa fa-edit"></i>
 						<% end %>
-						<%= link_to event_account_path(@event, participant), method: :delete, title: "Remove from #{@event.name}" do %>
+						<%= link_to event_user_memberships_destroy_path(@event.id, participant.id), title: "Remove from #{@event.name}" do %>
 							<i class="fa fa-trash"></i>
 						<% end %>
 					</td>
-					<td class="<%= participant.source_id.blank? ? 'text-muted' : 'none' %>"><%= participant.account_name %></td>
-					<td><%= participant.default_method %>: <%= participant.default_share %></td>
-					<td class="text-right"><%= number_to_currency(participant.balance) %></td>
+					<td><%= participant.display_name %></td>
+					<td><%= participant.account.default_method %>: <%= participant.account.default_share %></td>
+					<td class="text-right"><%= number_to_currency(@event.user_balance(participant)) %></td>
 				</tr>
 			<% end %>
 		</tbody>

@@ -20,20 +20,34 @@ Rails.application.routes.draw do
 
   resources :events do
     resources :accounts do
-      get 'statement'
+      get 'event_statement', as: 'statement'
       get 'statement_email'
       collection do
         get 'statements_email'
       end
     end
     post 'accounts/create'
+    post 'memberships/create'
+    resources :users do
+      get 'memberships/destroy'
+      post 'memberships/create'
+    end
+    resources :payments
+  end
+
+  resources :users do
     resources :payments
   end
 
   resources :payments
-  resources :accounts
-  resources :users
+  
+  resources :accounts do
+    get 'statement'
+    get 'statement_email'
+  end
+
   resources :allocations
+  resources :memberships
 
   root 'visitors#welcome'
 

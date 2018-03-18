@@ -1,10 +1,12 @@
 
 event_account_one:
   source: one (Event)
-  event: one
-  account_name: "Test Event #1"
+  name: "Test Event #1"
+
+event_account_two:
+  source: two (event)
+  name: "Test Event #2"
 
 user_account_one:
-  source: user_one (User)
-  event: one
-  account_name: "User One"
+  source: one (User)
+  name: "User One"

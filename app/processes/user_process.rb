@@ -1,10 +1,10 @@
 class UserProcess
 
-
 	def initialize(params)
     @routes = Rails.application.routes.url_helpers
     @redirect_path = @routes.users_path    
 		@params = params
+    @user = User.new
 	end
 
 	def setup   
@@ -19,12 +19,8 @@ class UserProcess
       @user.created_by_id = @params[:current_user_id]
       @user.role = "guest"
       @user.save!
+      @user
     end
-  end
-
-  def create_account(event)   
-    @account = Account.create(source_id: @user.id, source_type: "User", account_name: @user.display_name, event_id: event.id )
-    @redirect_path = @routes.event_path(event.id)
   end
 
   def user

@@ -1,9 +1,9 @@
 <table class="table">
 	<thead>
 	  <th class="col-md-3">Email</th>
-	  <th class="col-md-2">Name</th>
+	  <th class="col-md-3">Name</th>
 	  <th class="col-md-2">Role</th>
-	  <th colspan="2" class="col-md-3 text-center">Registration Status</th>
+	  <th colspan="2" class="col-md-2 text-center">Registration Status</th>
 	  <th class="col-md-1 text-center"></th>
 	  <th class="col-md-1 text-center"></th>
 	</thead>
@@ -12,61 +12,61 @@
 	    <tr>
 	    	<!-- Email -->
 	    	<td>
-					<%= user.email %>
-				</td>
-				<!-- Display name -->
-				<td>
-					<%= user.display_name if !user.display_name.blank? %>
-				</td>
-				<!-- Select role -->
-				<td class="control-group">
-					<%= form_for(user) do |f| %>
-						<% if policy(user).change_role? %>
-							<%= f.select(:role, User.roles.keys.map {|role| [role.titleize,role]}) %>
-							<%= f.submit 'Change role', :class => "btn btn-primary btn-xs" %>
-						<% end %>
+				<%= user.email %>
+			</td>
+			<!-- Display name -->
+			<td>
+				<%= user.display_name if !user.display_name.blank? %>
+			</td>
+			<!-- Select role -->
+			<td class="control-group">
+				<%= form_for(user) do |f| %>
+					<% if policy(user).change_role? %>
+						<%= f.select(:role, User.roles.keys.map {|role| [role.titleize,role]}) %>
+						<%= f.submit 'Change role', :class => "btn btn-primary btn-xs" %>
 					<% end %>
-				</td>
-				<!-- Registration Status -->
-				<% if user.sign_in_count > 0 %>
-					<!-- Status - Complete -->
-					<td>
-						<p>Complete</p>
-					</td>
-					<td></td>
-				<% elsif !user.invitation_sent_at.blank? %>
-					<!-- Status - Invited -->
-					<td>
-						Invited: <%= user.invitation_sent_at.localtime.strftime("%F %H:%M:%S %Z") %>
-					</td>
-					<!-- Resend -->
-					<td class="text-center">
-						<%= link_to "Resend invitation", create_user_invitation_path(user), class: "btn btn-primary btn-xs btn-block" %>
-					</td>
-				<% else %>
-					<!-- Status - Entered -->
-					<td>
-						<p>Entered</p> 
-					</td>
-					<!-- Invite -->
-					<td class="text-center">
-						<%= link_to "Send invitation", create_user_invitation_path(user), class: "btn btn-primary btn-xs btn-block" %>
-					</td>
 				<% end %>
-				<!-- Edit user link -->
-				<td class="text-center" >
-					<% if policy(user).edit? %>
-						<%= link_to glyphicon_edit.html_safe, edit_user_path(user) %>
-					<% end %>
+			</td>
+			<!-- Registration Status -->
+			<% if user.sign_in_count > 0 %>
+				<!-- Status - Complete -->
+				<td>
+					<p>Complete</p>
 				</td>
-				<!-- Delete user link -->
+				<td></td>
+			<% elsif !user.invitation_sent_at.blank? %>
+				<!-- Status - Invited -->
+				<td>
+					Invited: <%= user.invitation_sent_at.localtime.strftime("%F %H:%M:%S %Z") %>
+				</td>
+				<!-- Resend -->
 				<td class="text-center">
-					<% if policy(user).destroy? && user != current_user %>
-						<%= link_to user_path(user), method: :delete, title: "Delete this transaction", data: { confirm: 'Are you sure?' } do %>
-							<div class="control-icon">&times;</div>
-						<% end %>
-					<% end %>
+					<%= link_to "Resend invitation", create_user_invitation_path(user), class: "btn btn-primary btn-xs btn-block" %>
 				</td>
+			<% else %>
+				<!-- Status - Entered -->
+				<td>
+					<p>Entered</p> 
+				</td>
+				<!-- Invite -->
+				<td class="text-center">
+					<%= link_to "Send invitation", create_user_invitation_path(user), class: "btn btn-primary btn-xs btn-block" %>
+				</td>
+			<% end %>
+			<!-- Edit user link -->
+			<td class="text-center" >
+				<% if policy(user).edit? %>
+					<%= link_to glyphicon_edit.html_safe, edit_user_path(user) %>
+				<% end %>
+			</td>
+			<!-- Delete user link -->
+			<td class="text-center">
+				<% if policy(user).destroy? && user != current_user %>
+					<%= link_to user_path(user), method: :delete, title: "Delete this transaction", data: { confirm: 'Are you sure?' } do %>
+						<div class="control-icon">&times;</div>
+					<% end %>
+				<% end %>
+			</td>
 	    </tr>
 	  <% end %>
 	</tbody>

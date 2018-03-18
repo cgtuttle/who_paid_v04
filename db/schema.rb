@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170319222619) do
+ActiveRecord::Schema.define(version: 20170603205749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,14 +21,14 @@ ActiveRecord::Schema.define(version: 20170319222619) do
     t.decimal  "debit"
     t.decimal  "credit"
     t.string   "entry_type"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.integer  "journal_id"
     t.string   "journal_type"
-    t.integer  "sub_journal_id"
-    t.string   "sub_journal_type"
     t.integer  "reversal_id"
     t.date     "occurred_on"
+    t.integer  "source_id"
+    t.string   "source_type"
   end
 
   add_index "account_transactions", ["account_id"], name: "index_account_transactions_on_account_id", using: :btree
@@ -36,8 +36,7 @@ ActiveRecord::Schema.define(version: 20170319222619) do
   create_table "accounts", force: :cascade do |t|
     t.integer  "source_id"
     t.string   "source_type"
-    t.string   "account_name"
-    t.integer  "event_id"
+    t.string   "name"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
     t.boolean  "inactive",       default: false, null: false
@@ -45,7 +44,6 @@ ActiveRecord::Schema.define(version: 20170319222619) do
     t.string   "default_method", default: "qty"
   end
 
-  add_index "accounts", ["event_id"], name: "index_accounts_on_event_id", using: :btree
   add_index "accounts", ["source_type", "source_id"], name: "index_accounts_on_source_type_and_source_id", using: :btree
 
   create_table "allocations", force: :cascade do |t|
@@ -67,6 +65,13 @@ ActiveRecord::Schema.define(version: 20170319222619) do
     t.datetime "updated_at", null: false
     t.integer  "owner_id"
   end
+
+  create_table "memberships", force: :cascade do |t|
+    t.integer "user_id",  null: false
+    t.integer "event_id", null: false
+  end
+
+  add_index "memberships", ["user_id", "event_id"], name: "index_memberships_on_user_id_and_event_id", unique: true, using: :btree
 
   create_table "payments", force: :cascade do |t|
     t.integer  "event_id"
@@ -116,7 +121,6 @@ ActiveRecord::Schema.define(version: 20170319222619) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "account_transactions", "accounts"
-  add_foreign_key "accounts", "events"
   add_foreign_key "allocations", "accounts"
   add_foreign_key "payments", "events"
 end

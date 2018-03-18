@@ -11,21 +11,20 @@ class UsersController < ApplicationController
 
   def create
     params[:current_user_id] = current_user.id
-    @user = UserProcess.new(params)
-    @user.setup
-    @user.create_account(current_event) if session[:new_user_type] == "account_user"
-    redirect_to @user.redirect_path, notice: "New user successfully created."
+    @user_process = UserProcess.new(params)
+    @user = @user_process.setup
+    @user.create_account(name: @user.display_name)
+    redirect_to @user_process.redirect_path, notice: "New user successfully created."
   end
 
   def destroy
     if @user.destroy
-      @user.update_accounts
+      @user.update_account
       redirect_to users_path, :notice => "User deleted."
     end
   end
 
   def edit
-    @cancel_path = users_path
   end
 
   def new
@@ -48,11 +47,14 @@ class UsersController < ApplicationController
   end
 
   def show
+    @account = @user.account
+    @transactions = @account.statement_transactions
+    @payments = @account.payments
   end
 
   def update
+    @user.update_account
     if @user.update(user_params)
-      @user.update_accounts
       redirect_to users_path, :notice => "User and Account details updated."
     else
       redirect_to users_path, :alert => "Unable to update user."

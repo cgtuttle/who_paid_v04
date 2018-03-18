@@ -116,7 +116,7 @@ namespace:data do
 				account = Account.create(id: row["id"], 
 					source_id: row["source_id"], 
 					source_type: row["source_type"], 
-					account_name: row["account_name"], 
+					name: row["name"], 
 					event_id: row["event_id"],
 					created_at: row["created_at"], 
 					updated_at: row["updated_at"])

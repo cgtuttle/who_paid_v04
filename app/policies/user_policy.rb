@@ -22,6 +22,10 @@ class UserPolicy < ApplicationPolicy
     @current_user.admin?
   end
 
+  def admin?
+    @current_user.admin?
+  end
+
   def change_role?
     @current_user.admin?
   end

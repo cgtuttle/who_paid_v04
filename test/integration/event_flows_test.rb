@@ -3,7 +3,7 @@ include Warden::Test::Helpers
 
 class EventFlowTest < ActionDispatch::IntegrationTest
   setup do
-    @user = users :user_one
+    @user = users :one
     Warden.test_mode!
     login_as(@user, scope: :user)
     Event.create(name: "Test Event #1", owner_id: @user.id)

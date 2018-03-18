@@ -2,9 +2,11 @@ class Allocation < ActiveRecord::Base
 
   before_save :set_defaults
 
-  belongs_to :journal, polymorphic: true
   belongs_to :account
-  has_many :account_transactions, as: :sub_journal
+
+  belongs_to :journal, polymorphic: true
+  has_many :account_transactions, as: :journal
+  has_many :account_transactions, as: :source, dependent: :destroy
 
   ALLOCATION_METHODS = ['qty','amt','pct']
 
@@ -12,9 +14,9 @@ class Allocation < ActiveRecord::Base
   scope :pct_allocation, -> {where(allocation_method: "pct")}
   scope :qty_allocation, -> {where(allocation_method: "qty")}
 
-  scope :by_last_name, -> { joins("join accounts on accounts.id = account_id 
-                                  join users on users.id = accounts.source_id")
-                            .where("accounts.source_type = 'User'")
+  scope :by_last_name, -> { joins("join accounts on account.id = account_id 
+                                  join users on users.id = account.source_id")
+                            .where("account.source_type = 'User'")
                             .order("users.last_name") }
 
 private

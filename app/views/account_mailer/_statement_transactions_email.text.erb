@@ -15,8 +15,8 @@
 	browser_date(t.occurred_on || t.created_at),
 	t.entry_type.titlecase,
 	t.journal.for,
-	t.journal.payer_account.account_name,
-	t.journal.payee_account.account_name,
+	t.journal.payer_account.name,
+	t.journal.payee_account.name,
 	number_to_currency(t.debit),
 	number_to_currency(t.credit),
 	number_to_currency(running_balance) ]%>

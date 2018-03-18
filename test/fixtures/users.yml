@@ -1,14 +1,14 @@
 
-user_one:
+one:
   email: user1@test.com
   first_name: User
   last_name: One
   role: 1
 
-user_two:
+two:
   email: user2@test.com
   user_name: user_two
   role: 1
-
-user_three:
+  
+three:
   email: user3@test.com

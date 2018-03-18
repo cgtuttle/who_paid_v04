@@ -1,0 +1,25 @@
+<!-- for larger formats... -->
+
+<div class="row row-heading hidden-xs">
+	<strong class="col-sm-1 col-xs-12"></strong>
+	<strong class="col-sm-1 col-xs-12">Paid On</strong>	
+	<strong class="col-sm-2 col-xs-12">Event</strong>	
+	<strong class="col-sm-2 col-xs-12">By</strong>
+	<strong class="col-sm-1 col-xs-12">Action</strong>
+	<strong class="col-sm-2 col-xs-12">For</strong>
+	<strong class="col-sm-1 col-xs-12 text-center">Debit</strong>
+	<strong class="col-sm-1 col-xs-12 text-center">Credit</strong>
+</div>
+
+<% transactions.each do |t| %>						
+	<div class="row row-list">															
+		<div class="col-sm-1 col-xs-12"></div>
+		<div class="col-sm-1 col-xs-12"><%= t.occurred_on %></div>
+		<div class="col-sm-2 col-xs-12"><%= t.event.name %></div>
+		<div class="col-sm-2 col-xs-12"><%= t.account.name %></div>
+		<div class="col-sm-1 col-xs-12"><%= t.entry_type.titlecase %></div>
+		<div class="col-sm-2 col-xs-12"><%= t.source.for %></div>
+		<div class="col-sm-1 col-xs-12 text-right"><%= number_to_currency(t.debit) %></div>
+		<div class="col-sm-1 col-xs-12 text-right"><%= number_to_currency(t.credit) %></div>
+	</div>
+<% end %>

@@ -1,6 +1,6 @@
 <%= @event.name %>
 
-Statement for <%= @account.account_name %>
+Statement for <%= @account.name %>
 
 <% if @account.owes? %>
 Owes <%= number_to_currency(-@account.balance) %>

@@ -1,12 +1,10 @@
 module PaymentsHelper
 
-	def accounts_list(current_event)
-		current_event.accounts.map(&:account_name).uniq.compact.sort
-	end
-
-	def setup_payment(event, payment)
-		(event.accounts.people - payment.accounts).each do |account|
-			payment.allocations.build(account: account)
+	def payment_allocation_choices(event, payment)
+		(event.user_accounts).each do |account|
+			if account.allocations.where(journal_type: "Payment", journal_id: payment.id).empty?
+				payment.allocations.new(account: account)
+			end
 		end
 		payment
 	end

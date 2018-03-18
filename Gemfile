@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby "2.2.4"
 
 gem 'rails', '4.2.1'
 gem 'pg'
@@ -19,6 +20,9 @@ gem 'bootstrap-datepicker-rails'
 gem 'font-awesome-rails'
 gem 'data-confirm-modal', github: 'ifad/data-confirm-modal'
 
+  # Access an IRB console on exception pages or by using <%= console %> in views
+  gem 'web-console', '~> 2.0', group: :development
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -35,8 +39,7 @@ group :development, :test do
   gem 'binding_of_caller'
   gem 'dotenv-rails'
 
-  # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
+
 
   # Spring speeds up development by keeping your application running in the background.
   gem 'spring'
@@ -44,4 +47,5 @@ end
 
 group :test do
 	gem 'minitest-reporters'
+
 end

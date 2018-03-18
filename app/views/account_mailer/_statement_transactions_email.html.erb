@@ -21,8 +21,8 @@
 				<td style="width:8%"><%= browser_date(t.occurred_on || t.created_at) %></td>
 				<td style="width:16%"><%= t.entry_type.titlecase %></td>
 				<td style="width:16%"><%= t.journal.for %></td>
-				<td style="width:16%"><%= t.journal.payer_account.account_name %></td>
-				<td style="width:16%"><%= t.journal.payee_account.account_name %></td>
+				<td style="width:16%"><%= t.journal.payer_account.name %></td>
+				<td style="width:16%"><%= t.journal.payee_account.name %></td>
 				<td style="width:8%;text-align:right;"><%= number_to_currency(t.debit) %></td>
 				<td style="width:8%;text-align:right;"><%= number_to_currency(t.credit) %></td>
 				<% running_balance = running_balance + (t.credit || 0) - (t.debit || 0) %>

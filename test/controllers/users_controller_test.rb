@@ -1,10 +1,10 @@
 require 'test_helper'
-include Devise::TestHelpers
 
 class UsersControllerTest < ActionController::TestCase
+  include Devise::Test::ControllerHelpers
   setup do
     @request.env["devise.mapping"] = Devise.mappings[:user]
-    sign_in users :user_one
+    sign_in users :one
   end
 
   test "should create new user" do

@@ -6,10 +6,12 @@ class PaymentsController < ApplicationController
     if params[:payment][:to_user_id] != "" || params[:user_to][:first_name] != "" || params[:user_to][:last_name] != "" || params[:user_to][:email] != ""
       params[:payment][:for] = "Settlement"
     end
-    @payment = current_event.payments.new(payment_params)
+    @event = Event.find(event_params)
+    @payment = @event.payments.new(payment_params)
     if @payment.save
       @payment.add_allocations
-      PaymentProcess.new(@payment).execute
+      @payment.update_allocation_factors
+      PaymentProcess.new(@payment).create
       redirect_to event_path(current_event), notice: 'Successfully recorded a new payment'
     else
       flash[:notice] = 'Could not add the payment'
@@ -21,7 +23,10 @@ class PaymentsController < ApplicationController
     @title = "Edit payment"
     @event = current_event
     @user = current_user
-    @payment = current_event.payments.find(params[:id])
+    @payment = Payment.find(params[:id])
+  end
+
+  def index
   end
 
   def new
@@ -42,8 +47,9 @@ class PaymentsController < ApplicationController
     params[:payment][:for] = "Settlement" if not params[:payment][:to_user_id].blank?
     @payment = Payment.find(params[:id])
     @payment.update(payment_params)
+    @payment.update_allocation_factors
     PaymentProcess.new(@payment).update_allocations
-    @payment.event.accounts.user.each do |account|
+    @payment.event.user_accounts.each do |account|
       @payment.allocations.each do |allocation|
         logger.debug "account = #{account.id}, allocation = #{allocation.id}, allocation.account = #{allocation.account.id}"
         if account.id == allocation.account.id
@@ -69,7 +75,7 @@ class PaymentsController < ApplicationController
   def assign_account(direction)
     id = params["payment"][direction + "_user_id"] # "payment"=>{"to_user_id"=>"5"}
     if params["payment"]["for"].present? && direction == "to"
-      account = current_event.accounts.where(source_type: "Event", source_id: current_event.id).first
+      account = Account.where(source_type: "Event", source_id: current_event.id).first
     elsif params["payment"][direction + "_user_id"] > "" # "payment"=>{"to_user_id"=>"5"}
       account = find_or_create_user_account(id)
     elsif params["user_" + direction].present?
@@ -86,10 +92,10 @@ class PaymentsController < ApplicationController
 
   def find_or_create_user_account(user_id)
     user = User.find(user_id)
-    new_account = current_event.accounts.find_or_create_by(source_type: "User", source_id: user_id) do |account|
+    new_account = Account.find_or_create_by(source_type: "User", source_id: user_id) do |account|
       account.source_type = "User"
       account.source_id = user_id
-      account.account_name = user.display_name
+      account.name = user.display_name
     end
   end
 

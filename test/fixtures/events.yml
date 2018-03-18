@@ -1,8 +1,8 @@
 
 one:
   name: Test Event 1
-  owner: user_one
+  owner: one
 
 two:
   name: Test Event 2
-  owner: user_one
+  owner: one

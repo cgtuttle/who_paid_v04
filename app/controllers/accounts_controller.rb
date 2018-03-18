@@ -5,8 +5,8 @@ class AccountsController < ApplicationController
   end
 
   def create
-    @account = @event.accounts.new(account_params)
-
+    @account = Account.new(account_params)
+    @event = Event.find(account_params)
     if @account.save      
       redirect_to event_path(@event), notice:'Successfully added participant.'
     else
@@ -15,7 +15,7 @@ class AccountsController < ApplicationController
   end
 
   def destroy
-    @account = Account.find(params[:id])
+    # @account = Account.find(params[:id])
     if AccountProcess.new(@account).delete
       redirect_to event_path(@event), notice:'Successfully deleted participant.'
     else
@@ -31,23 +31,30 @@ class AccountsController < ApplicationController
   end
 
   def new
-    @account = @event.accounts.new
+    @account = Account.new
     respond_to do |format|
       format.html
       format.js
     end
   end
 
-  def participants
-  end
-
   def show
+    @title = "Add a payment..."
+    @account = Account.find(params[:id])
+    @payment = @account.payments.new
+    @payments = @account.payments
+    @transactions = @account.account_transactions.order(occurred_on: :desc)
   end
 
   def statement
     @transactions = @account.statement_transactions
-    @event = @account.event
     render 'statement'
+  end
+
+  def event_statement
+    # @transactions = AccountTransaction.includes(:source)
+    @transactions = @account.statement_transactions    
+    render 'event_statement'
   end
 
   def statement_email
@@ -57,7 +64,7 @@ class AccountsController < ApplicationController
   end
 
   def statements_email
-    @participants = @event.participants
+    @participants = @event.users
     @user = current_user
     @participants.each do |p|
       AccountMailer.statement_email(@user, p, p.statement_transactions).deliver_now
@@ -80,14 +87,14 @@ class AccountsController < ApplicationController
   def set_resources
     if params[:account_id]
       @account = Account.find(params[:account_id])
-      @user = User.find(@account.source_id) if @account.source_type = "User"
+      @user = User.find(@account.source_id) if @account.source_type == "User"
+      @event = current_event
+      logger.debug "set_resources: @account = #{@account}"
     end
-    @event = Event.find(params[:event_id])
-    @accounts = @event_accounts
   end
 
   def account_params
-    params.require(:account).permit(:account_name, :source_id, :source_type, :active, :default_share, :default_method)
+    params.require(:account).permit(:name, :source_id, :source_type, :active, :default_share, :default_method, :event_id)
   end
 
 end

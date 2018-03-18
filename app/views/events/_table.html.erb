@@ -2,6 +2,7 @@
 <!-- for larger formats... -->
 
 	<div class="row well">
+	
 
 		<%= link_to new_event_path, title: 'Add new event' do %>
 			<span class="control-icon-light">&oplus;</span> Add event
@@ -27,9 +28,12 @@
             </td>
 						<td><%= link_to event.name, event_path(event) %></td>
 						<td><%= event.owner.display_name %></td>
-            <td class="text-right"><%= number_to_currency(current_user.event_balance(event)) %></td>
+            <td class="text-right"><%= number_to_currency(event.user_balance(current_user)) %></td>
+
 					</tr>
-				<% end %>
+				<% end %>	
 			</tbody>
 		</table>
+	
 	</div>
+

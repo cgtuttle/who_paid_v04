@@ -7,7 +7,7 @@ namespace:transactions do
 		puts "Processing payments..."
 		Payment.all.each do |payment|
 			print "."
-			PaymentProcess.new(payment).execute
+			PaymentProcess.new(payment).create
 		end
 		puts ""
 		puts "Completed successfully."

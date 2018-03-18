@@ -19,6 +19,7 @@ $bg-color-dark: hsla($bg-color-hue, $bg-color-saturation, $bg-color-lightness * 
 html, body {
   height: 100%;
   background-color: $bg-color;
+  overflow-y: hidden;
 }
 
 main {
@@ -40,12 +41,12 @@ main {
 
 .container-fluid.visitor {
   background-image: image-url('friends_skyline.jpg');
-  padding-top: 50px;
-  padding-bottom: 70px;
+  padding-top: 0;
+  padding-bottom: 0;
   padding-left: 50px;
-  margin-bottom: 20px;
-  margin-top: -10px;
-  height: 800px;
+  margin-bottom: 0;
+  margin-top: 0;
+  height: 100vh;
 }
 
 section {
@@ -103,7 +104,18 @@ i {
 }
 
 .summary-row {
-  outline: thin solid;
+  height: auto;
+  border: 2px solid;
+  border-radius: 10px;
+  border-color: #959393;
+}
+
+.credit-balance {
+  color: #01017D;
+}
+
+.debit-balance {
+  color: #8B0000;
 }
 
 .h0 {

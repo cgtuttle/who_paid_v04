@@ -3,7 +3,7 @@ include Warden::Test::Helpers
 
 class UserFlowsTest < ActionDispatch::IntegrationTest
   setup do
-    @user = users :user_one
+    @user = users :one
     Warden.test_mode!
     login_as(@user, scope: :user)
     Rails::logger.debug "User signed in"

@@ -9,14 +9,14 @@ ready = ->
   #   alert "It worked!"
 
 
-window.toggle_new_user = (direction) ->
+window.toggle_new_user = (direction, namespace) ->
   timeNow = new Date().toLocaleTimeString()
   new_user = document.getElementById("is_new_user_" + direction)
   type = document.getElementById("account_" + direction + "_type")
   user = document.getElementById("payment_" + direction + "_user_id")
   index = document.getElementById("account_" + direction + "_index")
   console.log("Ran toggle_new_user " + timeNow)  
-  $("#new_guest_" + direction).collapse('toggle')
+  $( "#new_guest_" + direction + "_" + namespace ).collapse('toggle')
   if new_user.value == "true"
     index.value = user.selectedIndex
     user.selectedIndex = 0

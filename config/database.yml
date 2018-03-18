@@ -11,11 +11,11 @@ default: &default
 
 development:
   <<: *default
-  database: who_paid_v04_development
+  database: who_paid_v06_development
 
 test:
   <<: *default
-  database: who_paid_v04_test
+  database: who_paid_v06_test
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -38,4 +38,4 @@ test:
 #
 production:
   <<: *default
-  database: who_paid_v04_production
+  database: who_paid_v06_production

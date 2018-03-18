@@ -1,45 +1,38 @@
-  <%= form_for [@payment] do |f| %>
-    <%= render 'layouts/errors', index: @event_payment %>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h4 class="panel-title"><%= @title %></h4>
+  </div>
 
-    <%= hidden_field_tag "is_new_user_from", false, id: "is_new_user_from" %>
-    <%= hidden_field_tag "is_new_user_to", false, id: "is_new_user_to" %>
+  <div class="panel-body">
+    <%= form_for [payment] do |f| %>
 
-    <div class="form-group">
-      <%= f.label "Amount", class: 'sr-only' %>
-      <%= f.text_field :amount, 
-        class: "form-control input-sm", 
-        placeholder: "Amount..." %>
-    </div>
+      <%= render 'layouts/errors', index: f.object %>
 
-    <div class="form-group">
-      <%= f.label "On", class: 'sr-only' %>
-      <%= f.text_field :payment_date, 'data-provide'=>'datepicker', 
-        :class => "form-control input-sm datepicker", 
-        placeholder: "Paid on..." %>
-    </div>
+      <div class="form-group">
+        <%= f.label "Amount", class: 'sr-only' %>
+        <%= f.text_field :amount, class: "form-control input-sm", placeholder: "Amount..." %>
+      </div>
 
-    <div class="form-group">
-      <%= f.label :account_from, class: 'sr-only' %>
-      <%= f.collection_select :account_from, Account.current_event(@current_event), :id, :account_name, 
-        {include_blank: "<New User>"}, 
-        {class: "account-selector form-control input-sm"} %>        
-    </div>
+      <div class="form-group">
+        <%= f.label "On", class: 'sr-only' %>
+        <%= f.text_field :payment_date, 'data-provide'=>'datepicker', :class => "form-control input-sm datepicker", placeholder: "Paid on..." %>
+      </div>
 
-    <div class="form-group">
-      <%= f.label :account_to, class: 'sr-only' %>
-      <%= f.collection_select :account_to, Account.current_event(@current_event), :id, :account_name, 
-        {include_blank: "<New User>"}, 
-        {class: "account-selector form-control input-sm", onchange: 'new_user_to();'} %>        
-    </div>
+      <%= hidden_field_tag "is_new_user_from", true, id: "is_new_user_from" %>
+      <%= hidden_field_tag "is_new_user_to", true, id: "is_new_user_to" %>
+      <%= hidden_field_tag "account_to_index", 0, id: "account_to_index" %>
 
-    <div class="form-group">
-      <%= f.label "For", class: 'sr-only' %>
-      <%= f.text_field :for, class: "form-control input-sm", placeholder: "For..." %>
-    </div>
+      <!-- To allow js to decide to show the account_to user form, event form, or neither -->
+      <%= content_tag "div", id: "to_source", data: { type: @payment.new_record? ? "None" : @payment.payee_account.source_type} do %>
+      <% end %> 
 
-    <div class="form-group">
-      <%= f.submit 'Submit', :class => 'btn btn-primary btn-sm' %>
-      <%= link_to 'Cancel', event_path(@event), class: 'btn btn-default btn-sm' %>
-    </div>
+      <%= render partial: 'payments/payment_from', locals: { f: f } %>
 
-  <% end %>
+      <%= render partial: 'payments/payment_to', locals: { f: f } %>
+        
+      <div class="form-group">
+        <%= f.submit 'Submit', :class => 'btn btn-primary btn-sm' %>
+      </div>
+    <% end %>
+  </div>
+</div>

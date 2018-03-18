@@ -24,12 +24,38 @@
 
       <!-- To allow js to decide to show the account_to user form, event form, or neither -->
       <%= content_tag "div", id: "to_source", data: { type: @payment.new_record? ? "None" : @payment.payee_account.source_type} do %>
-      <% end %> 
+      <% end %>
 
-      <%= render partial: 'events/payment_from', locals: { f: f } %>
+      <div class="panel-group" id="event_payment_accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
 
-      <%= render partial: 'events/payment_to', locals: { f: f } %>
-        
+          <!-- collapsable payment form control -->
+          <div class="panel-heading" role="tab" id="event_payment_heading">
+            <div class="panel-title">
+              <div class="form-group">
+                <%= link_to "#event_payment_form", title: "Payment details", data: { toggle: :collapse, parent: "#event_payment_accordion" }, aria: { controls: "event_payment_form" } do %>
+                  <i class="fa fa-plus-circle"></i> Payment details...
+                <% end %>
+              </div>
+            </div>
+          </div> 
+
+          <!-- collapsable payment form -->
+          <div id="event_payment_form", class="panel-collapse collapse" role="tabpanel" aria-labelledby="event_payment_heading">
+            <div class="panel-body">                       
+
+              <%= render partial: 'events/payment_from', locals: { f: f } %>
+
+              <%= render partial: 'events/payment_to', locals: { f: f } %>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+      
+
+
       <div class="form-group">
         <%= f.submit 'Submit', :class => 'btn btn-primary btn-sm' %>
         <% if ["create", "edit"].include? controller.action_name %>

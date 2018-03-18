@@ -2,7 +2,7 @@ require 'test_helper'
 
 class EventTest < ActiveSupport::TestCase
   setup do
-    @user = users(:user_one)
+    @user = users(:one)
     @event = events(:one)
   end
 

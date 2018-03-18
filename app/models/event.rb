@@ -1,19 +1,19 @@
 class Event < ActiveRecord::Base
-  has_many :accounts, dependent: :destroy
+  has_one :account, as: :source, dependent: :destroy
+  has_many :payments_paid, through: :account
+  has_many :payments_received, through: :account
   has_many :payments
-  has_many :account_transactions, through: :accounts
-  has_many :users, through: :accounts, source: :source, source_type: "User"
+  has_many :allocations, through: :account
+  has_many :account_transactions, through: :payments
+  has_many :memberships
+  has_many :users, through: :memberships
   belongs_to :owner, class_name: "User"
   validates :name, uniqueness: { scope: :owner_id, message: "already exists"}
 
   USER_TO_USER_PAYMENT = "Settlement"
 
-  def event_account
-    Account.where(source_type: "Event", source_id: self.id).first
-  end
-
-  def participants
-    self.accounts.user
+  def user_accounts
+    Account.includes(:source).where("source_type = ? AND source_id IN (?)", "User", self.users.select(:id))
   end
 
   def owner?(user)
@@ -24,32 +24,38 @@ class Event < ActiveRecord::Base
 		self.users.exists?(user.id)
 	end
 
-  def create_event_owner_account(user)
-    self.accounts.create!(source: user, account_name: user.display_name)
-  end
-
-  def create_event_default_account
-    self.accounts.create!(account_name: self.name, source_type: "Event", source_id: self.id)
-  end
-
   def entries_of_type(entry_type)
     self.account_transactions.entries_of_type(entry_type)
   end
 
-  def total_amount(entry_type)
-    self.entries_of_type(entry_type).sum(:credit) - self.entries_of_type(entry_type).sum(:debit)
+  def total_expenses
+    self.account_transactions.entries_of_type("receipt").sum(:debit)
   end
 
-  def total_expenses
-    self.account_transactions.entries_of_type("receipt").where(account_id: self.event_account.id).sum(:debit) 
+  def user_balance(user)
+    logger.debug "Running user_balance for #{user}"
+    logger.debug "user.account.id = #{user.account.id}"
+    self.account_transactions.where(account_id: user.account.id).sum(:credit) - self.account_transactions.where(account_id: user.account.id).sum(:debit)
   end
 
   def display_name
     self.name
   end
 
-  def account_group
-    self.all
-  end
+  # def account_group
+  #   self.all
+  # end
+  
+  # def event_account
+  #   self.account
+  # end
+
+  # def owner_account
+  #   Account.includes(:source).where(source_type: "User", source_id: self.owner_id)
+  # end
+
+  # def total_amount(entry_type)
+  #   self.entries_of_type(entry_type).sum(:credit) - self.entries_of_type(entry_type).sum(:debit)
+  # end
 
 end

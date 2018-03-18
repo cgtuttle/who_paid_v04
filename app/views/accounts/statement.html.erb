@@ -1,7 +1,7 @@
 <div class="container">
 
-	<h1 class="visible-print-block statement"><%= @event.name %></h1>
-	<h3>Statement for <%= @account.account_name %></h3>
+	<h1 class="visible-print-block statement"><%= @event.name if controller_name == "events" %></h1>
+	<h3>Statement for <%= @account.name %></h3>
 	<h4>
 		<% if @account.owes? %>
 			Owes <%= number_to_currency(-@account.balance) %>
@@ -11,13 +11,9 @@
 	</h4>
 
 	<div class="row">
-		<div class="col-md-6"><%= link_to "Return to Event: #{@event.name}", event_path(@event), class: "hidden-print" %></div>
-		<div class="col-md-6 text-right bottom-space-10">
+		<div class="col-md-6 bottom-space-10">
 			<%= link_to '#', onclick: 'window.print();return false;', class: 'hidden-print', title: "Print statment" do %>
 				<i class="fa fa-print"></i>
-			<% end %>
-			<%= link_to event_account_statement_email_path(@event, @account), class: 'hidden-print', title:'Send to user via email' do %>
-				<i class="fa fa-envelope"></i>
 			<% end %>
 		</div>
 	</div>

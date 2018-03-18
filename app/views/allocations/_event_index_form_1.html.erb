@@ -1,12 +1,12 @@
 
 <%= form_for [@event, payment], url: {action: :update_allocations, controller: :payments}, method: :get, role: 'form' do |f| %>
 	<%= f.hidden_field :id, value: payment.id %>
-	<%= f.collection_check_boxes :account_ids, @participants, :id, :account_name do |b| %>
+	<%= f.collection_check_boxes :account_ids, @participants, :id, :name do |b| %>
 	  <div class="row">			  	
 	    <%= b.label(class: "check-box col-md-6") do %>
 	      <div class="col-xs-4 col-md-6">
 	        <%= b.check_box %>
-	        <span class="check-box-label"><%= b.object.account_name %></span>
+	        <span class="check-box-label"><%= b.object.name %></span>
 	      </div>
 	    <% end %>				  
 	  </div>
